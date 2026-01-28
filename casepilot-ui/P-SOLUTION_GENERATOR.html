@@ -11,206 +11,222 @@
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
-  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="P-HOME.html" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-          <i class="fas fa-cube text-white"></i>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-border-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <a href="P-HOME.html" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 bg-gradient-to-br from-teal-600 to-teal-500 rounded-xl flex items-center justify-center">
+          <i class="fas fa-cube text-white text-sm"></i>
         </div>
         <div class="leading-tight">
-          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">协作生成 · 交付级方案书</div>
+          <div class="text-base font-bold gradient-text">CasePilot</div>
+          <div class="text-[10px] text-text-secondary -mt-0.5">交付级方案书</div>
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-HOME.html">首页</a>
-        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-SOLUTION_GENERATOR.html">协作生成</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">案例库</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_HISTORY.html">历史方案</a>
+      <nav class="hidden md:flex items-center gap-1">
+        <a class="px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary transition-colors" href="P-HOME.html">首页</a>
+        <a class="px-3 py-1.5 rounded-lg text-sm nav-link-active" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary transition-colors" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary transition-colors" href="P-SOLUTION_HISTORY.html">历史</a>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <span class="hidden sm:inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-pill">
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full cp-pill">
           <span class="cp-dot"></span>
           <span id="cp-status">未保存</span>
         </span>
-        <a id="cp-go-detail" href="P-SOLUTION_DETAIL.html#run=draft" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
-          <i class="fas fa-file-lines"></i>
-          方案包
-        </a>
-        <a href="P-LOGIN_REGISTER.html" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary text-sm">
-          <i class="fas fa-user"></i>
-          登录
+        <a href="P-SOLUTION_DETAIL.html#run=draft" id="cp-go-detail" class="cp-btn cp-btn-secondary text-xs py-1.5 px-3">
+          <i class="fas fa-eye"></i>
+          预览
         </a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-page="generator">
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6" data-page="generator">
+    <!-- Title row -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <div>
-        <h1 id="cp-title" class="cp-page-title text-3xl font-extrabold">新方案</h1>
-        <div class="mt-2 flex flex-wrap gap-2 text-xs">
-          <span class="px-2 py-1 rounded-full cp-pill">可追溯</span>
-          <span class="px-2 py-1 rounded-full cp-pill-warn">可验收</span>
-          <span class="px-2 py-1 rounded-full cp-pill-primary">风险边界</span>
-          <span class="px-2 py-1 rounded-full cp-pill">协作闭环</span>
-        </div>
+        <h1 id="cp-title" class="cp-page-title text-2xl font-bold">新方案</h1>
+        <p class="mt-1 text-sm text-text-secondary">输入需求，生成可追溯、可验收的交付级方案书</p>
       </div>
-
       <div class="flex items-center gap-2">
-        <button id="cp-generate-draft" class="px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary text-sm">
+        <button id="cp-generate-draft" class="cp-btn cp-btn-secondary text-sm">
+          <i class="fas fa-wand-magic-sparkles"></i>
           生成初版
-        </button>
-        <button id="cp-open-chat" class="px-4 py-2 rounded-xl bg-gradient-primary text-white shadow-card-hover text-sm">
-          协作
         </button>
       </div>
     </div>
 
+    <!-- Main grid: document 7 cols + sidebar 5 cols -->
     <section class="mt-6 grid lg:grid-cols-12 gap-6">
-      <!-- Main: document (large) -->
-      <div class="lg:col-span-8">
-        <div class="cp-card shadow-card p-6 sm:p-8">
-          <div class="flex items-center justify-between gap-4">
-            <div class="font-bold">方案书（可编辑）</div>
-            <div class="flex items-center gap-2 text-xs">
-              <span class="cp-kbd">点击文本即可编辑</span>
-              <a class="text-text-secondary hover:text-primary" href="P-SOLUTION_DETAIL.html">预览</a>
+      <!-- Document area -->
+      <div class="lg:col-span-7 xl:col-span-8">
+        <div class="cp-doc-card p-6 lg:p-8">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
+                <i class="fas fa-file-lines text-teal-600"></i>
+              </div>
+              <div>
+                <div class="font-semibold text-lg">方案书</div>
+                <div class="text-xs text-text-secondary">点击任意区域即可编辑</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="cp-pill-success"><i class="fas fa-check-circle"></i> 自动保存</span>
             </div>
           </div>
 
-          <div class="mt-5 grid gap-5">
-            <section class="cp-card p-5">
-              <div class="flex items-center justify-between">
-                <div class="font-semibold">概述</div>
-                <span class="text-xs cp-pill px-2 py-1 rounded-full">摘要</span>
+          <div class="space-y-4">
+            <!-- Section: Overview -->
+            <section class="cp-section p-5">
+              <div class="cp-section-title">
+                <i class="fas fa-align-left"></i>
+                概述
               </div>
-              <div id="cp-doc-overview" class="mt-3 text-sm leading-relaxed" contenteditable="true" data-doc="overview"></div>
+              <div id="cp-doc-overview" class="cp-editable" contenteditable="true" data-doc="overview" data-placeholder="描述项目目标、范围与预期交付物…"></div>
             </section>
 
-            <section class="cp-card p-5">
-              <div class="flex items-center justify-between">
-                <div class="font-semibold">系统架构</div>
-                <span class="text-xs cp-pill px-2 py-1 rounded-full">可落地</span>
+            <!-- Section: Architecture -->
+            <section class="cp-section p-5">
+              <div class="cp-section-title">
+                <i class="fas fa-sitemap"></i>
+                系统架构
               </div>
-              <div id="cp-doc-arch" class="mt-3 text-sm leading-relaxed" contenteditable="true" data-doc="arch"></div>
+              <div id="cp-doc-arch" class="cp-editable" contenteditable="true" data-doc="arch" data-placeholder="技术架构、组件设计、数据流向…"></div>
             </section>
 
-            <section class="cp-card p-5">
-              <div class="flex items-center justify-between">
-                <div class="font-semibold">验收指标与口径</div>
-                <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">可验收</span>
+            <!-- Section: Metrics -->
+            <section class="cp-section p-5">
+              <div class="cp-section-title">
+                <i class="fas fa-chart-line"></i>
+                验收指标与口径
+                <span class="cp-pill-warn text-[10px] ml-2">可验收</span>
               </div>
-              <div id="cp-doc-metrics" class="mt-3 text-sm leading-relaxed" contenteditable="true" data-doc="metrics"></div>
+              <div id="cp-doc-metrics" class="cp-editable" contenteditable="true" data-doc="metrics" data-placeholder="指标名称、计算公式、目标值、验收用例…"></div>
             </section>
 
-            <section class="cp-card p-5">
-              <div class="flex items-center justify-between">
-                <div class="font-semibold">风险边界与护栏</div>
-                <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">边界</span>
+            <!-- Section: Boundaries -->
+            <section class="cp-section p-5">
+              <div class="cp-section-title">
+                <i class="fas fa-shield-halved"></i>
+                风险边界与护栏
+                <span class="cp-pill-primary text-[10px] ml-2">边界</span>
               </div>
-              <div id="cp-doc-boundaries" class="mt-3 text-sm leading-relaxed" contenteditable="true" data-doc="boundaries"></div>
+              <div id="cp-doc-boundaries" class="cp-editable" contenteditable="true" data-doc="boundaries" data-placeholder="不适用场景、降级策略、复核流程…"></div>
             </section>
 
-            <section class="cp-card p-5">
-              <div class="flex items-center justify-between">
-                <div class="font-semibold">交付物清单</div>
-                <span class="text-xs cp-pill px-2 py-1 rounded-full">输出</span>
+            <!-- Section: Deliverables -->
+            <section class="cp-section p-5">
+              <div class="cp-section-title">
+                <i class="fas fa-box-open"></i>
+                交付物清单
               </div>
-              <div id="cp-doc-deliverables" class="mt-3 text-sm leading-relaxed" contenteditable="true" data-doc="deliverables"></div>
+              <div id="cp-doc-deliverables" class="cp-editable" contenteditable="true" data-doc="deliverables" data-placeholder="文档、代码、接口、用例集、其他产出…"></div>
             </section>
           </div>
         </div>
       </div>
 
-      <!-- Side: chat + checklist + evidence (sticky) -->
-      <aside class="lg:col-span-4">
-        <div class="cp-card shadow-card p-5 lg:sticky lg:top-20">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">协作</div>
-            <div class="flex items-center gap-2 text-xs">
-              <span class="cp-kbd">Ctrl</span><span class="cp-kbd">Enter</span>
+      <!-- Sidebar -->
+      <aside class="lg:col-span-5 xl:col-span-4">
+        <div class="cp-sidebar-card p-5 lg:sticky lg:top-20">
+          <!-- Tab buttons -->
+          <div class="flex items-center gap-1 p-1 bg-bg-secondary rounded-xl">
+            <button class="cp-tab active flex-1" data-pane-tab="chat" type="button">
+              <i class="fas fa-comments mr-1.5"></i>对话
+            </button>
+            <button class="cp-tab flex-1" data-pane-tab="todo" type="button">
+              <i class="fas fa-list-check mr-1.5"></i>清单
+            </button>
+            <button class="cp-tab flex-1" data-pane-tab="refs" type="button">
+              <i class="fas fa-link mr-1.5"></i>引用
+            </button>
+          </div>
+
+          <!-- Chat pane -->
+          <div class="mt-4" data-pane="chat">
+            <div class="cp-chat max-h-[320px] overflow-y-auto" id="cp-chat"></div>
+            <div class="mt-4 space-y-3">
+              <textarea id="cp-input" rows="2" class="w-full px-4 py-3 rounded-xl border border-border-light search-focus resize-none text-sm" placeholder="输入需求或修改点，按 Ctrl+Enter 发送"></textarea>
+              <button id="cp-send" class="cp-btn cp-btn-primary w-full">
+                <i class="fas fa-paper-plane"></i>
+                发送
+              </button>
             </div>
           </div>
 
-          <div class="mt-4">
-            <div class="flex items-center gap-2">
-              <button class="px-3 py-2 rounded-xl text-sm nav-link-active" data-pane-tab="chat" type="button">对话</button>
-              <button class="px-3 py-2 rounded-xl text-sm text-text-secondary hover:bg-bg-secondary" data-pane-tab="todo" type="button">清单</button>
-              <button class="px-3 py-2 rounded-xl text-sm text-text-secondary hover:bg-bg-secondary" data-pane-tab="evidence" type="button">证据</button>
+          <!-- Todo pane -->
+          <div class="mt-4 hidden" data-pane="todo">
+            <div class="space-y-2" id="cp-todos"></div>
+            <div class="mt-4">
+              <button id="cp-generate" class="cp-btn cp-btn-primary w-full" disabled>
+                <i class="fas fa-bolt"></i>
+                生成方案包
+              </button>
+              <p class="mt-2 text-xs text-text-secondary text-center">完成所有确认项后可生成</p>
             </div>
+          </div>
 
-            <!-- chat -->
-            <div class="mt-4" data-pane="chat">
-              <div class="cp-chat max-h-[360px] overflow-auto pr-1" id="cp-chat"></div>
-              <div class="mt-4 flex items-end gap-3">
-                <textarea id="cp-input" rows="3" class="flex-1 px-4 py-3 rounded-xl border border-border-light search-focus resize-none" placeholder="输入需求或修改点…"></textarea>
-                <button id="cp-send" class="px-4 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">发送</button>
+          <!-- References pane -->
+          <div class="mt-4 hidden" data-pane="refs">
+            <div class="space-y-2" id="cp-evidence"></div>
+            <div class="mt-4 pt-4 border-t border-border-light">
+              <div class="text-xs font-medium text-text-secondary mb-2">快速添加</div>
+              <div class="flex flex-wrap gap-2">
+                <button class="cp-pill hover:bg-teal-50 transition-colors cursor-pointer">+ 论文</button>
+                <button class="cp-pill hover:bg-teal-50 transition-colors cursor-pointer">+ 基准</button>
+                <button class="cp-pill hover:bg-teal-50 transition-colors cursor-pointer">+ 历史项目</button>
               </div>
             </div>
+          </div>
 
-            <!-- todo -->
-            <div class="mt-4 hidden" data-pane="todo">
-              <div class="grid gap-3" id="cp-todos"></div>
-              <div class="mt-4">
-                <button id="cp-generate" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover disabled:opacity-50 disabled:cursor-not-allowed" type="button">
-                  <i class="fas fa-bolt"></i>
-                  生成方案包
-                </button>
-              </div>
+          <!-- Divider -->
+          <div class="cp-divider my-5"></div>
+
+          <!-- Quick stats -->
+          <div class="grid grid-cols-2 gap-3">
+            <div class="cp-mini-card">
+              <div class="text-xs text-text-secondary">指标</div>
+              <div class="mt-1 font-semibold text-sm" id="cp-metrics-count">0 项</div>
             </div>
-
-            <!-- evidence -->
-            <div class="mt-4 hidden" data-pane="evidence">
-              <div class="grid gap-3" id="cp-evidence"></div>
+            <div class="cp-mini-card">
+              <div class="text-xs text-text-secondary">边界</div>
+              <div class="mt-1 font-semibold text-sm" id="cp-boundaries-count">0 项</div>
             </div>
           </div>
 
-          <div class="mt-5 cp-divider"></div>
-
-          <div class="mt-4 grid gap-3">
-            <div class="flex items-center justify-between">
-              <div class="text-sm font-semibold">指标</div>
-              <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">口径</span>
-            </div>
-            <div class="grid gap-2" id="cp-metrics"></div>
-            <div class="flex items-center justify-between mt-2">
-              <div class="text-sm font-semibold">边界</div>
-              <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">护栏</span>
-            </div>
-            <div class="grid gap-2" id="cp-boundaries"></div>
-          </div>
+          <!-- Metrics preview -->
+          <div class="mt-4 space-y-2" id="cp-metrics"></div>
+          <div class="mt-3 space-y-2" id="cp-boundaries"></div>
         </div>
       </aside>
     </section>
 
     <script>
-      // side pane tabs (tiny)
-      document.addEventListener('click', (e)=>{
+      // Tab switching
+      document.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-pane-tab]');
-        if(!btn) return;
+        if (!btn) return;
         const tab = btn.getAttribute('data-pane-tab');
-        document.querySelectorAll('[data-pane-tab]').forEach(b=>{
-          const active = b.getAttribute('data-pane-tab')===tab;
-          b.classList.toggle('nav-link-active', active);
-          b.classList.toggle('text-text-secondary', !active);
+        document.querySelectorAll('[data-pane-tab]').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-pane-tab') === tab);
         });
-        document.querySelectorAll('[data-pane]').forEach(p=>{
-          p.classList.toggle('hidden', p.getAttribute('data-pane')!==tab);
+        document.querySelectorAll('[data-pane]').forEach(p => {
+          p.classList.toggle('hidden', p.getAttribute('data-pane') !== tab);
         });
       });
     </script>
   </main>
 
-  <footer class="border-t border-border-light bg-white/70">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
+  <footer class="border-t border-border-light bg-white/80 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div class="text-sm text-text-secondary">© CasePilot · 交付级 AI 方案</div>
       <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary" href="P-CASE_LIBRARY.html">案例库</a>
-        <a class="hover:text-primary" href="P-SOLUTION_HISTORY.html">历史方案</a>
-        <a class="hover:text-primary" href="P-LOGIN_REGISTER.html">登录</a>
+        <a class="hover:text-primary transition-colors" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="hover:text-primary transition-colors" href="P-SOLUTION_HISTORY.html">历史方案</a>
       </div>
     </div>
   </footer>
