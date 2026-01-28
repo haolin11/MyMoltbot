@@ -1,773 +1,382 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>方案生成器 - CasePilot</title>
-    <script src="assets/tailwind-config.js"></script>
-    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>方案生成器 · CasePilot</title>
+
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
-    <!-- 顶部导航栏 -->
-    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
-        <div class="flex items-center justify-between h-full px-6">
-            <!-- Logo和产品名称 -->
-            <div id="logo-section" class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
-                    <i class="fas fa-rocket text-white text-lg"></i>
-                </div>
-                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
-            </div>
-            
-            <!-- 主导航菜单 -->
-            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
-                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
-                <a href="P-SOLUTION_GENERATOR.html" class="text-primary font-medium border-b-2 border-primary py-1">方案生成器</a>
-                <a href="P-CASE_LIBRARY.html" class="text-text-secondary hover:text-primary py-1 transition-colors">案例库</a>
-                <a href="P-USER_CENTER.html" class="text-text-secondary hover:text-primary py-1 transition-colors">个人中心</a>
-            </nav>
-            
-            <!-- 搜索框和用户操作区 -->
-            <div id="header-actions" class="flex items-center space-x-4">
-                <!-- 全局搜索 -->
-                <div class="relative hidden lg:block">
-                    <input type="text" id="global-search" placeholder="搜索案例、方案..." 
-                           class="w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
-                </div>
-                
-                <!-- 消息通知 -->
-                <button id="notification-btn" class="relative p-2 text-text-secondary hover:text-primary transition-colors">
-                    <i class="fas fa-bell text-lg"></i>
-                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-danger rounded-full"></span>
-                </button>
-                
-                <!-- 用户头像 -->
-                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
-                    <img src="https://s.coze.cn/image/oXxEXqAbo8c/" 
-                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
-                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
-                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
-                </div>
-            </div>
+  <!-- Top Nav (modern, simple) -->
+  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="P-HOME.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
+          <i class="fas fa-cube text-white"></i>
         </div>
-    </header>
-
-    <!-- 左侧菜单 -->
-    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
-        <div class="p-6">
-            <!-- 菜单标题 -->
-            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">功能导航</h3>
-            
-            <!-- 菜单项 -->
-            <nav id="sidebar-nav" class="space-y-2">
-                <a href="P-HOME.html" id="nav-home" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-home text-lg"></i>
-                    <span class="font-medium">首页</span>
-                </a>
-                <a href="P-SOLUTION_GENERATOR.html" id="nav-generator" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
-                    <i class="fas fa-magic text-lg"></i>
-                    <span class="font-medium">方案生成器</span>
-                </a>
-                <a href="P-CASE_LIBRARY.html" id="nav-library" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-book text-lg"></i>
-                    <span class="font-medium">案例库</span>
-                </a>
-                <a href="P-SOLUTION_HISTORY.html" id="nav-history" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-history text-lg"></i>
-                    <span class="font-medium">历史方案</span>
-                </a>
-                <a href="P-USER_CENTER.html" id="nav-profile" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-user text-lg"></i>
-                    <span class="font-medium">个人中心</span>
-                </a>
-            </nav>
+        <div class="leading-tight">
+          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
+          <div class="text-xs text-text-secondary">交付级 AI 方案生成平台</div>
         </div>
-    </aside>
+      </a>
 
-    <!-- 主内容区 -->
-    <main id="main-content" class="ml-64 mt-16 min-h-screen">
-        <div class="p-8">
-            <!-- 页面头部 -->
-            <div id="page-header" class="mb-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">方案生成器</h1>
-                        <nav id="breadcrumb" class="text-sm text-text-secondary">
-                            <span>首页</span>
-                            <i class="fas fa-chevron-right mx-2"></i>
-                            <span class="text-primary">方案生成器</span>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-HOME.html">首页</a>
+        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-SOLUTION_GENERATOR.html">方案生成器</a>
+        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_HISTORY.html">历史方案</a>
+      </nav>
 
-            <!-- 步骤指示器 -->
-            <div id="step-indicator" class="mb-8">
-                <div class="flex items-center justify-center space-x-8">
-                    <div id="step-1" class="step-indicator step-active flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                            <i class="fas fa-edit text-white text-sm"></i>
-                        </div>
-                        <span class="text-sm font-medium text-primary">需求输入</span>
-                    </div>
-                    <div id="step-2" class="step-indicator flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-border-light rounded-full flex items-center justify-center">
-                            <span class="text-sm font-medium text-text-secondary">2</span>
-                        </div>
-                        <span class="text-sm font-medium text-text-secondary">智能澄清</span>
-                    </div>
-                    <div id="step-3" class="step-indicator flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-border-light rounded-full flex items-center justify-center">
-                            <span class="text-sm font-medium text-text-secondary">3</span>
-                        </div>
-                        <span class="text-sm font-medium text-text-secondary">方案生成</span>
-                    </div>
-                </div>
-            </div>
+      <div class="flex items-center gap-3">
+        <a href="P-LOGIN_REGISTER.html" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border-light bg-white hover:bg-bg-secondary text-sm">
+          <i class="fas fa-user"></i>
+          登录/注册
+        </a>
+        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-primary text-white text-sm shadow-card-hover">
+          <i class="fas fa-shield-check"></i>
+          交付级
+        </a>
+      </div>
+    </div>
+  </header>
 
-            <!-- 输入方式选择 -->
-            <div id="input-method-selection" class="mb-8">
-                <div class="bg-white rounded-2xl shadow-card p-8">
-                    <h2 class="text-xl font-semibold text-text-primary mb-6">选择输入方式</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- 文本描述输入 -->
-                        <div id="text-input-option" class="border-2 border-border-light rounded-xl p-6 cursor-pointer hover:border-primary hover:shadow-card-hover transition-all">
-                            <div class="flex items-center space-x-4 mb-4">
-                                <div class="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-align-left text-white text-xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-text-primary">文本描述</h3>
-                                    <p class="text-sm text-text-secondary">自由描述您的需求</p>
-                                </div>
-                            </div>
-                            <p class="text-text-secondary text-sm mb-4">
-                                用自然语言详细描述您的项目需求，我们将通过智能问答帮您完善需求。
-                            </p>
-                            <div class="flex items-center text-sm text-text-secondary">
-                                <i class="fas fa-clock mr-2"></i>
-                                <span>预计5-10分钟</span>
-                            </div>
-                        </div>
-
-                        <!-- 结构化表单输入 -->
-                        <div id="form-input-option" class="border-2 border-border-light rounded-xl p-6 cursor-pointer hover:border-primary hover:shadow-card-hover transition-all">
-                            <div class="flex items-center space-x-4 mb-4">
-                                <div class="w-12 h-12 bg-gradient-secondary rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-list-ul text-white text-xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-text-primary">结构化表单</h3>
-                                    <p class="text-sm text-text-secondary">按模板填写需求</p>
-                                </div>
-                            </div>
-                            <p class="text-text-secondary text-sm mb-4">
-                                通过填写标准化表单，快速明确项目的关键要素和技术要求。
-                            </p>
-                            <div class="flex items-center text-sm text-text-secondary">
-                                <i class="fas fa-clock mr-2"></i>
-                                <span>预计3-5分钟</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 历史生成方案 -->
-            <div id="history-solutions" class="mb-8">
-                <div class="bg-white rounded-2xl shadow-card p-8">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-xl font-semibold text-text-primary">历史生成方案</h2>
-                        <button id="refresh-history" class="text-sm text-text-secondary hover:text-primary transition-colors">
-                            <i class="fas fa-sync-alt mr-1"></i>
-                            刷新
-                        </button>
-                    </div>
-                    <div id="history-solutions-list" class="space-y-4">
-                        <div class="text-center py-8 text-text-secondary">
-                            <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
-                            <p>加载中...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 文本输入区域 -->
-            <div id="text-input-section" class="mb-8 hidden">
-                <div class="bg-white rounded-2xl shadow-card p-8">
-                    <h2 class="text-xl font-semibold text-text-primary mb-6">描述您的需求</h2>
-                    <div class="space-y-6">
-                        <div>
-                            <label for="project-title" class="block text-sm font-medium text-text-primary mb-2">项目标题</label>
-                            <input type="text" id="project-title" name="project-title" 
-                                   class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus" 
-                                   placeholder="请输入项目的简要标题">
-                        </div>
-                        <div>
-                            <label for="project-description" class="block text-sm font-medium text-text-primary mb-2">详细需求描述</label>
-                            <textarea id="project-description" name="project-description" rows="8"
-                                      class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus resize-none"
-                                      placeholder="请详细描述您的项目需求，包括：
-• 项目背景和目标
-• 技术要求和限制条件
-• 期望的功能和性能
-• 预算和时间要求
-• 其他特殊需求"></textarea>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-sm text-text-secondary">
-                                <i class="fas fa-info-circle mr-1"></i>
-                                详细的描述有助于生成更精准的方案
-                            </div>
-                            <button id="text-input-next" class="px-8 py-3 bg-gradient-primary text-white rounded-xl font-semibold hover:shadow-glow transition-all">
-                                开始智能澄清
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 表单输入区域 -->
-            <div id="form-input-section" class="mb-8 hidden">
-                <div class="bg-white rounded-2xl shadow-card p-8">
-                    <h2 class="text-xl font-semibold text-text-primary mb-6">填写项目信息</h2>
-                    <form id="structured-form" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="form-project-title" class="block text-sm font-medium text-text-primary mb-2">项目标题 *</label>
-                                <input type="text" id="form-project-title" name="project-title" required
-                                       class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus" 
-                                       placeholder="请输入项目标题">
-                            </div>
-                            <div>
-                                <label for="form-industry" class="block text-sm font-medium text-text-primary mb-2">所属行业 *</label>
-                                <select id="form-industry" name="industry" required
-                                        class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus">
-                                    <option value="">请选择行业</option>
-                                    <option value="finance">金融科技</option>
-                                    <option value="manufacturing">制造业</option>
-                                    <option value="healthcare">医疗健康</option>
-                                    <option value="education">教育培训</option>
-                                    <option value="retail">零售电商</option>
-                                    <option value="logistics">物流运输</option>
-                                    <option value="entertainment">文化娱乐</option>
-                                    <option value="other">其他</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="form-technology" class="block text-sm font-medium text-text-primary mb-2">主要技术方向 *</label>
-                                <select id="form-technology" name="technology" required
-                                        class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus">
-                                    <option value="">请选择技术方向</option>
-                                    <option value="ai-ml">人工智能/机器学习</option>
-                                    <option value="iot">物联网</option>
-                                    <option value="blockchain">区块链</option>
-                                    <option value="cloud">云计算</option>
-                                    <option value="big-data">大数据</option>
-                                    <option value="web-dev">Web开发</option>
-                                    <option value="mobile-dev">移动开发</option>
-                                    <option value="other">其他</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="form-budget" class="block text-sm font-medium text-text-primary mb-2">预算范围</label>
-                                <select id="form-budget" name="budget"
-                                        class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus">
-                                    <option value="">请选择预算范围</option>
-                                    <option value="0-10">10万以下</option>
-                                    <option value="10-50">10-50万</option>
-                                    <option value="50-100">50-100万</option>
-                                    <option value="100-500">100-500万</option>
-                                    <option value="500+">500万以上</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label for="form-objectives" class="block text-sm font-medium text-text-primary mb-2">项目目标 *</label>
-                            <textarea id="form-objectives" name="objectives" rows="4" required
-                                      class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus resize-none"
-                                      placeholder="请描述项目的主要目标和期望达成的效果"></textarea>
-                        </div>
-                        
-                        <div>
-                            <label for="form-requirements" class="block text-sm font-medium text-text-primary mb-2">技术要求和限制</label>
-                            <textarea id="form-requirements" name="requirements" rows="4"
-                                      class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus resize-none"
-                                      placeholder="请描述技术要求、系统限制、兼容性要求等"></textarea>
-                        </div>
-                        
-                        <div class="flex items-center justify-between">
-                            <div class="text-sm text-text-secondary">
-                                <i class="fas fa-info-circle mr-1"></i>
-                                带 * 的为必填项
-                            </div>
-                            <button type="submit" id="form-submit" class="px-8 py-3 bg-gradient-primary text-white rounded-xl font-semibold hover:shadow-glow transition-all">
-                                生成方案
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- 智能澄清区域 -->
-            <div id="clarification-section" class="mb-8 hidden">
-                <div class="bg-white rounded-2xl shadow-card p-8">
-                    <h2 class="text-xl font-semibold text-text-primary mb-6">智能澄清</h2>
-                    <div id="clarification-content" class="space-y-6">
-                        <!-- 动态生成的澄清问题 -->
-                    </div>
-                    <div class="flex items-center justify-between mt-8">
-                        <button id="clarification-back" class="px-6 py-3 border border-border-light text-text-secondary rounded-xl font-medium hover:border-primary hover:text-primary transition-all">
-                            上一步
-                        </button>
-                        <button id="clarification-next" class="px-8 py-3 bg-gradient-primary text-white rounded-xl font-semibold hover:shadow-glow transition-all">
-                            开始生成方案
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 方案生成中 -->
-            <div id="generating-section" class="mb-8 hidden">
-                <div class="bg-white rounded-2xl shadow-card p-8 text-center">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-primary rounded-full flex items-center justify-center">
-                        <i class="fas fa-magic text-white text-3xl loading-spinner"></i>
-                    </div>
-                    <h2 class="text-2xl font-semibold text-text-primary mb-4">正在生成方案...</h2>
-                    <p class="text-text-secondary mb-8">
-                        我们正在基于您的需求和相关案例，为您生成定制化的解决方案，请稍候...
-                    </p>
-                    
-                    <!-- 进度条 -->
-                    <div class="w-full bg-border-light rounded-full h-3 mb-6">
-                        <div id="generation-progress" class="bg-gradient-primary h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
-                    </div>
-                    
-                    <div class="text-sm text-text-secondary">
-                        <span id="progress-text">正在分析需求...</span>
-                    </div>
-                </div>
-            </div>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-page="generator">
+    <!-- Page header -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-badge">
+          <i class="fas fa-diagram-project"></i>
+          四步生成流：初步生成 → 风险建模 → 协作闭环 → 可信生成
         </div>
-    </main>
+        <h1 class="mt-4 text-3xl font-extrabold text-text-primary">方案生成器（交付级）</h1>
+        <p class="mt-2 text-text-secondary">
+          把“模糊建议”变成“工程级可信度”：指标可算、假设可查、边界可声明。
+        </p>
+      </div>
 
-    <script src="js/api.js?v=6"></script>
-    <script>
-        // 等待ApiClient加载完成
-        function waitForApiClient(callback, maxAttempts = 100) {
-            const apiClient = window.ApiClient || window.apiClient || (typeof ApiClient !== 'undefined' ? ApiClient : null);
-            
-            if (apiClient && typeof apiClient.generateSolution === 'function') {
-                console.log('ApiClient已加载:', typeof apiClient.generateSolution);
-                if (!window.ApiClient) {
-                    window.ApiClient = apiClient;
-                }
-                callback();
-            } else if (maxAttempts > 0) {
-                if (maxAttempts % 20 === 0) {
-                    console.log('等待ApiClient加载...', maxAttempts);
-                }
-                setTimeout(() => waitForApiClient(callback, maxAttempts - 1), 50);
-            } else {
-                console.error('ApiClient加载超时');
-                alert('API客户端加载失败，请刷新页面重试');
-            }
-        }
+      <div class="flex items-center gap-3">
+        <div class="text-xs text-text-secondary">状态：<span id="cp-status">未保存</span></div>
+        <a id="cp-go-detail" href="P-SOLUTION_DETAIL.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
+          <i class="fas fa-file-lines"></i>
+          预览方案包
+        </a>
+      </div>
+    </div>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // 等待ApiClient加载完成后再初始化
-            waitForApiClient(function() {
-                initPage();
-            });
-        });
+    <!-- Stepper -->
+    <div class="mt-8 bg-white rounded-3xl border border-border-light shadow-card p-4 sm:p-6">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="1" type="button">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">1. 初步生成</div>
+            <i class="fas fa-pen-to-square text-primary"></i>
+          </div>
+          <div class="mt-1 text-sm text-text-secondary">把需求写成可执行的约束</div>
+        </button>
+        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="2" type="button">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">2. 风险建模</div>
+            <i class="fas fa-triangle-exclamation text-warning"></i>
+          </div>
+          <div class="mt-1 text-sm text-text-secondary">边界、失败模式与护栏</div>
+        </button>
+        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="3" type="button">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">3. 协作闭环</div>
+            <i class="fas fa-people-group text-primary"></i>
+          </div>
+          <div class="mt-1 text-sm text-text-secondary">专家/用户澄清口径</div>
+        </button>
+        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="4" type="button">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">4. 可信生成</div>
+            <i class="fas fa-shield-check text-success"></i>
+          </div>
+          <div class="mt-1 text-sm text-text-secondary">输出方案包 + 验收指标</div>
+        </button>
+      </div>
 
-        // 加载历史方案
-        async function loadHistorySolutions() {
-            const listContainer = document.querySelector('#history-solutions-list');
-            if (!listContainer) return;
-            
-            try {
-                listContainer.innerHTML = `
-                    <div class="text-center py-8 text-text-secondary">
-                        <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
-                        <p>加载中...</p>
-                    </div>
-                `;
-                
-                const client = window.ApiClient || window.apiClient || ApiClient;
-                const response = await client.getSolutions({ page: 1, pageSize: 5 });
-                
-                if (response.success && response.data && response.data.length > 0) {
-                    const solutions = response.data;
-                    listContainer.innerHTML = solutions.map(solution => {
-                        const title = solution.user_input?.title || '未命名方案';
-                        const description = solution.user_input?.description || solution.user_input?.objectives || '';
-                        const createdDate = new Date(solution.created_at).toLocaleString('zh-CN', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        });
-                        const statusClass = solution.status === 'completed' ? 'bg-green-100 text-green-800' : 
-                                          solution.status === 'generating' ? 'bg-blue-100 text-blue-800' : 
-                                          'bg-gray-100 text-gray-800';
-                        const statusText = solution.status === 'completed' ? '已完成' : 
-                                         solution.status === 'generating' ? '生成中' : 
-                                         '失败';
-                        
-                        return `
-                            <div class="border border-border-light rounded-xl p-4 hover:shadow-card-hover transition-all cursor-pointer" 
-                                 onclick="window.location.href='P-SOLUTION_DETAIL.html?solutionId=${solution.solution_id}'">
-                                <div class="flex items-start justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex items-center space-x-3 mb-2">
-                                            <div class="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <h4 class="font-medium text-text-primary truncate">${title}</h4>
-                                                ${description ? `<p class="text-sm text-text-secondary mt-1 line-clamp-2">${description}</p>` : ''}
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center space-x-4 mt-3 text-sm text-text-secondary">
-                                            <span><i class="fas fa-clock mr-1"></i>${createdDate}</span>
-                                            <span class="px-2 py-1 ${statusClass} rounded-lg text-xs font-medium">${statusText}</span>
-                                        </div>
-                                    </div>
-                                    <div class="ml-4 flex items-center space-x-2">
-                                        <button class="text-primary hover:text-secondary transition-colors p-2" 
-                                                onclick="event.stopPropagation(); window.location.href='P-SOLUTION_DETAIL.html?solutionId=${solution.solution_id}'"
-                                                title="查看详情">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-                } else {
-                    listContainer.innerHTML = `
-                        <div class="text-center py-8 text-text-secondary">
-                            <i class="fas fa-inbox text-4xl mb-3 opacity-50"></i>
-                            <p>暂无历史方案</p>
-                            <p class="text-sm mt-2">开始创建您的第一个方案吧！</p>
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                console.error('加载历史方案失败:', error);
-                listContainer.innerHTML = `
-                    <div class="text-center py-8 text-text-secondary">
-                        <i class="fas fa-exclamation-circle text-2xl mb-2 text-danger"></i>
-                        <p>加载失败，请稍后重试</p>
-                        <button onclick="window.loadHistorySolutions()" class="mt-3 text-sm text-primary hover:underline">重试</button>
-                    </div>
-                `;
-            }
-        }
-        
-        // 将函数暴露到全局作用域，以便错误处理中的重试按钮可以调用
-        window.loadHistorySolutions = loadHistorySolutions;
+      <style>
+        /* lightweight stepper states */
+        .cp-step-active{ border-color: rgba(14,165,164,0.40); box-shadow: 0 0 0 3px rgba(14,165,164,0.12); }
+        .cp-step-done{ border-color: rgba(2,132,199,0.20); }
+      </style>
+    </div>
 
-        function initPage() {
-            let currentStep = 1;
-            let selectedInputMethod = '';
-            let userInputData = {};
-            
-            // 加载历史方案
-            loadHistorySolutions();
-            
-            // 刷新历史方案按钮
-            document.querySelector('#refresh-history').addEventListener('click', function() {
-                loadHistorySolutions();
-            });
-            
-            // 输入方式选择
-            document.querySelector('#text-input-option').addEventListener('click', function() {
-                selectedInputMethod = 'text';
-                showTextInputSection();
-            });
-            
-            document.querySelector('#form-input-option').addEventListener('click', function() {
-                selectedInputMethod = 'form';
-                showFormInputSection();
-            });
-            
-            function showTextInputSection() {
-                document.querySelector('#input-method-selection').classList.add('hidden');
-                document.querySelector('#history-solutions').classList.add('hidden');
-                document.querySelector('#text-input-section').classList.remove('hidden');
-                updateStepIndicator(1);
-            }
-            
-            function showFormInputSection() {
-                document.querySelector('#input-method-selection').classList.add('hidden');
-                document.querySelector('#history-solutions').classList.add('hidden');
-                document.querySelector('#form-input-section').classList.remove('hidden');
-                updateStepIndicator(1);
-            }
-            
-            // 文本输入下一步
-            document.querySelector('#text-input-next').addEventListener('click', function() {
-                const title = document.querySelector('#project-title').value.trim();
-                const description = document.querySelector('#project-description').value.trim();
-                
-                if (!title || !description) {
-                    alert('请填写完整的项目信息');
-                    return;
-                }
-                
-                userInputData = {
-                    title: title,
-                    description: description,
-                    method: 'text'
-                };
-                
-                showClarificationSection();
-            });
-            
-            // 表单提交
-            document.querySelector('#structured-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(this);
-                userInputData = {
-                    title: formData.get('project-title'),
-                    industry: formData.get('industry'),
-                    technology: formData.get('technology'),
-                    budget: formData.get('budget'),
-                    objectives: formData.get('objectives'),
-                    requirements: formData.get('requirements'),
-                    method: 'form'
-                };
-                
-                // 检查必填项
-                if (!userInputData.title || !userInputData.industry || !userInputData.technology || !userInputData.objectives) {
-                    alert('请填写所有必填项');
-                    return;
-                }
-                
-                // 直接生成方案，跳过澄清步骤
-                startSolutionGeneration();
-            });
-            
-            // 澄清区域
-            function showClarificationSection() {
-                document.querySelector('#text-input-section').classList.add('hidden');
-                document.querySelector('#clarification-section').classList.remove('hidden');
-                updateStepIndicator(2);
-                
-                // 生成澄清问题
-                generateClarificationQuestions();
-            }
-            
-            function generateClarificationQuestions() {
-                const questions = [
-                    {
-                        id: 'q1',
-                        question: '您的项目预计需要多长时间完成？',
-                        options: ['1-3个月', '3-6个月', '6-12个月', '1年以上']
-                    },
-                    {
-                        id: 'q2',
-                        question: '项目团队规模大概是多少人？',
-                        options: ['1-5人', '5-10人', '10-20人', '20人以上']
-                    },
-                    {
-                        id: 'q3',
-                        question: '是否有特定的技术栈或平台要求？',
-                        type: 'text'
-                    }
-                ];
-                
-                const contentDiv = document.querySelector('#clarification-content');
-                contentDiv.innerHTML = '';
-                
-                questions.forEach((q, index) => {
-                    const questionDiv = document.createElement('div');
-                    questionDiv.className = 'border-b border-border-light pb-6 last:border-b-0 last:pb-0';
-                    
-                    if (q.type === 'text') {
-                        questionDiv.innerHTML = `
-                            <h3 class="text-lg font-medium text-text-primary mb-3">${index + 1}. ${q.question}</h3>
-                            <textarea id="${q.id}" rows="3" 
-                                    class="w-full px-4 py-3 border border-border-light rounded-xl form-input-focus resize-none"
-                                    placeholder="请输入您的答案..."></textarea>
-                        `;
-                    } else {
-                        questionDiv.innerHTML = `
-                            <h3 class="text-lg font-medium text-text-primary mb-3">${index + 1}. ${q.question}</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                ${q.options.map(option => `
-                                    <label class="flex items-center p-3 border border-border-light rounded-xl cursor-pointer hover:border-primary transition-colors">
-                                        <input type="radio" name="${q.id}" value="${option}" class="mr-3 text-primary">
-                                        <span>${option}</span>
-                                    </label>
-                                `).join('')}
-                            </div>
-                        `;
-                    }
-                    
-                    contentDiv.appendChild(questionDiv);
-                });
-            }
-            
-            // 澄清上一步
-            document.querySelector('#clarification-back').addEventListener('click', function() {
-                document.querySelector('#clarification-section').classList.add('hidden');
-                document.querySelector('#text-input-section').classList.remove('hidden');
-                updateStepIndicator(1);
-            });
-            
-            // 澄清下一步
-            document.querySelector('#clarification-next').addEventListener('click', function() {
-                // 收集澄清答案
-                const q1Answer = document.querySelector('input[name="q1"]:checked');
-                const q2Answer = document.querySelector('input[name="q2"]:checked');
-                const q3Answer = document.querySelector('#q3').value.trim();
-                
-                if (!q1Answer || !q2Answer) {
-                    alert('请回答所有问题');
-                    return;
-                }
-                
-                userInputData.clarification = {
-                    timeline: q1Answer.value,
-                    teamSize: q2Answer.value,
-                    techRequirements: q3Answer
-                };
-                
-                showGeneratingSection();
-            });
-            
-            // 显示生成中状态（已废弃，现在直接跳转到进度页）
-            function showGeneratingSection() {
-                // 直接开始生成，不再显示当前页面的进度
-                startSolutionGeneration();
-            }
-            
-            // 开始生成方案
-            async function startSolutionGeneration() {
-                try {
-                    // 调用API生成方案
-                    const client = window.ApiClient || window.apiClient || ApiClient;
-                    if (!client || typeof client.generateSolution !== 'function') {
-                        throw new Error('ApiClient未正确加载，请刷新页面重试');
-                    }
-                    
-                    // 显示加载提示
-                    const submitBtn = document.querySelector('#form-submit') || document.querySelector('#clarification-next');
-                    if (submitBtn) {
-                        submitBtn.disabled = true;
-                        const originalText = submitBtn.textContent || submitBtn.innerHTML;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>正在创建方案...';
-                    }
-                    
-                    const response = await client.generateSolution(userInputData);
-                    
-                    if (response.success && response.data) {
-                        const solutionId = response.data.solution_id;
-                        console.log('方案创建成功，solutionId:', solutionId);
-                        
-                        // 立即跳转到进度页
-                        window.location.href = `P-SOLUTION_PROGRESS.html?solutionId=${solutionId}`;
-                    } else {
-                        throw new Error(response.error || '方案生成失败');
-                    }
-                } catch (error) {
-                    console.error('创建方案失败:', error);
-                    alert('方案创建失败: ' + error.message);
-                    
-                    // 恢复按钮状态
-                    const submitBtn = document.querySelector('#form-submit') || document.querySelector('#clarification-next');
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = submitBtn.getAttribute('data-original-text') || '生成方案';
-                    }
-                }
-            }
-            
-            // 更新步骤指示器
-            function updateStepIndicator(step) {
-                currentStep = step;
-                
-                // 重置所有步骤
-                for (let i = 1; i <= 3; i++) {
-                    const stepElement = document.querySelector(`#step-${i}`);
-                    const circle = stepElement.querySelector('div');
-                    const text = stepElement.querySelector('span');
-                    
-                    if (i < step) {
-                        // 已完成步骤
-                        stepElement.className = 'step-indicator step-completed flex items-center space-x-2';
-                        circle.className = 'w-8 h-8 bg-success rounded-full flex items-center justify-center';
-                        circle.innerHTML = '<i class="fas fa-check text-white text-sm"></i>';
-                        text.className = 'text-sm font-medium text-success';
-                    } else if (i === step) {
-                        // 当前步骤
-                        stepElement.className = 'step-indicator step-active flex items-center space-x-2';
-                        circle.className = 'w-8 h-8 bg-primary rounded-full flex items-center justify-center';
-                        circle.innerHTML = '<i class="fas fa-edit text-white text-sm"></i>';
-                        text.className = 'text-sm font-medium text-primary';
-                    } else {
-                        // 未开始步骤
-                        stepElement.className = 'step-indicator flex items-center space-x-2';
-                        circle.className = 'w-8 h-8 bg-border-light rounded-full flex items-center justify-center';
-                        circle.innerHTML = `<span class="text-sm font-medium text-text-secondary">${i}</span>`;
-                        text.className = 'text-sm font-medium text-text-secondary';
-                    }
-                }
-            }
-            
-            // 导航菜单点击事件
-            document.querySelector('#nav-home').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-HOME.html';
-            });
-            
-            document.querySelector('#nav-generator').addEventListener('click', function(e) {
-                e.preventDefault();
-                // 已在方案生成器页面，无需操作
-            });
-            
-            document.querySelector('#nav-library').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-CASE_LIBRARY.html';
-            });
-            
-            document.querySelector('#nav-profile').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-USER_CENTER.html';
-            });
-            
-            document.querySelector('#nav-orders').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-ORDER_MANAGEMENT.html';
-            });
-            
-            document.querySelector('#nav-invoices').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-INVOICE_MANAGEMENT.html';
-            });
-            
-            // 顶部导航点击事件
-            document.querySelector('#logo-section').addEventListener('click', function() {
-                window.location.href = 'P-HOME.html';
-            });
-            
-            // 用户头像点击事件
-            document.querySelector('#user-avatar').addEventListener('click', function() {
-                window.location.href = 'P-USER_CENTER.html';
-            });
-        }
-    </script>
+    <!-- Panels -->
+    <section class="mt-6 grid lg:grid-cols-12 gap-6">
+      <!-- Main panel -->
+      <div class="lg:col-span-8 space-y-6">
+        <!-- Step 1 -->
+        <div class="cp-panel" data-step="1">
+          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
+            <div class="flex items-start justify-between gap-6">
+              <div>
+                <h2 class="text-2xl font-extrabold">初步生成：把需求写成可交付约束</h2>
+                <p class="mt-2 text-text-secondary">先不要追求“写得漂亮”，先把“验收怎么验”写清楚。</p>
+              </div>
+              <span class="cp-badge text-xs px-2 py-1 rounded-full">必做</span>
+            </div>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-text-primary">项目标题</label>
+                <input id="cp-title" class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="例：面向售后知识库的可信问答助手" />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-text-primary">行业/场景（演示）</label>
+                <select class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus">
+                  <option>企业内部知识问答</option>
+                  <option>智能客服/工单辅助</option>
+                  <option>风控/合规审核</option>
+                  <option>检索增强问答（RAG）</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label class="block text-sm font-semibold text-text-primary">问题定义（必须可验收）</label>
+              <textarea id="cp-problem" rows="6" class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus resize-none"
+                placeholder="请用可验收的方式描述：
+- 谁用？在什么流程？
+- 什么输入？输出要包含什么？
+- 失败时如何处理（拒答/降级/转人工）？
+- 验收指标如何计算？"></textarea>
+              <div class="mt-2 text-xs text-text-secondary">提示：把“准确率95%”改成“指标公式 + 口径 + 验收数据集”。</div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-end gap-3">
+              <button data-action="next" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
+                下一步：风险建模
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="cp-panel hidden" data-step="2">
+          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
+            <div class="flex items-start justify-between gap-6">
+              <div>
+                <h2 class="text-2xl font-extrabold">风险建模：明确边界与护栏</h2>
+                <p class="mt-2 text-text-secondary">知道“什么时候不适用”，才是专业。拒绝对赌式立项。</p>
+              </div>
+              <span class="cp-badge text-xs px-2 py-1 rounded-full">关键</span>
+            </div>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-4" id="cp-risks"></div>
+
+            <div class="mt-6 rounded-2xl border border-border-light bg-bg-secondary p-5">
+              <div class="font-semibold flex items-center gap-2">
+                <i class="fas fa-circle-info text-primary"></i>
+                风险边界声明（示例）
+              </div>
+              <ul class="mt-2 text-sm text-text-secondary list-disc pl-5">
+                <li>当知识库缺失/来源不可信时：强制引用，无法引用则拒答。</li>
+                <li>当问题涉及法律/财务等高风险：标注风险级别，推荐人工审核。</li>
+                <li>当用户意图不明确：进入协作闭环（澄清问题）。</li>
+              </ul>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between gap-3">
+              <button data-action="prev" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
+                <i class="fas fa-arrow-left"></i>
+                上一步
+              </button>
+              <button data-action="next" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
+                下一步：协作闭环
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="cp-panel hidden" data-step="3">
+          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
+            <div class="flex items-start justify-between gap-6">
+              <div>
+                <h2 class="text-2xl font-extrabold">协作闭环：澄清口径，形成共识</h2>
+                <p class="mt-2 text-text-secondary">我们提供协作，但不替代工程执行；把“含糊”转成“约束”。</p>
+              </div>
+              <span class="cp-badge text-xs px-2 py-1 rounded-full">协作</span>
+            </div>
+
+            <div class="mt-6 grid gap-4">
+              <div class="rounded-2xl border border-border-light bg-white p-5">
+                <div class="font-semibold">需要你确认的 5 个关键问题（演示）</div>
+                <ol class="mt-2 list-decimal pl-5 text-sm text-text-secondary space-y-1">
+                  <li>验收对象是谁？（产品/交付/甲方评审/安全合规）</li>
+                  <li>指标口径：准确率/覆盖率/拒答率/成本上限的计算方式？</li>
+                  <li>数据来源优先级：内部知识库 vs 公开资料 vs 经验规则？</li>
+                  <li>失败策略：拒答/降级/转人工/输出“待确认项”列表？</li>
+                  <li>不适用边界：哪些场景必须强制人工？</li>
+                </ol>
+              </div>
+
+              <div class="rounded-2xl border border-border-light bg-bg-secondary p-5">
+                <div class="font-semibold flex items-center gap-2">
+                  <i class="fas fa-magnifying-glass text-primary"></i>
+                  增加可追溯证据（示例）
+                </div>
+                <div class="mt-3 grid sm:grid-cols-3 gap-3">
+                  <select id="cp-evidence-type" class="px-4 py-3 rounded-xl border border-border-light search-focus bg-white">
+                    <option>公开论文</option>
+                    <option>行业基准</option>
+                    <option>历史项目</option>
+                    <option>内部规范</option>
+                  </select>
+                  <input id="cp-evidence-ref" class="px-4 py-3 rounded-xl border border-border-light search-focus bg-white" placeholder="引用标识（例：arXiv:2304.xxxxx）" />
+                  <input id="cp-evidence-note" class="px-4 py-3 rounded-xl border border-border-light search-focus bg-white" placeholder="备注（可选）" />
+                </div>
+                <div class="mt-3 flex items-center justify-end">
+                  <button data-action="add-evidence" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-border-light hover:bg-bg-secondary">
+                    <i class="fas fa-plus"></i>
+                    添加
+                  </button>
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-3 gap-4" id="cp-evidence"></div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between gap-3">
+              <button data-action="prev" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
+                <i class="fas fa-arrow-left"></i>
+                上一步
+              </button>
+              <button data-action="next" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
+                下一步：可信生成
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="cp-panel hidden" data-step="4">
+          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
+            <div class="flex items-start justify-between gap-6">
+              <div>
+                <h2 class="text-2xl font-extrabold">可信生成：输出可验收的方案包</h2>
+                <p class="mt-2 text-text-secondary">输出不是“文字”，而是用于立项/投标/验收的全链路交付包。</p>
+              </div>
+              <span class="cp-badge text-xs px-2 py-1 rounded-full">可交付</span>
+            </div>
+
+            <div class="mt-6 grid sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl border border-border-light bg-white p-5">
+                <div class="font-semibold">验收指标（示例）</div>
+                <div class="mt-3 grid gap-3" id="cp-metrics"></div>
+              </div>
+              <div class="rounded-2xl border border-border-light bg-white p-5">
+                <div class="font-semibold">交付物清单（示例）</div>
+                <div class="mt-3 grid gap-3" id="cp-deliverables"></div>
+              </div>
+            </div>
+
+            <div class="mt-6 rounded-2xl border border-border-light bg-bg-secondary p-5">
+              <div class="font-semibold flex items-center gap-2">
+                <i class="fas fa-lock text-primary"></i>
+                预交付检查（现代最佳实践）
+              </div>
+              <div class="mt-2 grid sm:grid-cols-2 gap-2 text-sm text-text-secondary">
+                <div>• 关键指标可计算（公式 + 口径 + 数据集）</div>
+                <div>• 所有关键假设可追溯（来源）</div>
+                <div>• 明确不适用场景（边界）</div>
+                <div>• 失败策略（拒答/降级/转人工）</div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between gap-3">
+              <button data-action="prev" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
+                <i class="fas fa-arrow-left"></i>
+                上一步
+              </button>
+              <button data-action="generate" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
+                <i class="fas fa-bolt"></i>
+                生成交付级方案包（演示）
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side info -->
+      <aside class="lg:col-span-4 space-y-6">
+        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
+          <div class="font-bold flex items-center justify-between">
+            为什么这是“交付级”？
+            <span class="cp-badge text-xs px-2 py-1 rounded-full">理念</span>
+          </div>
+          <div class="mt-3 text-sm text-text-secondary leading-relaxed">
+            痛点不在于“写不出来”，而在于“无法交付与立项”：指标不可算、性能假设缺数据、风险边界不清。
+            方案必须从一开始就面向“能否验收”。
+          </div>
+          <div class="mt-4 grid gap-2 text-sm">
+            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>验收指标可计算</span></div>
+            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>关键假设可追溯</span></div>
+            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>风险边界可声明</span></div>
+            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>协作闭环可沉淀</span></div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
+          <div class="font-bold">最近生成（演示）</div>
+          <div class="mt-3 grid gap-3" data-history></div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
+          <div class="font-bold">快捷入口</div>
+          <div class="mt-3 grid gap-2">
+            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">
+              <span class="flex items-center gap-2"><i class="fas fa-book text-primary"></i>案例库</span>
+              <i class="fas fa-arrow-right text-text-secondary"></i>
+            </a>
+            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-SOLUTION_DETAIL.html#run=demo">
+              <span class="flex items-center gap-2"><i class="fas fa-file-lines text-primary"></i>查看示例方案包</span>
+              <i class="fas fa-arrow-right text-text-secondary"></i>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="border-t border-border-light bg-white/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
+      <div class="text-sm text-text-secondary flex items-center gap-4">
+        <a class="hover:text-primary" href="P-HOME.html">首页</a>
+        <a class="hover:text-primary" href="P-SOLUTION_HISTORY.html">历史方案</a>
+        <a class="hover:text-primary" href="P-LOGIN_REGISTER.html">登录/注册</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+  <script>
+    // stepper click binding
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.cp-step');
+      if(!btn) return;
+      const step = Number(btn.getAttribute('data-step') || '1');
+      // drive by app.js state: simulate via clicking prev/next until reached
+      const current = window.localStorage.getItem('cp.generator.state');
+      let st;
+      try{ st = current ? JSON.parse(current) : null; }catch{ st=null; }
+      const cur = st?.step || 1;
+      if(step===cur) return;
+      st = st || {step:1};
+      st.step = step;
+      try{ window.localStorage.setItem('cp.generator.state', JSON.stringify(st)); }catch{}
+      window.location.reload();
+    });
+  </script>
 </body>
 </html>
