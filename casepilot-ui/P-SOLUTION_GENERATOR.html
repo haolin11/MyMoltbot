@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>方案生成器 · CasePilot</title>
+  <title>协作生成 · CasePilot</title>
 
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
@@ -11,7 +11,7 @@
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
-  <!-- Top Nav (modern, simple) -->
+  <!-- Top Nav -->
   <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="P-HOME.html" class="flex items-center gap-3">
@@ -20,331 +20,140 @@
         </div>
         <div class="leading-tight">
           <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">交付级 AI 方案生成平台</div>
+          <div class="text-xs text-text-secondary">协作生成 · 交付级方案包</div>
         </div>
       </a>
 
       <nav class="hidden md:flex items-center gap-2">
         <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-HOME.html">首页</a>
-        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-SOLUTION_GENERATOR.html">方案生成器</a>
+        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-SOLUTION_GENERATOR.html">协作生成</a>
         <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">案例库</a>
         <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_HISTORY.html">历史方案</a>
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="P-LOGIN_REGISTER.html" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border-light bg-white hover:bg-bg-secondary text-sm">
-          <i class="fas fa-user"></i>
-          登录/注册
+        <span class="hidden sm:inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-pill">
+          <span class="cp-dot"></span>
+          <span id="cp-status">未保存</span>
+        </span>
+        <a id="cp-go-detail" href="P-SOLUTION_DETAIL.html#run=draft" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
+          <i class="fas fa-file-lines"></i>
+          方案包
         </a>
-        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-primary text-white text-sm shadow-card-hover">
-          <i class="fas fa-shield-check"></i>
-          交付级
+        <a href="P-LOGIN_REGISTER.html" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary text-sm">
+          <i class="fas fa-user"></i>
+          登录
         </a>
       </div>
     </div>
   </header>
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-page="generator">
-    <!-- Page header -->
-    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-3">
       <div>
-        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-badge">
-          <i class="fas fa-diagram-project"></i>
-          四步生成流：初步生成 → 风险建模 → 协作闭环 → 可信生成
+        <h1 id="cp-title" class="cp-page-title text-3xl font-extrabold">新方案</h1>
+        <div class="mt-2 flex flex-wrap gap-2 text-xs">
+          <span class="px-2 py-1 rounded-full cp-pill">可追溯</span>
+          <span class="px-2 py-1 rounded-full cp-pill-warn">可验收</span>
+          <span class="px-2 py-1 rounded-full cp-pill-primary">风险边界</span>
+          <span class="px-2 py-1 rounded-full cp-pill">协作闭环</span>
         </div>
-        <h1 class="mt-4 text-3xl font-extrabold text-text-primary">方案生成器（交付级）</h1>
-        <p class="mt-2 text-text-secondary">
-          把“模糊建议”变成“工程级可信度”：指标可算、假设可查、边界可声明。
-        </p>
       </div>
 
       <div class="flex items-center gap-3">
-        <div class="text-xs text-text-secondary">状态：<span id="cp-status">未保存</span></div>
-        <a id="cp-go-detail" href="P-SOLUTION_DETAIL.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
-          <i class="fas fa-file-lines"></i>
-          预览方案包
-        </a>
+        <span class="cp-kbd">Ctrl</span><span class="cp-kbd">Enter</span>
+        <span class="text-xs text-text-secondary">发送</span>
       </div>
     </div>
 
-    <!-- Stepper -->
-    <div class="mt-8 bg-white rounded-3xl border border-border-light shadow-card p-4 sm:p-6">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="1" type="button">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">1. 初步生成</div>
-            <i class="fas fa-pen-to-square text-primary"></i>
-          </div>
-          <div class="mt-1 text-sm text-text-secondary">把需求写成可执行的约束</div>
-        </button>
-        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="2" type="button">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">2. 风险建模</div>
-            <i class="fas fa-triangle-exclamation text-warning"></i>
-          </div>
-          <div class="mt-1 text-sm text-text-secondary">边界、失败模式与护栏</div>
-        </button>
-        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="3" type="button">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">3. 协作闭环</div>
-            <i class="fas fa-people-group text-primary"></i>
-          </div>
-          <div class="mt-1 text-sm text-text-secondary">专家/用户澄清口径</div>
-        </button>
-        <button class="cp-step rounded-2xl border border-border-light p-4 text-left" data-step="4" type="button">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">4. 可信生成</div>
-            <i class="fas fa-shield-check text-success"></i>
-          </div>
-          <div class="mt-1 text-sm text-text-secondary">输出方案包 + 验收指标</div>
-        </button>
-      </div>
-
-      <style>
-        /* lightweight stepper states */
-        .cp-step-active{ border-color: rgba(14,165,164,0.40); box-shadow: 0 0 0 3px rgba(14,165,164,0.12); }
-        .cp-step-done{ border-color: rgba(2,132,199,0.20); }
-      </style>
-    </div>
-
-    <!-- Panels -->
     <section class="mt-6 grid lg:grid-cols-12 gap-6">
-      <!-- Main panel -->
-      <div class="lg:col-span-8 space-y-6">
-        <!-- Step 1 -->
-        <div class="cp-panel" data-step="1">
-          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-            <div class="flex items-start justify-between gap-6">
-              <div>
-                <h2 class="text-2xl font-extrabold">初步生成：把需求写成可交付约束</h2>
-                <p class="mt-2 text-text-secondary">先不要追求“写得漂亮”，先把“验收怎么验”写清楚。</p>
-              </div>
-              <span class="cp-badge text-xs px-2 py-1 rounded-full">必做</span>
-            </div>
-
-            <div class="mt-6 grid sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-semibold text-text-primary">项目标题</label>
-                <input id="cp-title" class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="例：面向售后知识库的可信问答助手" />
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-text-primary">行业/场景（演示）</label>
-                <select class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus">
-                  <option>企业内部知识问答</option>
-                  <option>智能客服/工单辅助</option>
-                  <option>风控/合规审核</option>
-                  <option>检索增强问答（RAG）</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="mt-4">
-              <label class="block text-sm font-semibold text-text-primary">问题定义（必须可验收）</label>
-              <textarea id="cp-problem" rows="6" class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus resize-none"
-                placeholder="请用可验收的方式描述：
-- 谁用？在什么流程？
-- 什么输入？输出要包含什么？
-- 失败时如何处理（拒答/降级/转人工）？
-- 验收指标如何计算？"></textarea>
-              <div class="mt-2 text-xs text-text-secondary">提示：把“准确率95%”改成“指标公式 + 口径 + 验收数据集”。</div>
-            </div>
-
-            <div class="mt-6 flex items-center justify-end gap-3">
-              <button data-action="next" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
-                下一步：风险建模
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
+      <!-- Left: continuous chat -->
+      <div class="lg:col-span-5">
+        <div class="cp-card shadow-card p-5">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">对话</div>
+            <a class="text-sm text-text-secondary hover:text-primary" href="P-SOLUTION_PROGRESS.html">生成中页</a>
           </div>
-        </div>
+          <div class="mt-4 cp-chat max-h-[520px] overflow-auto pr-1" id="cp-chat"></div>
 
-        <!-- Step 2 -->
-        <div class="cp-panel hidden" data-step="2">
-          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-            <div class="flex items-start justify-between gap-6">
-              <div>
-                <h2 class="text-2xl font-extrabold">风险建模：明确边界与护栏</h2>
-                <p class="mt-2 text-text-secondary">知道“什么时候不适用”，才是专业。拒绝对赌式立项。</p>
-              </div>
-              <span class="cp-badge text-xs px-2 py-1 rounded-full">关键</span>
-            </div>
+          <div class="mt-4 cp-divider"></div>
 
-            <div class="mt-6 grid sm:grid-cols-2 gap-4" id="cp-risks"></div>
-
-            <div class="mt-6 rounded-2xl border border-border-light bg-bg-secondary p-5">
-              <div class="font-semibold flex items-center gap-2">
-                <i class="fas fa-circle-info text-primary"></i>
-                风险边界声明（示例）
-              </div>
-              <ul class="mt-2 text-sm text-text-secondary list-disc pl-5">
-                <li>当知识库缺失/来源不可信时：强制引用，无法引用则拒答。</li>
-                <li>当问题涉及法律/财务等高风险：标注风险级别，推荐人工审核。</li>
-                <li>当用户意图不明确：进入协作闭环（澄清问题）。</li>
-              </ul>
-            </div>
-
-            <div class="mt-6 flex items-center justify-between gap-3">
-              <button data-action="prev" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
-                <i class="fas fa-arrow-left"></i>
-                上一步
-              </button>
-              <button data-action="next" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
-                下一步：协作闭环
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="cp-panel hidden" data-step="3">
-          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-            <div class="flex items-start justify-between gap-6">
-              <div>
-                <h2 class="text-2xl font-extrabold">协作闭环：澄清口径，形成共识</h2>
-                <p class="mt-2 text-text-secondary">我们提供协作，但不替代工程执行；把“含糊”转成“约束”。</p>
-              </div>
-              <span class="cp-badge text-xs px-2 py-1 rounded-full">协作</span>
-            </div>
-
-            <div class="mt-6 grid gap-4">
-              <div class="rounded-2xl border border-border-light bg-white p-5">
-                <div class="font-semibold">需要你确认的 5 个关键问题（演示）</div>
-                <ol class="mt-2 list-decimal pl-5 text-sm text-text-secondary space-y-1">
-                  <li>验收对象是谁？（产品/交付/甲方评审/安全合规）</li>
-                  <li>指标口径：准确率/覆盖率/拒答率/成本上限的计算方式？</li>
-                  <li>数据来源优先级：内部知识库 vs 公开资料 vs 经验规则？</li>
-                  <li>失败策略：拒答/降级/转人工/输出“待确认项”列表？</li>
-                  <li>不适用边界：哪些场景必须强制人工？</li>
-                </ol>
-              </div>
-
-              <div class="rounded-2xl border border-border-light bg-bg-secondary p-5">
-                <div class="font-semibold flex items-center gap-2">
-                  <i class="fas fa-magnifying-glass text-primary"></i>
-                  增加可追溯证据（示例）
-                </div>
-                <div class="mt-3 grid sm:grid-cols-3 gap-3">
-                  <select id="cp-evidence-type" class="px-4 py-3 rounded-xl border border-border-light search-focus bg-white">
-                    <option>公开论文</option>
-                    <option>行业基准</option>
-                    <option>历史项目</option>
-                    <option>内部规范</option>
-                  </select>
-                  <input id="cp-evidence-ref" class="px-4 py-3 rounded-xl border border-border-light search-focus bg-white" placeholder="引用标识（例：arXiv:2304.xxxxx）" />
-                  <input id="cp-evidence-note" class="px-4 py-3 rounded-xl border border-border-light search-focus bg-white" placeholder="备注（可选）" />
-                </div>
-                <div class="mt-3 flex items-center justify-end">
-                  <button data-action="add-evidence" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-border-light hover:bg-bg-secondary">
-                    <i class="fas fa-plus"></i>
-                    添加
-                  </button>
-                </div>
-              </div>
-
-              <div class="grid sm:grid-cols-3 gap-4" id="cp-evidence"></div>
-            </div>
-
-            <div class="mt-6 flex items-center justify-between gap-3">
-              <button data-action="prev" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
-                <i class="fas fa-arrow-left"></i>
-                上一步
-              </button>
-              <button data-action="next" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
-                下一步：可信生成
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="cp-panel hidden" data-step="4">
-          <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-            <div class="flex items-start justify-between gap-6">
-              <div>
-                <h2 class="text-2xl font-extrabold">可信生成：输出可验收的方案包</h2>
-                <p class="mt-2 text-text-secondary">输出不是“文字”，而是用于立项/投标/验收的全链路交付包。</p>
-              </div>
-              <span class="cp-badge text-xs px-2 py-1 rounded-full">可交付</span>
-            </div>
-
-            <div class="mt-6 grid sm:grid-cols-2 gap-4">
-              <div class="rounded-2xl border border-border-light bg-white p-5">
-                <div class="font-semibold">验收指标（示例）</div>
-                <div class="mt-3 grid gap-3" id="cp-metrics"></div>
-              </div>
-              <div class="rounded-2xl border border-border-light bg-white p-5">
-                <div class="font-semibold">交付物清单（示例）</div>
-                <div class="mt-3 grid gap-3" id="cp-deliverables"></div>
-              </div>
-            </div>
-
-            <div class="mt-6 rounded-2xl border border-border-light bg-bg-secondary p-5">
-              <div class="font-semibold flex items-center gap-2">
-                <i class="fas fa-lock text-primary"></i>
-                预交付检查（现代最佳实践）
-              </div>
-              <div class="mt-2 grid sm:grid-cols-2 gap-2 text-sm text-text-secondary">
-                <div>• 关键指标可计算（公式 + 口径 + 数据集）</div>
-                <div>• 所有关键假设可追溯（来源）</div>
-                <div>• 明确不适用场景（边界）</div>
-                <div>• 失败策略（拒答/降级/转人工）</div>
-              </div>
-            </div>
-
-            <div class="mt-6 flex items-center justify-between gap-3">
-              <button data-action="prev" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
-                <i class="fas fa-arrow-left"></i>
-                上一步
-              </button>
-              <button data-action="generate" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
-                <i class="fas fa-bolt"></i>
-                生成交付级方案包（演示）
-              </button>
-            </div>
+          <div class="mt-4 flex items-end gap-3">
+            <textarea id="cp-input" rows="3" class="flex-1 px-4 py-3 rounded-xl border border-border-light search-focus resize-none" placeholder="一句话需求：例如『做一个售后知识问答助手，必须可验收，可追溯』"></textarea>
+            <button id="cp-send" class="px-4 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover">
+              发送
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Side info -->
-      <aside class="lg:col-span-4 space-y-6">
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
-          <div class="font-bold flex items-center justify-between">
-            为什么这是“交付级”？
-            <span class="cp-badge text-xs px-2 py-1 rounded-full">理念</span>
+      <!-- Middle: Notion-like checklist / confirmations -->
+      <div class="lg:col-span-3">
+        <div class="cp-card shadow-card p-5">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">确认清单</div>
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">拖不动（演示）</span>
           </div>
-          <div class="mt-3 text-sm text-text-secondary leading-relaxed">
-            痛点不在于“写不出来”，而在于“无法交付与立项”：指标不可算、性能假设缺数据、风险边界不清。
-            方案必须从一开始就面向“能否验收”。
-          </div>
-          <div class="mt-4 grid gap-2 text-sm">
-            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>验收指标可计算</span></div>
-            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>关键假设可追溯</span></div>
-            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>风险边界可声明</span></div>
-            <div class="flex items-center gap-2"><i class="fas fa-check text-success"></i><span>协作闭环可沉淀</span></div>
+          <div class="mt-4 grid gap-3" id="cp-todos"></div>
+
+          <div class="mt-4">
+            <button id="cp-generate" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover disabled:opacity-50 disabled:cursor-not-allowed" type="button">
+              <i class="fas fa-bolt"></i>
+              生成方案包
+            </button>
+            <div class="mt-2 text-xs text-text-secondary">完成清单后可生成（演示）。</div>
           </div>
         </div>
 
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
-          <div class="font-bold">最近生成（演示）</div>
+        <div class="mt-6 cp-card shadow-card p-5">
+          <div class="font-bold">最近</div>
           <div class="mt-3 grid gap-3" data-history></div>
         </div>
+      </div>
 
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
-          <div class="font-bold">快捷入口</div>
-          <div class="mt-3 grid gap-2">
-            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">
-              <span class="flex items-center gap-2"><i class="fas fa-book text-primary"></i>案例库</span>
-              <i class="fas fa-arrow-right text-text-secondary"></i>
-            </a>
-            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-SOLUTION_DETAIL.html#run=demo">
-              <span class="flex items-center gap-2"><i class="fas fa-file-lines text-primary"></i>查看示例方案包</span>
-              <i class="fas fa-arrow-right text-text-secondary"></i>
-            </a>
+      <!-- Right: artifacts (minimal text, block style) -->
+      <div class="lg:col-span-4">
+        <div class="cp-card shadow-card p-5">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">方案包骨架</div>
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">实时填充</span>
+          </div>
+
+          <div class="mt-4 grid gap-6">
+            <div>
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold">证据（可追溯）</div>
+                <span class="text-xs cp-pill px-2 py-1 rounded-full">来源</span>
+              </div>
+              <div class="mt-2 grid gap-2" id="cp-evidence"></div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold">指标（可验收）</div>
+                <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">口径</span>
+              </div>
+              <div class="mt-2 grid gap-2" id="cp-metrics"></div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold">边界（不适用）</div>
+                <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">护栏</span>
+              </div>
+              <div class="mt-2 grid gap-2" id="cp-boundaries"></div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold">交付物</div>
+                <span class="text-xs cp-pill px-2 py-1 rounded-full">输出</span>
+              </div>
+              <div class="mt-2 grid gap-2" id="cp-deliverables"></div>
+            </div>
           </div>
         </div>
-      </aside>
+      </div>
     </section>
   </main>
 
@@ -352,31 +161,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
       <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
       <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary" href="P-HOME.html">首页</a>
+        <a class="hover:text-primary" href="P-CASE_LIBRARY.html">案例库</a>
         <a class="hover:text-primary" href="P-SOLUTION_HISTORY.html">历史方案</a>
-        <a class="hover:text-primary" href="P-LOGIN_REGISTER.html">登录/注册</a>
+        <a class="hover:text-primary" href="P-LOGIN_REGISTER.html">登录</a>
       </div>
     </div>
   </footer>
 
   <script src="assets/app.js"></script>
-  <script>
-    // stepper click binding
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.cp-step');
-      if(!btn) return;
-      const step = Number(btn.getAttribute('data-step') || '1');
-      // drive by app.js state: simulate via clicking prev/next until reached
-      const current = window.localStorage.getItem('cp.generator.state');
-      let st;
-      try{ st = current ? JSON.parse(current) : null; }catch{ st=null; }
-      const cur = st?.step || 1;
-      if(step===cur) return;
-      st = st || {step:1};
-      st.step = step;
-      try{ window.localStorage.setItem('cp.generator.state', JSON.stringify(st)); }catch{}
-      window.location.reload();
-    });
-  </script>
 </body>
 </html>

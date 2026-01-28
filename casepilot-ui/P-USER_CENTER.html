@@ -1,793 +1,119 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人中心 - CasePilot</title>
-    <script src="assets/tailwind-config.js"></script>
-    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>工作台 · CasePilot</title>
+
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
-    <!-- 顶部导航栏 -->
-    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
-        <div class="flex items-center justify-between h-full px-6">
-            <!-- Logo和产品名称 -->
-            <div id="logo-section" class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
-                    <i class="fas fa-rocket text-white text-lg"></i>
-                </div>
-                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
-            </div>
-            
-            <!-- 主导航菜单 -->
-            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
-                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
-                <a href="P-SOLUTION_GENERATOR.html" class="text-text-secondary hover:text-primary py-1 transition-colors">方案生成器</a>
-                <a href="P-CASE_LIBRARY.html" class="text-text-secondary hover:text-primary py-1 transition-colors">案例库</a>
-                <a href="P-USER_CENTER.html" class="text-primary font-medium border-b-2 border-primary py-1">个人中心</a>
-            </nav>
-            
-            <!-- 搜索框和用户操作区 -->
-            <div id="header-actions" class="flex items-center space-x-4">
-                <!-- 全局搜索 -->
-                <div class="relative hidden lg:block">
-                    <input type="text" id="global-search" placeholder="搜索案例、方案..." 
-                           class="w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
-                </div>
-                
-                <!-- 消息通知 -->
-                <button id="notification-btn" class="relative p-2 text-text-secondary hover:text-primary transition-colors">
-                    <i class="fas fa-bell text-lg"></i>
-                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-danger rounded-full"></span>
-                </button>
-                
-                <!-- 用户头像 -->
-                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
-                    <img src="https://s.coze.cn/image/s7ZJMcBFJIg/" 
-                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
-                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
-                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
-                </div>
-            </div>
+  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="P-HOME.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
+          <i class="fas fa-cube text-white"></i>
         </div>
-    </header>
-
-    <!-- 左侧菜单 -->
-    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
-        <div class="p-6">
-            <!-- 菜单标题 -->
-            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">功能导航</h3>
-            
-            <!-- 菜单项 -->
-            <nav id="sidebar-nav" class="space-y-2">
-                <a href="P-HOME.html" id="nav-home" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-home text-lg"></i>
-                    <span class="font-medium">首页</span>
-                </a>
-                <a href="P-SOLUTION_GENERATOR.html" id="nav-generator" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-magic text-lg"></i>
-                    <span class="font-medium">方案生成器</span>
-                </a>
-                <a href="P-CASE_LIBRARY.html" id="nav-library" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-book text-lg"></i>
-                    <span class="font-medium">案例库</span>
-                </a>
-                <a href="P-SOLUTION_HISTORY.html" id="nav-history" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-history text-lg"></i>
-                    <span class="font-medium">历史方案</span>
-                </a>
-                <a href="P-USER_CENTER.html" id="nav-profile" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
-                    <i class="fas fa-user text-lg"></i>
-                    <span class="font-medium">个人中心</span>
-                </a>
-            </nav>
+        <div class="leading-tight">
+          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
+          <div class="text-xs text-text-secondary">工作台</div>
         </div>
-    </aside>
+      </a>
 
-    <!-- 主内容区 -->
-    <main id="main-content" class="ml-64 mt-16 min-h-screen">
-        <div class="p-8">
-            <!-- 页面头部 -->
-            <div id="page-header" class="mb-8">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">个人中心</h1>
-                        <nav id="breadcrumb" class="text-sm text-text-secondary">
-                            <span>首页</span>
-                            <i class="fas fa-chevron-right mx-2"></i>
-                            <span>个人中心</span>
-                        </nav>
-                    </div>
-                </div>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_HISTORY.html">历史方案</a>
+        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-USER_CENTER.html">工作台</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="P-LOGIN_REGISTER.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
+          <i class="fas fa-user"></i>
+          账号
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+      <div>
+        <h1 class="text-3xl font-extrabold">工作台</h1>
+        <p class="mt-2 text-text-secondary">沉淀三件事：证据库 / 基准库 / 失败模式库。</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-primary text-white shadow-card-hover">
+          <i class="fas fa-plus"></i>
+          新方案
+        </a>
+      </div>
+    </div>
+
+    <section class="mt-6 grid lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-8 space-y-6">
+        <div class="cp-card shadow-card p-6">
+          <div class="font-bold">我的资产（演示）</div>
+          <div class="mt-4 grid sm:grid-cols-3 gap-3">
+            <div class="stats-card rounded-2xl p-4">
+              <div class="text-xs text-text-secondary">证据条目</div>
+              <div class="mt-1 text-2xl font-extrabold">128</div>
             </div>
-
-            <!-- 个人中心内容区 -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- 左侧个人中心导航 -->
-                <div id="profile-sidebar" class="lg:col-span-1">
-                    <div class="bg-white rounded-2xl shadow-card p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-6">个人中心</h3>
-                        <nav id="profile-nav" class="space-y-2">
-                            <a href="#basic-info" id="nav-basic-info" class="flex items-center space-x-3 px-4 py-3 rounded-xl profile-nav-active profile-nav-item">
-                                <i class="fas fa-user-circle text-lg"></i>
-                                <span class="font-medium">基本资料</span>
-                            </a>
-                            <a href="#account-security" id="nav-account-security" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary profile-nav-item">
-                                <i class="fas fa-shield-alt text-lg"></i>
-                                <span class="font-medium">账号安全</span>
-                            </a>
-                            <a href="#my-solutions" id="nav-my-solutions" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary profile-nav-item">
-                                <i class="fas fa-lightbulb text-lg"></i>
-                                <span class="font-medium">我的方案</span>
-                            </a>
-                            <a href="#my-orders" id="nav-my-orders" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary profile-nav-item">
-                                <i class="fas fa-shopping-bag text-lg"></i>
-                                <span class="font-medium">我的订单</span>
-                            </a>
-                            <a href="#my-invoices" id="nav-my-invoices" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary profile-nav-item">
-                                <i class="fas fa-file-invoice text-lg"></i>
-                                <span class="font-medium">我的发票</span>
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-
-                <!-- 右侧内容展示区 -->
-                <div id="profile-content" class="lg:col-span-3 space-y-8">
-                    <!-- 基本资料 -->
-                    <div id="basic-info-content" class="tab-content active">
-                        <div class="bg-white rounded-2xl shadow-card p-8">
-                            <h3 class="text-xl font-semibold text-text-primary mb-6">基本资料</h3>
-                            <form id="basic-info-form" class="space-y-6">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div class="space-y-2">
-                                        <label for="user-nickname" class="block text-sm font-medium text-text-primary">昵称</label>
-                                        <input type="text" id="user-nickname" name="nickname" value="张经理" 
-                                               class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label for="user-email" class="block text-sm font-medium text-text-primary">邮箱</label>
-                                        <input type="email" id="user-email" name="email" value="zhang@example.com" 
-                                               class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus" readonly>
-                                        <p class="text-xs text-text-secondary">邮箱地址不可修改</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div class="space-y-2">
-                                        <label for="user-phone" class="block text-sm font-medium text-text-primary">手机号</label>
-                                        <input type="tel" id="user-phone" name="phone" value="138****8888" 
-                                               class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label for="user-company" class="block text-sm font-medium text-text-primary">公司</label>
-                                        <input type="text" id="user-company" name="company" value="科技有限公司" 
-                                               class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                    </div>
-                                </div>
-                                
-                                <div class="space-y-2">
-                                    <label for="user-position" class="block text-sm font-medium text-text-primary">职位</label>
-                                    <input type="text" id="user-position" name="position" value="技术总监" 
-                                           class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                </div>
-                                
-                                <div class="flex justify-end space-x-4 pt-4">
-                                    <button type="button" id="cancel-basic-info" 
-                                            class="px-6 py-3 border border-border-light text-text-secondary rounded-lg hover:bg-bg-secondary transition-colors">
-                                        取消
-                                    </button>
-                                    <button type="submit" id="save-basic-info" 
-                                            class="px-6 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-glow transition-all">
-                                        保存修改
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- 账号安全 -->
-                    <div id="account-security-content" class="tab-content">
-                        <div class="bg-white rounded-2xl shadow-card p-8">
-                            <h3 class="text-xl font-semibold text-text-primary mb-6">账号安全</h3>
-                            
-                            <!-- 修改密码 -->
-                            <div class="mb-8">
-                                <h4 class="text-lg font-medium text-text-primary mb-4">修改密码</h4>
-                                <form id="change-password-form" class="space-y-4">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div class="space-y-2">
-                                            <label for="current-password" class="block text-sm font-medium text-text-primary">当前密码</label>
-                                            <input type="password" id="current-password" name="currentPassword" 
-                                                   class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label for="new-password" class="block text-sm font-medium text-text-primary">新密码</label>
-                                            <input type="password" id="new-password" name="newPassword" 
-                                                   class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                        </div>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <label for="confirm-password" class="block text-sm font-medium text-text-primary">确认新密码</label>
-                                        <input type="password" id="confirm-password" name="confirmPassword" 
-                                               class="w-full px-4 py-3 border border-border-light rounded-lg form-input-focus">
-                                    </div>
-                                    <div class="flex justify-end space-x-4 pt-4">
-                                        <button type="button" id="cancel-password" 
-                                                class="px-6 py-3 border border-border-light text-text-secondary rounded-lg hover:bg-bg-secondary transition-colors">
-                                            取消
-                                        </button>
-                                        <button type="submit" id="save-password" 
-                                                class="px-6 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-glow transition-all">
-                                            修改密码
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                            
-                            <!-- 第三方账号绑定 -->
-                            <div>
-                                <h4 class="text-lg font-medium text-text-primary mb-4">第三方账号绑定</h4>
-                                <div class="space-y-4">
-                                    <div class="flex items-center justify-between p-4 border border-border-light rounded-lg">
-                                        <div class="flex items-center space-x-3">
-                                            <i class="fab fa-weixin text-success text-xl"></i>
-                                            <span class="font-medium text-text-primary">微信</span>
-                                        </div>
-                                        <button id="bind-wechat" class="px-4 py-2 border border-success text-success rounded-lg hover:bg-success hover:text-white transition-colors">
-                                            绑定
-                                        </button>
-                                    </div>
-                                    
-                                    <div class="flex items-center justify-between p-4 border border-border-light rounded-lg">
-                                        <div class="flex items-center space-x-3">
-                                            <i class="fab fa-github text-text-primary text-xl"></i>
-                                            <span class="font-medium text-text-primary">GitHub</span>
-                                        </div>
-                                        <button id="bind-github" class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
-                                            绑定
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 我的方案 -->
-                    <div id="my-solutions-content" class="tab-content">
-                        <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-                            <div class="p-8 border-b border-border-light">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-xl font-semibold text-text-primary">我的方案</h3>
-                                    <a href="P-SOLUTION_GENERATOR.html" 
-                                       class="px-4 py-2 bg-gradient-primary text-white rounded-lg hover:shadow-glow transition-all">
-                                        <i class="fas fa-plus mr-2"></i>
-                                        新建方案
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="overflow-x-auto">
-                                <table class="w-full">
-                                    <thead class="bg-bg-secondary">
-                                        <tr>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">方案名称</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">生成时间</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">状态</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-border-light">
-                                        <tr id="solution-item-1" class="hover:bg-bg-primary transition-colors" data-solution-id="sol_001">
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-3">
-                                                    <div class="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                                                        <i class="fas fa-file-alt text-white"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h4 class="font-medium text-text-primary">电商平台智能推荐系统</h4>
-                                                        <p class="text-sm text-text-secondary">基于协同过滤的个性化推荐方案</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-15 14:30</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">已导出</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-2">
-                                                    <button class="view-solution text-primary hover:text-secondary transition-colors" title="查看">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="export-solution text-primary hover:text-secondary transition-colors" title="导出">
-                                                        <i class="fas fa-download"></i>
-                                                    </button>
-                                                    <button class="delete-solution text-danger hover:text-red-700 transition-colors" title="删除">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr id="solution-item-2" class="hover:bg-bg-primary transition-colors" data-solution-id="sol_002">
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-3">
-                                                    <div class="w-10 h-10 bg-gradient-secondary rounded-lg flex items-center justify-center">
-                                                        <i class="fas fa-file-alt text-white"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h4 class="font-medium text-text-primary">企业内部知识管理系统</h4>
-                                                        <p class="text-sm text-text-secondary">基于大模型的智能知识检索平台</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-12 09:15</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium">草稿</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-2">
-                                                    <button class="view-solution text-primary hover:text-secondary transition-colors" title="查看">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="edit-solution text-primary hover:text-secondary transition-colors" title="编辑">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="delete-solution text-danger hover:text-red-700 transition-colors" title="删除">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr id="solution-item-3" class="hover:bg-bg-primary transition-colors" data-solution-id="sol_003">
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-3">
-                                                    <div class="w-10 h-10 bg-gradient-to-br from-warning to-danger rounded-lg flex items-center justify-center">
-                                                        <i class="fas fa-file-alt text-white"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h4 class="font-medium text-text-primary">智能客服机器人解决方案</h4>
-                                                        <p class="text-sm text-text-secondary">多轮对话智能客服系统</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-10 16:45</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">已导出</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-2">
-                                                    <button class="view-solution text-primary hover:text-secondary transition-colors" title="查看">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="export-solution text-primary hover:text-secondary transition-colors" title="导出">
-                                                        <i class="fas fa-download"></i>
-                                                    </button>
-                                                    <button class="delete-solution text-danger hover:text-red-700 transition-colors" title="删除">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <!-- 分页 -->
-                            <div class="px-6 py-4 border-t border-border-light">
-                                <div class="flex items-center justify-between">
-                                    <div class="text-sm text-text-secondary">
-                                        显示 1-3 条，共 3 条记录
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <button class="px-3 py-1 border border-border-light rounded text-text-secondary hover:bg-bg-secondary transition-colors" disabled>
-                                            上一页
-                                        </button>
-                                        <button class="px-3 py-1 bg-primary text-white rounded">1</button>
-                                        <button class="px-3 py-1 border border-border-light rounded text-text-secondary hover:bg-bg-secondary transition-colors" disabled>
-                                            下一页
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 我的订单 -->
-                    <div id="my-orders-content" class="tab-content">
-                        <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-                            <div class="p-8 border-b border-border-light">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-xl font-semibold text-text-primary">我的订单</h3>
-                                    <a href="P-ORDER_MANAGEMENT.html" 
-                                       class="text-primary hover:text-secondary transition-colors font-medium">
-                                        查看全部 <i class="fas fa-arrow-right ml-1"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="overflow-x-auto">
-                                <table class="w-full">
-                                    <thead class="bg-bg-secondary">
-                                        <tr>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">订单号</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">商品名称</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">金额</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">状态</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">下单时间</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-border-light">
-                                        <tr id="order-item-1" class="hover:bg-bg-primary transition-colors" data-order-id="order_001">
-                                            <td class="px-6 py-4">
-                                                <span class="font-medium text-text-primary cursor-pointer hover:text-primary">ORD20240115001</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-3">
-                                                    <img src="https://s.coze.cn/image/yjRb9PUcYuo/" 
-                                                         alt="智能信贷风控系统解决方案" data-category="商业科技" 
-                                                         class="w-12 h-12 object-cover rounded-lg">
-                                                    <div>
-                                                        <h4 class="font-medium text-text-primary">智能信贷风控系统解决方案</h4>
-                                                        <p class="text-sm text-text-secondary">案例解锁</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 text-lg font-semibold text-text-primary">¥299</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">已支付</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-15 10:30</td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-2">
-                                                    <button class="view-order text-primary hover:text-secondary transition-colors" title="查看详情">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="apply-invoice text-primary hover:text-secondary transition-colors" title="申请发票">
-                                                        <i class="fas fa-file-invoice"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr id="order-item-2" class="hover:bg-bg-primary transition-colors" data-order-id="order_002">
-                                            <td class="px-6 py-4">
-                                                <span class="font-medium text-text-primary cursor-pointer hover:text-primary">ORD20240112002</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-3">
-                                                    <img src="https://s.coze.cn/image/9RIDL2Z5ngA/" 
-                                                         alt="工业物联网设备监控平台" data-category="商业科技" 
-                                                         class="w-12 h-12 object-cover rounded-lg">
-                                                    <div>
-                                                        <h4 class="font-medium text-text-primary">工业物联网设备监控平台</h4>
-                                                        <p class="text-sm text-text-secondary">案例解锁</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="px-6 py-4 text-lg font-semibold text-text-primary">¥199</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">已支付</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-12 16:45</td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center space-x-2">
-                                                    <button class="view-order text-primary hover:text-secondary transition-colors" title="查看详情">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="download-invoice text-primary hover:text-secondary transition-colors" title="下载发票">
-                                                        <i class="fas fa-download"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 我的发票 -->
-                    <div id="my-invoices-content" class="tab-content">
-                        <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-                            <div class="p-8 border-b border-border-light">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-xl font-semibold text-text-primary">我的发票</h3>
-                                    <a href="P-INVOICE_MANAGEMENT.html" 
-                                       class="text-primary hover:text-secondary transition-colors font-medium">
-                                        查看全部 <i class="fas fa-arrow-right ml-1"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="overflow-x-auto">
-                                <table class="w-full">
-                                    <thead class="bg-bg-secondary">
-                                        <tr>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">发票号码</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">订单号</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">金额</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">状态</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">开具时间</th>
-                                            <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-border-light">
-                                        <tr id="invoice-item-1" class="hover:bg-bg-primary transition-colors" data-invoice-id="invoice_001">
-                                            <td class="px-6 py-4">
-                                                <span class="font-medium text-text-primary cursor-pointer hover:text-primary">FP20240115001</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <span class="text-primary cursor-pointer hover:text-secondary">ORD20240115001</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-lg font-semibold text-text-primary">¥299</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">已开具</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-15 14:20</td>
-                                            <td class="px-6 py-4">
-                                                <button class="download-invoice-btn text-primary hover:text-secondary transition-colors" title="下载发票">
-                                                    <i class="fas fa-download"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr id="invoice-item-2" class="hover:bg-bg-primary transition-colors" data-invoice-id="invoice_002">
-                                            <td class="px-6 py-4">
-                                                <span class="font-medium text-text-primary cursor-pointer hover:text-primary">FP20240112002</span>
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <span class="text-primary cursor-pointer hover:text-secondary">ORD20240112002</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-lg font-semibold text-text-primary">¥199</td>
-                                            <td class="px-6 py-4">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">已开具</span>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm text-text-secondary">2024-01-12 18:30</td>
-                                            <td class="px-6 py-4">
-                                                <button class="download-invoice-btn text-primary hover:text-secondary transition-colors" title="下载发票">
-                                                    <i class="fas fa-download"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="stats-card rounded-2xl p-4">
+              <div class="text-xs text-text-secondary">基准/用例集</div>
+              <div class="mt-1 text-2xl font-extrabold">12</div>
             </div>
+            <div class="stats-card rounded-2xl p-4">
+              <div class="text-xs text-text-secondary">失败模式</div>
+              <div class="mt-1 text-2xl font-extrabold">36</div>
+            </div>
+          </div>
         </div>
-    </main>
 
-    <!-- 底部版权信息 -->
-    <footer id="footer" class="ml-64 bg-white border-t border-border-light py-6">
-        <div class="px-8 text-center text-text-secondary text-sm">
-            <p>&copy; 2024 CasePilot. 案例驱动的大模型解决方案平台. 保留所有权利.</p>
-            <p class="mt-1">京ICP备12345678号-1 | 京公网安备11010802012345号</p>
+        <div class="cp-card shadow-card p-6">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">最近方案</div>
+            <a class="text-sm text-text-secondary hover:text-primary" href="P-SOLUTION_HISTORY.html">全部</a>
+          </div>
+          <div class="mt-4 grid gap-3" data-history></div>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 个人中心导航切换
-            const profileNavItems = document.querySelectorAll('#profile-nav a');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            profileNavItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // 移除所有active状态
-                    profileNavItems.forEach(nav => {
-                        nav.classList.remove('profile-nav-active');
-                        nav.classList.add('text-text-secondary');
-                    });
-                    
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // 添加当前active状态
-                    this.classList.add('profile-nav-active');
-                    this.classList.remove('text-text-secondary');
-                    
-                    // 显示对应内容
-                    const targetId = this.getAttribute('href').substring(1) + '-content';
-                    const targetContent = document.querySelector('#' + targetId);
-                    if (targetContent) {
-                        targetContent.classList.add('active');
-                    }
-                });
-            });
-            
-            // 基本资料表单提交
-            document.querySelector('#basic-info-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                // 模拟保存操作
-                alert('基本资料保存成功！');
-            });
-            
-            // 取消基本资料修改
-            document.querySelector('#cancel-basic-info').addEventListener('click', function() {
-                // 重置表单
-                document.querySelector('#basic-info-form').reset();
-                // 或者恢复原始值
-                document.querySelector('#user-nickname').value = '张经理';
-                document.querySelector('#user-phone').value = '138****8888';
-                document.querySelector('#user-company').value = '科技有限公司';
-                document.querySelector('#user-position').value = '技术总监';
-            });
-            
-            // 修改密码表单提交
-            document.querySelector('#change-password-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const currentPassword = document.querySelector('#current-password').value;
-                const newPassword = document.querySelector('#new-password').value;
-                const confirmPassword = document.querySelector('#confirm-password').value;
-                
-                if (!currentPassword || !newPassword || !confirmPassword) {
-                    alert('请填写完整的密码信息');
-                    return;
-                }
-                
-                if (newPassword !== confirmPassword) {
-                    alert('新密码和确认密码不一致');
-                    return;
-                }
-                
-                // 模拟密码修改
-                alert('密码修改成功！');
-                this.reset();
-            });
-            
-            // 取消密码修改
-            document.querySelector('#cancel-password').addEventListener('click', function() {
-                document.querySelector('#change-password-form').reset();
-            });
-            
-            // 第三方账号绑定
-            document.querySelector('#bind-wechat').addEventListener('click', function() {
-                console.log('需要调用第三方接口实现微信绑定功能');
-                alert('微信绑定功能开发中...');
-            });
-            
-            document.querySelector('#bind-github').addEventListener('click', function() {
-                console.log('需要调用第三方接口实现GitHub绑定功能');
-                alert('GitHub绑定功能开发中...');
-            });
-            
-            // 方案操作
-            document.querySelectorAll('.view-solution').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const solutionId = this.closest('tr').dataset.solutionId;
-                    window.location.href = `P-SOLUTION_DETAIL.html?solutionId=${solutionId}`;
-                });
-            });
-            
-            document.querySelectorAll('.export-solution').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    console.log('需要调用第三方接口实现方案导出功能');
-                    alert('方案导出功能开发中...');
-                });
-            });
-            
-            document.querySelectorAll('.edit-solution').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const solutionId = this.closest('tr').dataset.solutionId;
-                    window.location.href = `P-SOLUTION_GENERATOR.html?edit=true&solutionId=${solutionId}`;
-                });
-            });
-            
-            document.querySelectorAll('.delete-solution').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (confirm('确定要删除这个方案吗？删除后无法恢复。')) {
-                        this.closest('tr').remove();
-                        alert('方案删除成功！');
-                    }
-                });
-            });
-            
-            // 订单操作
-            document.querySelectorAll('.view-order').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const orderId = this.closest('tr').dataset.orderId;
-                    window.location.href = `P-ORDER_MANAGEMENT.html?orderId=${orderId}`;
-                });
-            });
-            
-            document.querySelectorAll('.apply-invoice').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    console.log('需要调用第三方接口实现发票申请功能');
-                    alert('发票申请功能开发中...');
-                });
-            });
-            
-            document.querySelectorAll('.download-invoice').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    console.log('需要调用第三方接口实现发票下载功能');
-                    alert('发票下载功能开发中...');
-                });
-            });
-            
-            // 发票下载
-            document.querySelectorAll('.download-invoice-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    console.log('需要调用第三方接口实现发票下载功能');
-                    alert('发票下载功能开发中...');
-                });
-            });
-            
-            // 订单号点击
-            document.querySelectorAll('#my-orders-content .font-medium').forEach(span => {
-                if (span.textContent.startsWith('ORD')) {
-                    span.addEventListener('click', function() {
-                        const orderId = this.textContent;
-                        window.location.href = `P-ORDER_MANAGEMENT.html?orderId=${orderId}`;
-                    });
-                }
-            });
-            
-            // 发票号点击
-            document.querySelectorAll('#my-invoices-content .font-medium').forEach(span => {
-                if (span.textContent.startsWith('FP')) {
-                    span.addEventListener('click', function() {
-                        const invoiceId = this.textContent;
-                        window.location.href = `P-INVOICE_MANAGEMENT.html?invoiceId=${invoiceId}`;
-                    });
-                }
-            });
-            
-            // 导航菜单点击事件
-            document.querySelector('#nav-home').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-HOME.html';
-            });
-            
-            document.querySelector('#nav-generator').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-SOLUTION_GENERATOR.html';
-            });
-            
-            document.querySelector('#nav-library').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-CASE_LIBRARY.html';
-            });
-            
-            document.querySelector('#nav-orders').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-ORDER_MANAGEMENT.html';
-            });
-            
-            document.querySelector('#nav-invoices').addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'P-INVOICE_MANAGEMENT.html';
-            });
-            
-            // 顶部导航菜单点击事件
-            document.querySelectorAll('#main-nav a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === 'P-USER_CENTER.html') {
-                        e.preventDefault();
-                        // 已在个人中心页面，无需操作
-                        return;
-                    }
-                });
-            });
-        });
-    </script>
+      <aside class="lg:col-span-4 space-y-6">
+        <div class="cp-card shadow-card p-6">
+          <div class="font-bold">快捷入口</div>
+          <div class="mt-4 grid gap-2">
+            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">
+              <span class="flex items-center gap-2"><i class="fas fa-book text-primary"></i>案例库</span>
+              <i class="fas fa-arrow-right text-text-secondary"></i>
+            </a>
+            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-SOLUTION_GENERATOR.html">
+              <span class="flex items-center gap-2"><i class="fas fa-diagram-project text-primary"></i>协作生成</span>
+              <i class="fas fa-arrow-right text-text-secondary"></i>
+            </a>
+            <a class="inline-flex items-center justify-between px-4 py-3 rounded-2xl border border-border-light hover:bg-bg-secondary" href="P-LOGIN_REGISTER.html">
+              <span class="flex items-center gap-2"><i class="fas fa-user text-primary"></i>账号</span>
+              <i class="fas fa-arrow-right text-text-secondary"></i>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="border-t border-border-light bg-white/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
+      <div class="text-sm text-text-secondary flex items-center gap-4">
+        <a class="hover:text-primary" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="hover:text-primary" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
 </body>
 </html>

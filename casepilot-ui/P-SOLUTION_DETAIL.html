@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>方案包（交付级）· CasePilot</title>
+  <title>方案包 · CasePilot</title>
 
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
@@ -19,24 +19,18 @@
         </div>
         <div class="leading-tight">
           <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">交付级 AI 方案生成平台</div>
+          <div class="text-xs text-text-secondary">交付级方案包</div>
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_GENERATOR.html">方案生成器</a>
-        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-SOLUTION_DETAIL.html">方案包</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-CASE_LIBRARY.html">案例库</a>
-      </nav>
-
       <div class="flex items-center gap-3">
-        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border-light bg-white hover:bg-bg-secondary text-sm">
+        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
           <i class="fas fa-arrow-left"></i>
-          返回生成器
+          返回协作生成
         </a>
-        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-primary text-white text-sm shadow-card-hover">
+        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-primary text-white shadow-card-hover">
           <i class="fas fa-download"></i>
-          导出（演示）
+          导出
         </a>
       </div>
     </div>
@@ -45,79 +39,72 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-badge">
+        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-pill">
           <i class="fas fa-shield-check"></i>
           可追溯 · 可验收 · 可交付
         </div>
-        <h1 id="cp-title" class="mt-4 text-3xl font-extrabold">交付级方案包</h1>
-        <p class="mt-2 text-text-secondary">Run ID：<span id="cp-run">demo</span> · 更新时间：<span id="cp-updated">—</span></p>
+        <h1 id="cp-title" class="mt-4 text-3xl font-extrabold">交付级方案包（演示）</h1>
+        <p class="mt-2 text-text-secondary text-sm">Run ID：<span id="cp-run">demo</span> · 更新：<span id="cp-updated">—</span></p>
       </div>
 
-      <div class="bg-white rounded-2xl border border-border-light shadow-card p-4 w-full lg:w-[420px]">
-        <div class="font-bold">验收摘要（示例）</div>
-        <div class="mt-3 grid grid-cols-2 gap-3 text-sm">
-          <div class="stats-card rounded-xl p-3">
-            <div class="text-xs text-text-secondary">可追溯覆盖率</div>
-            <div class="mt-1 font-bold">≥ 95%</div>
-          </div>
-          <div class="stats-card rounded-xl p-3">
-            <div class="text-xs text-text-secondary">验收通过率</div>
-            <div class="mt-1 font-bold">≥ 90%</div>
-          </div>
-          <div class="stats-card rounded-xl p-3">
-            <div class="text-xs text-text-secondary">成本上限</div>
-            <div class="mt-1 font-bold">≤ ¥0.30/次</div>
-          </div>
-          <div class="stats-card rounded-xl p-3">
-            <div class="text-xs text-text-secondary">失败策略</div>
-            <div class="mt-1 font-bold">拒答/降级/转人工</div>
-          </div>
-        </div>
+      <div class="cp-card shadow-card p-4 w-full lg:w-[420px]">
+        <div class="font-bold">验收摘要</div>
+        <div class="mt-3 grid grid-cols-2 gap-3 text-sm" id="cp-summary"></div>
       </div>
     </div>
 
     <section class="mt-8 grid lg:grid-cols-12 gap-6">
       <div class="lg:col-span-8 space-y-6">
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-          <h2 class="text-2xl font-extrabold">1) 技术方案报告（结构化）</h2>
-          <div class="mt-4 grid gap-4 text-sm">
-            <div class="rounded-2xl border border-border-light p-5">
-              <div class="font-semibold">系统架构</div>
-              <div class="mt-2 text-text-secondary">RAG + 引用强制 + 置信阈值拒答 + 审核流（演示）。</div>
-              <ul class="mt-2 list-disc pl-5 text-text-secondary">
-                <li>检索层：多路召回（关键词/向量/规则）</li>
-                <li>生成层：引用拼接 + 证据校验</li>
-                <li>评测层：场景分层用例集 + 失败模式库</li>
-              </ul>
+        <div class="cp-card shadow-card p-6 sm:p-8">
+          <h2 class="text-xl font-extrabold">方案结构</h2>
+          <div class="mt-4 grid gap-3 text-sm text-text-secondary">
+            <div class="cp-card p-4">
+              <div class="font-semibold text-text-primary">系统架构</div>
+              <div class="mt-2">RAG + 引用强制 + 置信阈值拒答 + 审核流（演示）。</div>
             </div>
-            <div class="rounded-2xl border border-border-light p-5">
-              <div class="font-semibold">接口与数据流</div>
-              <div class="mt-2 text-text-secondary">输入 → 检索 → 证据 → 生成 → 引用 → 输出（附来源）。</div>
+            <div class="cp-card p-4">
+              <div class="font-semibold text-text-primary">数据与证据</div>
+              <div class="mt-2">每条关键结论必须引用来源；无来源则拒答或转人工。</div>
+            </div>
+            <div class="cp-card p-4">
+              <div class="font-semibold text-text-primary">验收与口径</div>
+              <div class="mt-2">指标 = 公式 + 口径 + 用例集 + 阈值。</div>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-          <h2 class="text-2xl font-extrabold">2) 验收指标与口径（可计算）</h2>
-          <div class="mt-4 grid gap-4 text-sm" id="cp-metrics"></div>
+        <div class="cp-card shadow-card p-6 sm:p-8">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-extrabold">指标（可验收）</h2>
+            <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">口径</span>
+          </div>
+          <div class="mt-4 grid gap-3" id="cp-metrics"></div>
         </div>
 
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-          <h2 class="text-2xl font-extrabold">3) 风险边界声明（不适用）</h2>
-          <div class="mt-3 text-text-secondary text-sm">明确边界可降低试错成本，避免对赌。</div>
-          <div class="mt-4 grid gap-4" id="cp-risks"></div>
+        <div class="cp-card shadow-card p-6 sm:p-8">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-extrabold">边界（不适用）</h2>
+            <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">护栏</span>
+          </div>
+          <div class="mt-4 grid gap-3" id="cp-boundaries"></div>
         </div>
       </div>
 
       <aside class="lg:col-span-4 space-y-6">
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
-          <div class="font-bold">可追溯证据（示例）</div>
-          <div class="mt-3 grid gap-3" id="cp-evidence"></div>
+        <div class="cp-card shadow-card p-6">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">证据（可追溯）</div>
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">来源</span>
+          </div>
+          <div class="mt-4 grid gap-3" id="cp-evidence"></div>
         </div>
 
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6">
-          <div class="font-bold">交付物清单（示例）</div>
-          <div class="mt-3 grid gap-3" id="cp-deliverables"></div>
+        <div class="cp-card shadow-card p-6">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">交付物</div>
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">输出</span>
+          </div>
+          <div class="mt-4 grid gap-3" id="cp-deliverables"></div>
         </div>
       </aside>
     </section>
@@ -127,8 +114,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
       <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
       <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary" href="P-HOME.html">首页</a>
-        <a class="hover:text-primary" href="P-SOLUTION_GENERATOR.html">方案生成器</a>
+        <a class="hover:text-primary" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="hover:text-primary" href="P-SOLUTION_HISTORY.html">历史方案</a>
       </div>
     </div>
   </footer>
@@ -136,43 +123,62 @@
   <script src="assets/app.js"></script>
   <script>
     (function(){
-      const get = () => {
-        try{ return JSON.parse(localStorage.getItem('cp.generator.state')||'{}'); }catch{ return {}; }
-      };
+      const get = () => { try{ return JSON.parse(localStorage.getItem('cp.collab.state')||'{}'); }catch{ return {}; } };
       const st = get();
-      const run = (location.hash.match(/run=([^&]+)/)?.[1]) || st.runId || 'demo';
-      const title = st.title || '交付级方案包（演示）';
-      const updated = st.lastSavedAt || '—';
+      const run = (location.hash.match(/run=([^&]+)/)?.[1]) || st?.meta?.runId || 'demo';
+      const title = st?.meta?.title || '交付级方案包（演示）';
+      const updated = st?.meta?.updatedAt || '—';
 
       const $ = (id)=>document.getElementById(id);
       if($('cp-run')) $('cp-run').textContent = decodeURIComponent(run);
       if($('cp-title')) $('cp-title').textContent = title;
       if($('cp-updated')) $('cp-updated').textContent = updated;
 
-      function box(tag, title, body){
-        return `<div class="rounded-xl border border-border-light bg-white p-4">
+      const artifacts = st.artifacts || {};
+
+      const card = (tagCls, tagText, title, body) => (
+        `<div class="cp-card p-4">
           <div class="flex items-center justify-between gap-3">
-            <div class="font-semibold">${title}</div>
-            <span class="cp-badge text-xs px-2 py-1 rounded-full">${tag}</span>
+            <div class="font-semibold text-sm">${title}</div>
+            <span class="text-xs px-2 py-1 rounded-full ${tagCls}">${tagText}</span>
           </div>
           <div class="mt-2 text-sm text-text-secondary">${body}</div>
-        </div>`;
-      }
+        </div>`
+      );
 
-      const evidence = (st.evidence||[]).slice(0,6);
-      const risks = (st.risks||[]).slice(0,6);
-      const metrics = (st.metrics||[]).slice(0,6);
-      const deliverables = (st.deliverables||[]).slice(0,6);
+      const ev = artifacts.evidence || [];
+      const met = artifacts.metrics || [];
+      const bd = artifacts.boundaries || [];
+      const del = artifacts.deliverables || [];
 
-      if($('cp-evidence')) $('cp-evidence').innerHTML = evidence.map(e=>box('可追溯', e.type, `${e.ref}<br/>${e.note||''}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-      if($('cp-risks')) $('cp-risks').innerHTML = risks.map(r=>box('边界/护栏', r.area, `风险：${r.risk}<br/>护栏：${r.guard}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-      if($('cp-metrics')) $('cp-metrics').innerHTML = metrics.map(m=>box('可验收', m.name, `公式：${m.formula}<br/>目标：${m.target}<br/>${m.note||''}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-      if($('cp-deliverables')) $('cp-deliverables').innerHTML = deliverables.map(d=>
-        `<div class="rounded-xl border border-border-light bg-white p-4">
-          <div class="font-semibold">${d.name}</div>
+      if($('cp-evidence')) $('cp-evidence').innerHTML = ev.map(e=>card('cp-pill', '可追溯', e.type, `${e.ref}<br/>${e.note||''}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
+      if($('cp-metrics')) $('cp-metrics').innerHTML = met.map(m=>card('cp-pill-warn', '可验收', m.name, `公式：${m.formula}<br/>目标：${m.target}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
+      if($('cp-boundaries')) $('cp-boundaries').innerHTML = bd.map(b=>card('cp-pill-primary', '边界', b.title, b.text)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
+      if($('cp-deliverables')) $('cp-deliverables').innerHTML = del.map(d=>
+        `<div class="cp-card p-4">
+          <div class="flex items-center justify-between gap-3">
+            <div class="font-semibold text-sm">${d.name}</div>
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">输出</span>
+          </div>
           <ul class="mt-2 text-sm text-text-secondary list-disc pl-5">${(d.items||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
         </div>`
       ).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
+
+      // summary chips (minimal)
+      if($('cp-summary')){
+        const sum = [
+          {k:'完成度', v:`${(st.todos||[]).filter(x=>x.done).length}/${(st.todos||[]).length}`},
+          {k:'可追溯', v:'来源卡'},
+          {k:'可验收', v:'指标卡'},
+          {k:'边界', v:'护栏卡'},
+        ];
+        $('cp-summary').innerHTML = sum.map(s=>
+          `<div class="stats-card rounded-xl p-3">
+            <div class="text-xs text-text-secondary">${s.k}</div>
+            <div class="mt-1 font-bold">${s.v}</div>
+          </div>`
+        ).join('');
+      }
     })();
   </script>
 </body>
