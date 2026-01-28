@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的订单 - CasePilot · 案例驱动的大模型解决方案平台</title>
+    <script src="assets/tailwind-config.js"></script>
+    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+</head>
+<body class="bg-bg-primary min-h-screen cp-grid-bg">
+    <!-- 顶部导航栏 -->
+    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
+        <div class="flex items-center justify-between h-full px-6">
+            <!-- Logo和产品名称 -->
+            <div id="logo-section" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+                    <i class="fas fa-rocket text-white text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
+            </div>
+            
+            <!-- 主导航菜单 -->
+            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
+                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
+                <a href="P-SOLUTION_GENERATOR.html" class="text-text-secondary hover:text-primary py-1 transition-colors">方案生成器</a>
+                <a href="P-CASE_LIBRARY.html" class="text-text-secondary hover:text-primary py-1 transition-colors">案例库</a>
+                <a href="P-USER_CENTER.html" class="text-primary font-medium border-b-2 border-primary py-1">个人中心</a>
+            </nav>
+            
+            <!-- 搜索框和用户操作区 -->
+            <div id="header-actions" class="flex items-center space-x-4">
+                <!-- 全局搜索 -->
+                <div class="relative hidden lg:block">
+                    <input type="text" id="global-search" placeholder="搜索案例、方案..." 
+                           class="w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
+                </div>
+                
+                <!-- 消息通知 -->
+                <button id="notification-btn" class="relative p-2 text-text-secondary hover:text-primary transition-colors">
+                    <i class="fas fa-bell text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-danger rounded-full"></span>
+                </button>
+                
+                <!-- 用户头像 -->
+                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
+                    <img src="https://s.coze.cn/image/vCnZoc8ALyI/" 
+                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
+                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
+                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 左侧菜单 -->
+    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
+        <div class="p-6">
+            <!-- 菜单标题 -->
+            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">功能导航</h3>
+            
+            <!-- 菜单项 -->
+            <nav id="sidebar-nav" class="space-y-2">
+                <a href="P-HOME.html" id="nav-home" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="font-medium">首页</span>
+                </a>
+                <a href="P-SOLUTION_GENERATOR.html" id="nav-generator" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-magic text-lg"></i>
+                    <span class="font-medium">方案生成器</span>
+                </a>
+                <a href="P-CASE_LIBRARY.html" id="nav-library" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-book text-lg"></i>
+                    <span class="font-medium">案例库</span>
+                </a>
+                <a href="P-SOLUTION_HISTORY.html" id="nav-history" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-history text-lg"></i>
+                    <span class="font-medium">历史方案</span>
+                </a>
+                <a href="P-USER_CENTER.html" id="nav-profile" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="font-medium">个人中心</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main id="main-content" class="ml-64 mt-16 min-h-screen">
+        <div class="p-8">
+            <!-- 页面头部 -->
+            <div id="page-header" class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">我的订单</h1>
+                        <nav id="breadcrumb" class="text-sm text-text-secondary">
+                            <span>首页</span>
+                            <i class="fas fa-chevron-right mx-2"></i>
+                            <span>个人中心</span>
+                            <i class="fas fa-chevron-right mx-2"></i>
+                            <span>我的订单</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索和筛选区域 -->
+            <div id="search-filter-section" class="bg-white rounded-2xl shadow-card p-6 mb-6">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                    <!-- 搜索框 -->
+                    <div class="relative flex-1 lg:max-w-md">
+                        <input type="text" id="order-search" placeholder="搜索订单号、商品名称..." 
+                               class="w-full pl-10 pr-4 py-3 border border-border-light rounded-xl search-focus">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
+                    </div>
+                    
+                    <!-- 筛选条件 -->
+                    <div class="flex flex-wrap items-center space-x-4">
+                        <!-- 订单状态筛选 -->
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-medium text-text-primary">订单状态：</span>
+                            <div class="flex space-x-2">
+                                <button class="filter-tag active px-4 py-2 border border-border-light rounded-lg text-sm">全部</button>
+                                <button class="filter-tag px-4 py-2 border border-border-light rounded-lg text-sm">待支付</button>
+                                <button class="filter-tag px-4 py-2 border border-border-light rounded-lg text-sm">已支付</button>
+                                <button class="filter-tag px-4 py-2 border border-border-light rounded-lg text-sm">已取消</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 时间范围筛选 -->
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-medium text-text-primary">时间范围：</span>
+                            <select id="time-range" class="px-4 py-2 border border-border-light rounded-lg text-sm search-focus">
+                                <option value="all">全部时间</option>
+                                <option value="today">今天</option>
+                                <option value="week">近一周</option>
+                                <option value="month">近一个月</option>
+                                <option value="quarter">近三个月</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 订单列表 -->
+            <div id="orders-table-section" class="bg-white rounded-2xl shadow-card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-bg-secondary">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="order-number">
+                                    订单号 <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">商品名称</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="amount">
+                                    金额 <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="status">
+                                    订单状态 <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="order-date">
+                                    下单时间 <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body" class="divide-y divide-border-light">
+                            <!-- 订单数据将通过JavaScript动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 分页区域 -->
+                <div id="pagination-section" class="px-6 py-4 border-t border-border-light">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-text-secondary">
+                            显示第 <span id="page-start">1</span> - <span id="page-end">10</span> 条，共 <span id="total-count">25</span> 条记录
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="prev-page" class="px-3 py-1 border border-border-light rounded-lg text-sm hover:bg-bg-secondary disabled:opacity-50" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div id="page-numbers" class="flex space-x-1">
+                                <!-- 页码按钮将通过JavaScript动态生成 -->
+                            </div>
+                            <button id="next-page" class="px-3 py-1 border border-border-light rounded-lg text-sm hover:bg-bg-secondary">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 订单详情模态框 -->
+    <div id="order-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-card max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <div class="p-6 border-b border-border-light">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-text-primary">订单详情</h3>
+                        <button id="close-modal" class="p-2 text-text-secondary hover:text-text-primary transition-colors">
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="modal-content" class="p-6">
+                    <!-- 订单详情内容将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 发票申请模态框 -->
+    <div id="invoice-apply-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-card max-w-md w-full">
+                <div class="p-6 border-b border-border-light">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-text-primary">申请发票</h3>
+                        <button id="close-invoice-modal" class="p-2 text-text-secondary hover:text-text-primary transition-colors">
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <form id="invoice-form" class="space-y-4">
+                        <div>
+                            <label for="invoice-type" class="block text-sm font-medium text-text-primary mb-2">发票类型</label>
+                            <select id="invoice-type" class="w-full px-4 py-2 border border-border-light rounded-lg search-focus">
+                                <option value="personal">个人发票</option>
+                                <option value="company">企业发票</option>
+                            </select>
+                        </div>
+                        <div id="company-info" class="hidden">
+                            <label for="company-name" class="block text-sm font-medium text-text-primary mb-2">公司名称</label>
+                            <input type="text" id="company-name" class="w-full px-4 py-2 border border-border-light rounded-lg search-focus" placeholder="请输入公司名称">
+                        </div>
+                        <div id="tax-number" class="hidden">
+                            <label for="tax-id" class="block text-sm font-medium text-text-primary mb-2">纳税人识别号</label>
+                            <input type="text" id="tax-id" class="w-full px-4 py-2 border border-border-light rounded-lg search-focus" placeholder="请输入纳税人识别号">
+                        </div>
+                        <div class="flex space-x-3 pt-4">
+                            <button type="button" id="cancel-invoice" class="flex-1 px-4 py-2 border border-border-light rounded-lg text-sm font-medium hover:bg-bg-secondary transition-colors">
+                                取消
+                            </button>
+                            <button type="submit" class="flex-1 px-4 py-2 bg-gradient-primary text-white rounded-lg text-sm font-medium hover:shadow-glow transition-all">
+                                申请
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 支付确认模态框 -->
+    <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-card max-w-md w-full">
+                <div class="p-6 border-b border-border-light">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-text-primary">支付确认</h3>
+                        <button id="close-payment-modal" class="p-2 text-text-secondary hover:text-text-primary transition-colors">
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-credit-card text-white text-2xl"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-2">订单支付</h4>
+                        <p class="text-text-secondary">请选择支付方式完成支付</p>
+                        <p class="text-2xl font-bold text-primary mt-2">¥<span id="payment-amount">0</span></p>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <label class="flex items-center p-3 border border-border-light rounded-lg cursor-pointer hover:bg-bg-secondary transition-colors">
+                            <input type="radio" name="payment-method" value="wechat" class="mr-3" checked>
+                            <i class="fab fa-weixin text-success text-xl mr-3"></i>
+                            <span class="font-medium">微信支付</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-border-light rounded-lg cursor-pointer hover:bg-bg-secondary transition-colors">
+                            <input type="radio" name="payment-method" value="alipay" class="mr-3">
+                            <i class="fab fa-alipay text-info text-xl mr-3"></i>
+                            <span class="font-medium">支付宝</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-border-light rounded-lg cursor-pointer hover:bg-bg-secondary transition-colors">
+                            <input type="radio" name="payment-method" value="unionpay" class="mr-3">
+                            <i class="fas fa-credit-card text-warning text-xl mr-3"></i>
+                            <span class="font-medium">银联支付</span>
+                        </label>
+                    </div>
+                    <button id="confirm-payment" class="w-full px-4 py-3 bg-gradient-primary text-white rounded-lg font-medium hover:shadow-glow transition-all">
+                        确认支付
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部版权信息 -->
+    <footer id="footer" class="ml-64 bg-white border-t border-border-light py-6">
+        <div class="px-8 text-center text-text-secondary text-sm">
+            <p>&copy; 2024 CasePilot. 案例驱动的大模型解决方案平台. 保留所有权利.</p>
+            <p class="mt-1">京ICP备12345678号-1 | 京公网安备11010802012345号</p>
+        </div>
+    </footer>
+
+    <script>
+        // 模拟订单数据
+        const mockOrders = [
+            {
+                id: 'CP20240115001',
+                itemName: '智能信贷风控系统解决方案',
+                amount: 299.00,
+                status: 'paid',
+                statusText: '已支付',
+                orderDate: '2024-01-15 14:30:25',
+                paymentMethod: '微信支付',
+                paymentDate: '2024-01-15 14:32:10',
+                invoiceStatus: '已开具'
+            },
+            {
+                id: 'CP20240112002',
+                itemName: '工业物联网设备监控平台',
+                amount: 199.00,
+                status: 'paid',
+                statusText: '已支付',
+                orderDate: '2024-01-12 09:15:42',
+                paymentMethod: '支付宝',
+                paymentDate: '2024-01-12 09:16:58',
+                invoiceStatus: '待开具'
+            },
+            {
+                id: 'CP20240110003',
+                itemName: '医学影像智能诊断系统',
+                amount: 399.00,
+                status: 'pending',
+                statusText: '待支付',
+                orderDate: '2024-01-10 16:45:18',
+                paymentMethod: '',
+                paymentDate: '',
+                invoiceStatus: ''
+            },
+            {
+                id: 'CP20240108004',
+                itemName: '电商平台智能推荐系统',
+                amount: 149.00,
+                status: 'cancelled',
+                statusText: '已取消',
+                orderDate: '2024-01-08 11:20:33',
+                paymentMethod: '',
+                paymentDate: '',
+                invoiceStatus: ''
+            },
+            {
+                id: 'CP20240105005',
+                itemName: '企业内部知识管理系统',
+                amount: 249.00,
+                status: 'paid',
+                statusText: '已支付',
+                orderDate: '2024-01-05 13:50:12',
+                paymentMethod: '银联支付',
+                paymentDate: '2024-01-05 13:51:45',
+                invoiceStatus: '已开具'
+            }
+        ];
+
+        let currentOrders = [...mockOrders];
+        let currentPage = 1;
+        let pageSize = 10;
+        let currentSort = { field: 'order-date', direction: 'desc' };
+        let currentFilters = { status: 'all', timeRange: 'all' };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化页面
+            renderOrdersTable();
+            updatePagination();
+            
+            // 搜索功能
+            document.querySelector('#order-search').addEventListener('input', function() {
+                const keyword = this.value.toLowerCase().trim();
+                filterOrders(keyword);
+            });
+            
+            // 状态筛选
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // 更新活跃状态
+                    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 更新筛选条件
+                    const status = this.textContent.trim();
+                    currentFilters.status = status === '全部' ? 'all' : status;
+                    filterOrders(document.querySelector('#order-search').value.toLowerCase().trim());
+                });
+            });
+            
+            // 时间范围筛选
+            document.querySelector('#time-range').addEventListener('change', function() {
+                currentFilters.timeRange = this.value;
+                filterOrders(document.querySelector('#order-search').value.toLowerCase().trim());
+            });
+            
+            // 表格排序
+            document.querySelectorAll('[data-sort]').forEach(header => {
+                header.addEventListener('click', function() {
+                    const field = this.dataset.sort;
+                    if (currentSort.field === field) {
+                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.field = field;
+                        currentSort.direction = 'asc';
+                    }
+                    
+                    // 更新排序图标
+                    document.querySelectorAll('[data-sort] i').forEach(icon => {
+                        icon.className = 'fas fa-sort ml-1';
+                    });
+                    
+                    const icon = this.querySelector('i');
+                    icon.className = currentSort.direction === 'asc' ? 'fas fa-sort-up ml-1' : 'fas fa-sort-down ml-1';
+                    
+                    sortOrders();
+                    renderOrdersTable();
+                });
+            });
+            
+            // 分页功能
+            document.querySelector('#prev-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderOrdersTable();
+                    updatePagination();
+                }
+            });
+            
+            document.querySelector('#next-page').addEventListener('click', function() {
+                const totalPages = Math.ceil(currentOrders.length / pageSize);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderOrdersTable();
+                    updatePagination();
+                }
+            });
+            
+            // 模态框关闭功能
+            document.querySelector('#close-modal').addEventListener('click', closeOrderDetailModal);
+            document.querySelector('#close-invoice-modal').addEventListener('click', closeInvoiceModal);
+            document.querySelector('#close-payment-modal').addEventListener('click', closePaymentModal);
+            
+            // 发票申请表单
+            document.querySelector('#invoice-type').addEventListener('change', function() {
+                const companyInfo = document.querySelector('#company-info');
+                const taxNumber = document.querySelector('#tax-number');
+                if (this.value === 'company') {
+                    companyInfo.classList.remove('hidden');
+                    taxNumber.classList.remove('hidden');
+                } else {
+                    companyInfo.classList.add('hidden');
+                    taxNumber.classList.add('hidden');
+                }
+            });
+            
+            document.querySelector('#invoice-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // 模拟发票申请成功
+                alert('发票申请成功！电子发票将在3个工作日内开具完成。');
+                closeInvoiceModal();
+            });
+            
+            document.querySelector('#cancel-invoice').addEventListener('click', closeInvoiceModal);
+            
+            // 支付确认
+            document.querySelector('#confirm-payment').addEventListener('click', function() {
+                const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+                console.log('需要调用第三方支付接口实现支付功能');
+                // 模拟支付成功
+                alert('支付成功！');
+                closePaymentModal();
+                // 更新订单状态
+                updateOrderStatus();
+            });
+            
+            // 导航功能
+            document.querySelector('#nav-home').addEventListener('click', function() {
+                window.location.href = 'P-HOME.html';
+            });
+            
+            document.querySelector('#nav-generator').addEventListener('click', function() {
+                window.location.href = 'P-SOLUTION_GENERATOR.html';
+            });
+            
+            document.querySelector('#nav-library').addEventListener('click', function() {
+                window.location.href = 'P-CASE_LIBRARY.html';
+            });
+            
+            document.querySelector('#nav-profile').addEventListener('click', function() {
+                window.location.href = 'P-USER_CENTER.html';
+            });
+            
+            document.querySelector('#nav-orders').addEventListener('click', function() {
+                // 已在订单页面，无需操作
+            });
+            
+            document.querySelector('#nav-invoices').addEventListener('click', function() {
+                window.location.href = 'P-INVOICE_MANAGEMENT.html';
+            });
+            
+            // 顶部导航
+            document.querySelector('#logo-section').addEventListener('click', function() {
+                window.location.href = 'P-HOME.html';
+            });
+            
+            document.querySelector('#user-avatar').addEventListener('click', function() {
+                window.location.href = 'P-USER_CENTER.html';
+            });
+        });
+
+        function filterOrders(keyword) {
+            currentOrders = mockOrders.filter(order => {
+                // 搜索筛选
+                const matchesSearch = !keyword || 
+                    order.id.toLowerCase().includes(keyword) ||
+                    order.itemName.toLowerCase().includes(keyword);
+                
+                // 状态筛选
+                const matchesStatus = currentFilters.status === 'all' || 
+                    (currentFilters.status === '待支付' && order.status === 'pending') ||
+                    (currentFilters.status === '已支付' && order.status === 'paid') ||
+                    (currentFilters.status === '已取消' && order.status === 'cancelled');
+                
+                // 时间范围筛选
+                const matchesTimeRange = currentFilters.timeRange === 'all' || 
+                    checkTimeRange(order.orderDate, currentFilters.timeRange);
+                
+                return matchesSearch && matchesStatus && matchesTimeRange;
+            });
+            
+            currentPage = 1;
+            sortOrders();
+            renderOrdersTable();
+            updatePagination();
+        }
+
+        function checkTimeRange(orderDate, timeRange) {
+            const orderDateTime = new Date(orderDate);
+            const now = new Date();
+            
+            switch (timeRange) {
+                case 'today':
+                    return orderDateTime.toDateString() === now.toDateString();
+                case 'week':
+                    return orderDateTime >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                case 'month':
+                    return orderDateTime >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                case 'quarter':
+                    return orderDateTime >= new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                default:
+                    return true;
+            }
+        }
+
+        function sortOrders() {
+            currentOrders.sort((a, b) => {
+                let aValue, bValue;
+                
+                switch (currentSort.field) {
+                    case 'order-number':
+                        aValue = a.id;
+                        bValue = b.id;
+                        break;
+                    case 'amount':
+                        aValue = a.amount;
+                        bValue = b.amount;
+                        break;
+                    case 'status':
+                        aValue = a.status;
+                        bValue = b.status;
+                        break;
+                    case 'order-date':
+                        aValue = new Date(a.orderDate);
+                        bValue = new Date(b.orderDate);
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                if (aValue < bValue) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aValue > bValue) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+
+        function renderOrdersTable() {
+            const tbody = document.querySelector('#orders-table-body');
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            const pageOrders = currentOrders.slice(startIndex, endIndex);
+            
+            tbody.innerHTML = pageOrders.map(order => `
+                <tr class="table-row transition-colors">
+                    <td class="px-6 py-4">
+                        <button class="text-primary hover:text-secondary font-medium" onclick="showOrderDetail('${order.id}')">
+                            ${order.id}
+                        </button>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-text-primary">${order.itemName}</h4>
+                                <p class="text-sm text-text-secondary">案例解锁</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-lg font-semibold text-text-primary">¥${order.amount.toFixed(2)}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="status-badge status-${order.status}">${order.statusText}</span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-text-secondary">${order.orderDate}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-2">
+                            <button class="text-primary hover:text-secondary transition-colors" onclick="showOrderDetail('${order.id}')" title="查看详情">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${order.status === 'paid' && order.invoiceStatus === '待开具' ? `
+                                <button class="text-success hover:text-green-700 transition-colors" onclick="showInvoiceModal('${order.id}')" title="申请发票">
+                                    <i class="fas fa-file-invoice"></i>
+                                </button>
+                            ` : ''}
+                            ${order.status === 'pending' ? `
+                                <button class="text-warning hover:text-yellow-700 transition-colors" onclick="showPaymentModal('${order.id}', ${order.amount})" title="立即支付">
+                                    <i class="fas fa-credit-card"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updatePagination() {
+            const totalCount = currentOrders.length;
+            const totalPages = Math.ceil(totalCount / pageSize);
+            const startIndex = (currentPage - 1) * pageSize + 1;
+            const endIndex = Math.min(currentPage * pageSize, totalCount);
+            
+            // 更新显示信息
+            document.querySelector('#page-start').textContent = totalCount > 0 ? startIndex : 0;
+            document.querySelector('#page-end').textContent = endIndex;
+            document.querySelector('#total-count').textContent = totalCount;
+            
+            // 更新按钮状态
+            document.querySelector('#prev-page').disabled = currentPage <= 1;
+            document.querySelector('#next-page').disabled = currentPage >= totalPages;
+            
+            // 生成页码按钮
+            const pageNumbers = document.querySelector('#page-numbers');
+            pageNumbers.innerHTML = '';
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    const button = document.createElement('button');
+                    button.className = `px-3 py-1 border border-border-light rounded-lg text-sm ${i === currentPage ? 'bg-primary text-white border-primary' : 'hover:bg-bg-secondary'}`;
+                    button.textContent = i;
+                    button.addEventListener('click', () => {
+                        currentPage = i;
+                        renderOrdersTable();
+                        updatePagination();
+                    });
+                    pageNumbers.appendChild(button);
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'px-2 text-text-secondary';
+                    ellipsis.textContent = '...';
+                    pageNumbers.appendChild(ellipsis);
+                }
+            }
+        }
+
+        function showOrderDetail(orderId) {
+            const order = mockOrders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const modalContent = document.querySelector('#modal-content');
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between p-4 bg-bg-secondary rounded-lg">
+                        <div>
+                            <h4 class="text-lg font-semibold text-text-primary">${order.itemName}</h4>
+                            <p class="text-sm text-text-secondary">订单号：${order.id}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold text-primary">¥${order.amount.toFixed(2)}</p>
+                            <span class="status-badge status-${order.status}">${order.statusText}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h5 class="text-sm font-medium text-text-secondary mb-3">订单信息</h5>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">下单时间：</span>
+                                    <span class="text-text-primary">${order.orderDate}</span>
+                                </div>
+                                ${order.status === 'paid' ? `
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">支付方式：</span>
+                                        <span class="text-text-primary">${order.paymentMethod}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">支付时间：</span>
+                                        <span class="text-text-primary">${order.paymentDate}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">发票状态：</span>
+                                        <span class="text-text-primary">${order.invoiceStatus}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-sm font-medium text-text-secondary mb-3">商品信息</h5>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">商品名称：</span>
+                                    <span class="text-text-primary">${order.itemName}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">商品类型：</span>
+                                    <span class="text-text-primary">案例解锁</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">价格：</span>
+                                    <span class="text-text-primary">¥${order.amount.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelector('#order-detail-modal').classList.remove('hidden');
+        }
+
+        function closeOrderDetailModal() {
+            document.querySelector('#order-detail-modal').classList.add('hidden');
+        }
+
+        function showInvoiceModal(orderId) {
+            document.querySelector('#invoice-apply-modal').classList.remove('hidden');
+            // 可以在这里设置当前订单ID
+            document.querySelector('#invoice-form').dataset.orderId = orderId;
+        }
+
+        function closeInvoiceModal() {
+            document.querySelector('#invoice-apply-modal').classList.add('hidden');
+            // 重置表单
+            document.querySelector('#invoice-form').reset();
+            document.querySelector('#company-info').classList.add('hidden');
+            document.querySelector('#tax-number').classList.add('hidden');
+        }
+
+        function showPaymentModal(orderId, amount) {
+            document.querySelector('#payment-amount').textContent = amount.toFixed(2);
+            document.querySelector('#payment-modal').classList.remove('hidden');
+            // 可以在这里设置当前订单ID
+            document.querySelector('#payment-modal').dataset.orderId = orderId;
+        }
+
+        function closePaymentModal() {
+            document.querySelector('#payment-modal').classList.add('hidden');
+        }
+
+        function updateOrderStatus() {
+            // 模拟更新订单状态为已支付
+            const orderId = document.querySelector('#payment-modal').dataset.orderId;
+            const order = mockOrders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'paid';
+                order.statusText = '已支付';
+                order.paymentMethod = '微信支付';
+                order.paymentDate = new Date().toLocaleString('zh-CN');
+                order.invoiceStatus = '待开具';
+            }
+            
+            // 重新渲染表格
+            filterOrders(document.querySelector('#order-search').value.toLowerCase().trim());
+        }
+    </script>
+</body>
+</html>

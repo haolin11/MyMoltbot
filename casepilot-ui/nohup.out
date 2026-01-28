@@ -1,0 +1,37 @@
+Starting up http-server, serving ./
+
+http-server version: 14.1.1
+
+http-server settings: 
+CORS: true
+Cache: 3600 seconds
+Connection Timeout: 120 seconds
+Directory Listings: visible
+AutoIndex: visible
+Serve GZIP Files: false
+Serve Brotli Files: false
+Default File Extension: none
+
+Available on:
+  http://127.0.0.1:8080
+  http://172.24.8.218:8080
+  http://172.17.0.1:8080
+Hit CTRL-C to stop the server
+
+[2025-11-16T14:51:35.892Z]  "GET /P-USER_CENTER.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:51:36.418Z]  "GET /favicon.ico" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:51:36.423Z]  "GET /favicon.ico" Error (404): "Not found"
+[2025-11-16T14:52:49.315Z]  "GET /P-CASE_DETAIL.html?caseId=26" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.506Z]  "GET /database/yolo%E6%8D%9F%E4%BC%A4%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE/visual.png" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.509Z]  "GET /database/V%E5%AE%9A%E4%BD%8D%E5%BB%BA%E5%9B%BE%E9%A1%B9%E7%9B%AE/visual.png" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.511Z]  "GET /database/yolo%E6%8D%9F%E4%BC%A4%E8%AF%86%E5%88%AB%E9%A1%B9%E7%9B%AE/visual.png" Error (404): "Not found"
+[2025-11-16T14:52:53.512Z]  "GET /database/V%E5%AE%9A%E4%BD%8D%E5%BB%BA%E5%9B%BE%E9%A1%B9%E7%9B%AE/visual.png" Error (404): "Not found"
+[2025-11-16T14:52:53.519Z]  "GET /database/VLM%E6%A3%80%E6%B5%8B%E9%A1%B9%E7%9B%AE/visual.png" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.522Z]  "GET /database/L%E5%AE%9A%E4%BD%8D%E5%BB%BA%E5%9B%BE%E9%A1%B9%E7%9B%AE/visual.png" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.531Z]  "GET /database/LV%E5%AE%9A%E4%BD%8D%E5%BB%BA%E5%9B%BE%E9%A1%B9%E7%9B%AE/visual.png" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.533Z]  "GET /database/VLM%E6%A3%80%E6%B5%8B%E9%A1%B9%E7%9B%AE/visual.png" Error (404): "Not found"
+[2025-11-16T14:52:53.535Z]  "GET /database/L%E5%AE%9A%E4%BD%8D%E5%BB%BA%E5%9B%BE%E9%A1%B9%E7%9B%AE/visual.png" Error (404): "Not found"
+[2025-11-16T14:52:53.538Z]  "GET /database/EEG%E9%A1%B9%E7%9B%AE/visual.png" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"
+[2025-11-16T14:52:53.540Z]  "GET /database/LV%E5%AE%9A%E4%BD%8D%E5%BB%BA%E5%9B%BE%E9%A1%B9%E7%9B%AE/visual.png" Error (404): "Not found"
+[2025-11-16T14:52:53.542Z]  "GET /database/EEG%E9%A1%B9%E7%9B%AE/visual.png" Error (404): "Not found"
+[2025-11-16T14:52:57.505Z]  "GET /P-CASE_DETAIL.html?caseId=22" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0"

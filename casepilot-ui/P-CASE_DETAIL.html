@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例详情 - CasePilot · 案例驱动的大模型解决方案平台</title>
+    <script src="assets/tailwind-config.js"></script>
+    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+</head>
+<body class="bg-bg-primary min-h-screen cp-grid-bg">
+    <!-- 顶部导航栏 -->
+    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
+        <div class="flex items-center justify-between h-full px-6">
+            <!-- Logo和产品名称 -->
+            <div id="logo-section" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+                    <i class="fas fa-rocket text-white text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
+            </div>
+            
+            <!-- 主导航菜单 -->
+            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
+                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
+                <a href="P-SOLUTION_GENERATOR.html" class="text-text-secondary hover:text-primary py-1 transition-colors">方案生成器</a>
+                <a href="P-CASE_LIBRARY.html" class="text-primary font-medium border-b-2 border-primary py-1">案例库</a>
+                <a href="P-USER_CENTER.html" class="text-text-secondary hover:text-primary py-1 transition-colors">个人中心</a>
+            </nav>
+            
+            <!-- 搜索框和用户操作区 -->
+            <div id="header-actions" class="flex items-center space-x-4">
+                <!-- 全局搜索 -->
+                <div class="relative hidden lg:block">
+                    <input type="text" id="global-search" placeholder="搜索案例、方案..." 
+                           class="w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
+                </div>
+                
+                <!-- 消息通知 -->
+                <button id="notification-btn" class="relative p-2 text-text-secondary hover:text-primary transition-colors">
+                    <i class="fas fa-bell text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-danger rounded-full"></span>
+                </button>
+                
+                <!-- 用户头像 -->
+                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
+                    <img src="https://s.coze.cn/image/jHyobVC1igE/" 
+                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
+                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
+                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 左侧菜单 -->
+    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
+        <div class="p-6">
+            <!-- 菜单标题 -->
+            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">功能导航</h3>
+            
+            <!-- 菜单项 -->
+            <nav id="sidebar-nav" class="space-y-2">
+                <a href="P-HOME.html" id="nav-home" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="font-medium">首页</span>
+                </a>
+                <a href="P-SOLUTION_GENERATOR.html" id="nav-generator" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-magic text-lg"></i>
+                    <span class="font-medium">方案生成器</span>
+                </a>
+                <a href="P-CASE_LIBRARY.html" id="nav-library" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
+                    <i class="fas fa-book text-lg"></i>
+                    <span class="font-medium">案例库</span>
+                </a>
+                <a href="P-SOLUTION_HISTORY.html" id="nav-history" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-history text-lg"></i>
+                    <span class="font-medium">历史方案</span>
+                </a>
+                <a href="P-USER_CENTER.html" id="nav-profile" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="font-medium">个人中心</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main id="main-content" class="ml-64 mt-16 min-h-screen">
+        <div class="p-8">
+            <!-- 页面头部 -->
+            <div id="page-header" class="mb-8">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <nav id="breadcrumb" class="text-sm text-text-secondary mb-2">
+                            <a href="P-HOME.html" class="hover:text-primary">首页</a>
+                            <span class="mx-2">/</span>
+                            <a href="P-CASE_LIBRARY.html" class="hover:text-primary">案例库</a>
+                            <span class="mx-2">/</span>
+                            <span>案例详情</span>
+                        </nav>
+                        <h1 id="case-title" class="text-3xl font-bold text-text-primary mb-4">智能信贷风控系统解决方案</h1>
+                        
+                        <!-- 案例标签 -->
+                        <div id="case-tags" class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium">金融科技</span>
+                            <span class="px-4 py-2 bg-green-100 text-green-800 rounded-lg text-sm font-medium">AI风控</span>
+                            <span class="px-4 py-2 bg-purple-100 text-purple-800 rounded-lg text-sm font-medium">机器学习</span>
+                            <span class="px-4 py-2 bg-orange-100 text-orange-800 rounded-lg text-sm font-medium">大数据</span>
+                        </div>
+                        
+                        <!-- 案例信息 -->
+                        <div id="case-meta" class="flex items-center space-x-6 text-text-secondary text-sm">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-eye"></i>
+                                <span id="view-count">1,245 次浏览</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-download"></i>
+                                <span id="download-count">156 次下载</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-calendar"></i>
+                                <span id="publish-date">2024-01-15</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-user"></i>
+                                <span id="author">金融科技专家团队</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 操作按钮组 -->
+                    <div id="action-buttons" class="flex flex-col space-y-3">
+                        <button id="unlock-btn" class="px-6 py-3 bg-gradient-primary text-white rounded-xl font-semibold hover:shadow-glow transition-all">
+                            <i class="fas fa-lock mr-2"></i>
+                            解锁详细方案
+                            <span class="ml-2 text-lg font-bold">¥199</span>
+                        </button>
+                        <button id="generate-similar-btn" class="px-6 py-3 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-primary hover:text-white transition-all">
+                            <i class="fas fa-magic mr-2"></i>
+                            生成类似方案
+                        </button>
+                        <button id="share-btn" class="px-6 py-3 bg-bg-secondary text-text-primary rounded-xl font-semibold hover:bg-border-light transition-all">
+                            <i class="fas fa-share-alt mr-2"></i>
+                            分享案例
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 案例内容区 -->
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+                <!-- 主内容 -->
+                <div class="xl:col-span-3 space-y-8">
+                    <!-- 案例概述（免费内容） -->
+                    <section id="case-overview" class="bg-white rounded-2xl shadow-card p-8">
+                        <h2 class="text-xl font-semibold text-text-primary mb-6 flex items-center">
+                            <i class="fas fa-info-circle text-primary mr-3"></i>
+                            案例概述
+                        </h2>
+                        
+                        <!-- 案例图片 -->
+                        <div class="mb-6">
+                            <img id="case-image" src="https://s.coze.cn/image/uyGNi79OZA0/" 
+                                 alt="金融科技AI风控系统界面展示" data-category="商业科技" 
+                                 class="w-full h-80 object-cover rounded-xl">
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-3">项目背景</h3>
+                                <p id="project-background" class="text-text-secondary leading-relaxed">
+                                    随着金融科技的快速发展，传统信贷风控模式面临效率低下、风险识别不精准等问题。某大型商业银行需要构建一套智能化的信贷风控系统，以提升审批效率、降低坏账率，并满足监管要求。
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-3">核心功能</h3>
+                                <div id="core-features" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="feature-card rounded-xl p-4">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <i class="fas fa-user-check text-primary text-lg"></i>
+                                            <h4 class="font-medium text-text-primary">智能客户画像</h4>
+                                        </div>
+                                        <p class="text-sm text-text-secondary">基于多维度数据构建360度客户画像</p>
+                                    </div>
+                                    <div class="feature-card rounded-xl p-4">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <i class="fas fa-shield-alt text-primary text-lg"></i>
+                                            <h4 class="font-medium text-text-primary">风险评估模型</h4>
+                                        </div>
+                                        <p class="text-sm text-text-secondary">机器学习算法实时风险评分</p>
+                                    </div>
+                                    <div class="feature-card rounded-xl p-4">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <i class="fas fa-search text-primary text-lg"></i>
+                                            <h4 class="font-medium text-text-primary">反欺诈检测</h4>
+                                        </div>
+                                        <p class="text-sm text-text-secondary">实时监控异常交易行为</p>
+                                    </div>
+                                    <div class="feature-card rounded-xl p-4">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <i class="fas fa-chart-line text-primary text-lg"></i>
+                                            <h4 class="font-medium text-text-primary">决策引擎</h4>
+                                        </div>
+                                        <p class="text-sm text-text-secondary">自动化信贷审批决策</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-3">适用场景</h3>
+                                <div id="applicable-scenarios" class="space-y-3">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-check-circle text-success mt-1"></i>
+                                        <p class="text-text-secondary">消费信贷、小微企业贷款审批</p>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-check-circle text-success mt-1"></i>
+                                        <p class="text-text-secondary">信用卡申请风险评估</p>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-check-circle text-success mt-1"></i>
+                                        <p class="text-text-secondary">个人贷款、抵押贷款风控</p>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-check-circle text-success mt-1"></i>
+                                        <p class="text-text-secondary">金融机构合规风控管理</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 详细内容（付费内容，默认锁定） -->
+                    <section id="detailed-content" class="locked-content rounded-2xl p-8 min-h-[400px]">
+                        <div class="locked-overlay">
+                            <i class="fas fa-lock text-4xl text-text-secondary mb-4"></i>
+                            <h3 class="text-xl font-semibold text-text-primary mb-2">解锁详细内容</h3>
+                            <p class="text-text-secondary mb-6">包含完整的技术方案、实施步骤、参数配置等专业内容</p>
+                            <button id="unlock-content-btn" class="px-6 py-3 bg-gradient-primary text-white rounded-xl font-semibold hover:shadow-glow transition-all">
+                                <i class="fas fa-unlock mr-2"></i>
+                                立即解锁
+                                <span class="ml-2 text-lg font-bold">¥199</span>
+                            </button>
+                        </div>
+                        
+                        <!-- 隐藏的详细内容（解锁后显示） -->
+                        <div id="full-content" class="hidden space-y-8">
+                            <!-- 技术架构 -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">技术架构</h3>
+                                <div class="bg-bg-secondary rounded-xl p-6">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-3 h-3 bg-primary rounded-full"></div>
+                                            <span class="font-medium text-text-primary">前端层：React + Ant Design</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-3 h-3 bg-secondary rounded-full"></div>
+                                            <span class="font-medium text-text-primary">后端层：Spring Boot + Microservices</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-3 h-3 bg-tertiary rounded-full"></div>
+                                            <span class="font-medium text-text-primary">数据层：Kafka + Spark + Elasticsearch</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-3 h-3 bg-warning rounded-full"></div>
+                                            <span class="font-medium text-text-primary">AI层：TensorFlow + PyTorch</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 实施步骤 -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">实施步骤</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">1</div>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">需求分析与数据调研</h4>
+                                            <p class="text-text-secondary text-sm">深入了解业务需求，梳理数据源和数据质量</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">2</div>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">数据采集与预处理</h4>
+                                            <p class="text-text-secondary text-sm">建立数据采集管道，进行数据清洗和特征工程</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">3</div>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">模型开发与训练</h4>
+                                            <p class="text-text-secondary text-sm">开发风控模型，进行训练和调优</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">4</div>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">系统集成与测试</h4>
+                                            <p class="text-text-secondary text-sm">系统集成、性能测试和安全测试</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">5</div>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">上线部署与运维</h4>
+                                            <p class="text-text-secondary text-sm">生产环境部署、监控和持续优化</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 风险与应对策略 -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">风险与应对策略</h3>
+                                <div class="space-y-4">
+                                    <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <i class="fas fa-exclamation-triangle text-red-600"></i>
+                                            <h4 class="font-medium text-red-800">数据安全风险</h4>
+                                        </div>
+                                        <p class="text-red-700 text-sm mb-2">客户敏感数据泄露风险</p>
+                                        <p class="text-red-600 text-sm">应对：实施数据加密、访问控制、定期安全审计</p>
+                                    </div>
+                                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <i class="fas fa-exclamation-circle text-yellow-600"></i>
+                                            <h4 class="font-medium text-yellow-800">模型风险</h4>
+                                        </div>
+                                        <p class="text-yellow-700 text-sm mb-2">模型预测准确率下降</p>
+                                        <p class="text-yellow-600 text-sm">应对：定期模型评估、持续学习、人工复核机制</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 验收指标 -->
+                            <div id="metrics-standards-section" class="hidden">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">参考指标与验收标准</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+                                        <h4 class="font-medium text-green-800 mb-2">评估指标 (真实参考值)</h4>
+                                        <div id="case-metrics-list" class="space-y-2 text-green-700 text-sm">
+                                            <!-- 动态填充指标 -->
+                                        </div>
+                                    </div>
+                                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                        <h4 class="font-medium text-blue-800 mb-2">验收标准</h4>
+                                        <div id="case-standards-text" class="text-blue-700 text-sm whitespace-pre-wrap">
+                                            <!-- 动态填充标准 -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 右侧边栏 -->
+                <div class="space-y-6">
+                    <!-- 案例信息卡片 -->
+                    <div class="bg-white rounded-2xl shadow-card p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">案例信息</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">案例ID</span>
+                                <span id="case-id" class="text-text-primary font-medium">CASE-2024-001</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">发布时间</span>
+                                <span id="case-publish-date" class="text-text-primary">2024-01-15</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">更新时间</span>
+                                <span id="case-update-date" class="text-text-primary">2024-01-20</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">浏览量</span>
+                                <span id="case-view-count" class="text-text-primary">1,245</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">下载量</span>
+                                <span id="case-download-count" class="text-text-primary">156</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-text-secondary">收藏数</span>
+                                <span id="case-favorite-count" class="text-text-primary">89</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 相关标签 -->
+                    <div class="bg-white rounded-2xl shadow-card p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">相关标签</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="tag-btn px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm hover:bg-blue-200 transition-colors">
+                                金融科技
+                            </button>
+                            <button class="tag-btn px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm hover:bg-green-200 transition-colors">
+                                AI风控
+                            </button>
+                            <button class="tag-btn px-3 py-1 bg-purple-100 text-purple-800 rounded-lg text-sm hover:bg-purple-200 transition-colors">
+                                机器学习
+                            </button>
+                            <button class="tag-btn px-3 py-1 bg-orange-100 text-orange-800 rounded-lg text-sm hover:bg-orange-200 transition-colors">
+                                大数据
+                            </button>
+                            <button class="tag-btn px-3 py-1 bg-teal-100 text-teal-800 rounded-lg text-sm hover:bg-teal-200 transition-colors">
+                                微服务
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 快速操作 -->
+                    <div class="bg-white rounded-2xl shadow-card p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">快速操作</h3>
+                        <div class="space-y-3">
+                            <button id="favorite-btn" class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-bg-secondary text-text-primary rounded-lg hover:bg-border-light transition-all">
+                                <i class="fas fa-heart"></i>
+                                <span>收藏案例</span>
+                            </button>
+                            <button id="download-summary-btn" class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-bg-secondary text-text-primary rounded-lg hover:bg-border-light transition-all">
+                                <i class="fas fa-download"></i>
+                                <span>下载摘要</span>
+                            </button>
+                            <button id="contact-consultant-btn" class="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-bg-secondary text-text-primary rounded-lg hover:bg-border-light transition-all">
+                                <i class="fas fa-headset"></i>
+                                <span>咨询顾问</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 相关推荐 -->
+            <section id="related-cases" class="mt-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold text-text-primary">相关案例推荐</h2>
+                    <a href="P-CASE_LIBRARY.html" class="text-primary hover:text-secondary transition-colors font-medium">
+                        查看更多 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- 相关案例卡片1 -->
+                    <div class="related-case-card bg-white rounded-2xl shadow-card p-6 card-hover-effect cursor-pointer" data-case-id="case-002">
+                        <img src="https://s.coze.cn/image/WvsI4oyll9A/" alt="智能反欺诈系统界面" data-category="商业科技" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium">金融科技</span>
+                                <span class="px-3 py-1 bg-red-100 text-red-800 rounded-lg text-sm font-medium">反欺诈</span>
+                            </div>
+                            <div class="flex items-center space-x-1 text-text-secondary text-sm">
+                                <i class="fas fa-eye"></i>
+                                <span>987</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold text-text-primary mb-3">实时交易反欺诈系统</h3>
+                        <p class="text-text-secondary text-sm mb-4 line-clamp-3">基于深度学习的实时交易监控系统，能够在毫秒级别识别异常交易行为...</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-text-secondary text-sm">
+                                <span><i class="fas fa-calendar mr-1"></i>2024-01-12</span>
+                                <span><i class="fas fa-download mr-1"></i>89</span>
+                            </div>
+                            <span class="text-primary font-semibold">¥149</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 相关案例卡片2 -->
+                    <div class="related-case-card bg-white rounded-2xl shadow-card p-6 card-hover-effect cursor-pointer" data-case-id="case-003">
+                        <img src="https://s.coze.cn/image/WhCLvPPOeVo/" alt="智能投顾系统界面" data-category="商业科技" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium">金融科技</span>
+                                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-lg text-sm font-medium">智能投顾</span>
+                            </div>
+                            <div class="flex items-center space-x-1 text-text-secondary text-sm">
+                                <i class="fas fa-eye"></i>
+                                <span>1,567</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold text-text-primary mb-3">智能投资顾问平台</h3>
+                        <p class="text-text-secondary text-sm mb-4 line-clamp-3">基于用户风险偏好和市场数据，提供个性化投资组合建议...</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-text-secondary text-sm">
+                                <span><i class="fas fa-calendar mr-1"></i>2024-01-10</span>
+                                <span><i class="fas fa-download mr-1"></i>234</span>
+                            </div>
+                            <span class="text-primary font-semibold">¥299</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 相关案例卡片3 -->
+                    <div class="related-case-card bg-white rounded-2xl shadow-card p-6 card-hover-effect cursor-pointer" data-case-id="case-004">
+                        <img src="https://s.coze.cn/image/ydU__mHxz30/" alt="供应链金融平台界面" data-category="商业科技" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium">金融科技</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm font-medium">供应链金融</span>
+                            </div>
+                            <div class="flex items-center space-x-1 text-text-secondary text-sm">
+                                <i class="fas fa-eye"></i>
+                                <span>756</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold text-text-primary mb-3">供应链金融数字化平台</h3>
+                        <p class="text-text-secondary text-sm mb-4 line-clamp-3">基于区块链技术的供应链金融解决方案，提升资金流转效率...</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-text-secondary text-sm">
+                                <span><i class="fas fa-calendar mr-1"></i>2024-01-08</span>
+                                <span><i class="fas fa-download mr-1"></i>123</span>
+                            </div>
+                            <span class="text-primary font-semibold">¥179</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 支付确认弹窗 -->
+    <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-card max-w-md w-full">
+                <div class="p-6">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-lock text-4xl text-primary mb-4"></i>
+                        <h3 class="text-xl font-semibold text-text-primary mb-2">解锁详细方案</h3>
+                        <p class="text-text-secondary">智能信贷风控系统解决方案</p>
+                    </div>
+                    
+                    <div class="bg-bg-secondary rounded-xl p-4 mb-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-text-secondary">解锁价格</span>
+                            <span class="text-2xl font-bold text-primary">¥199</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="text-text-secondary text-sm">完整技术架构文档</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="text-text-secondary text-sm">详细实施步骤指南</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="text-text-secondary text-sm">参数配置清单</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="text-text-secondary text-sm">风险应对策略</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span class="text-text-secondary text-sm">验收指标与模板</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button id="cancel-payment-btn" class="flex-1 py-3 border border-border-light text-text-primary rounded-xl font-medium hover:bg-bg-secondary transition-all">
+                            取消
+                        </button>
+                        <button id="confirm-payment-btn" class="flex-1 py-3 bg-gradient-primary text-white rounded-xl font-medium hover:shadow-glow transition-all">
+                            确认支付
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享弹窗 -->
+    <div id="share-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-card max-w-md w-full">
+                <div class="p-6">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-share-alt text-4xl text-primary mb-4"></i>
+                        <h3 class="text-xl font-semibold text-text-primary">分享案例</h3>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center justify-between p-3 bg-bg-secondary rounded-lg">
+                            <span class="text-text-secondary">链接分享</span>
+                            <button id="copy-link-btn" class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-all">
+                                复制链接
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-4">
+                            <button class="share-platform-btn flex flex-col items-center p-3 bg-bg-secondary rounded-lg hover:bg-border-light transition-all" data-platform="wechat">
+                                <i class="fab fa-weixin text-2xl text-green-500 mb-2"></i>
+                                <span class="text-xs text-text-secondary">微信</span>
+                            </button>
+                            <button class="share-platform-btn flex flex-col items-center p-3 bg-bg-secondary rounded-lg hover:bg-border-light transition-all" data-platform="qq">
+                                <i class="fab fa-qq text-2xl text-blue-500 mb-2"></i>
+                                <span class="text-xs text-text-secondary">QQ</span>
+                            </button>
+                            <button class="share-platform-btn flex flex-col items-center p-3 bg-bg-secondary rounded-lg hover:bg-border-light transition-all" data-platform="weibo">
+                                <i class="fab fa-weibo text-2xl text-red-500 mb-2"></i>
+                                <span class="text-xs text-text-secondary">微博</span>
+                            </button>
+                            <button class="share-platform-btn flex flex-col items-center p-3 bg-bg-secondary rounded-lg hover:bg-border-light transition-all" data-platform="linkedin">
+                                <i class="fab fa-linkedin text-2xl text-blue-600 mb-2"></i>
+                                <span class="text-xs text-text-secondary">LinkedIn</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button id="close-share-btn" class="w-full py-3 bg-gradient-primary text-white rounded-xl font-medium hover:shadow-glow transition-all">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部版权信息 -->
+    <footer id="footer" class="ml-64 bg-white border-t border-border-light py-6">
+        <div class="px-8 text-center text-text-secondary text-sm">
+            <p>&copy; 2024 CasePilot. 案例驱动的大模型解决方案平台. 保留所有权利.</p>
+            <p class="mt-1">京ICP备12345678号-1 | 京公网安备11010802012345号</p>
+        </div>
+    </footer>
+
+    <script src="js/api.js?v=6"></script>
+    <script>
+        // 等待ApiClient加载完成
+        function waitForApiClient(callback, maxAttempts = 100) {
+            const apiClient = window.ApiClient || window.apiClient || (typeof ApiClient !== 'undefined' ? ApiClient : null);
+            
+            if (apiClient && typeof apiClient.getCaseById === 'function') {
+                console.log('ApiClient已加载:', typeof apiClient.getCaseById);
+                if (!window.ApiClient) {
+                    window.ApiClient = apiClient;
+                }
+                callback();
+            } else if (maxAttempts > 0) {
+                if (maxAttempts % 20 === 0) {
+                    console.log('等待ApiClient加载...', maxAttempts);
+                }
+                setTimeout(() => waitForApiClient(callback, maxAttempts - 1), 50);
+            } else {
+                console.error('ApiClient加载超时');
+                alert('API客户端加载失败，请刷新页面重试');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 解析URL参数的辅助函数
+            function getUrlParams() {
+                const params = {};
+                const queryString = window.location.search.substring(1);
+                const urlParams = new URLSearchParams(queryString);
+                
+                for(const [key, value] of urlParams.entries()) {
+                    params[key] = value;
+                }
+                return params;
+            }
+
+            // 获取URL参数
+            const params = getUrlParams();
+            const caseId = params.caseId;
+
+            if (!caseId) {
+                alert('缺少案例ID参数');
+                window.location.href = 'P-CASE_LIBRARY.html';
+                return;
+            }
+
+            // 等待ApiClient加载后获取案例数据
+            waitForApiClient(async function() {
+                try {
+                    // 显示加载状态
+                    document.querySelector('#case-title').textContent = '加载中...';
+                    
+                    // 从API获取案例数据
+                    const client = window.ApiClient || window.apiClient || ApiClient;
+                    const response = await client.getCaseById(caseId);
+                    
+                    if (!response.success || !response.data) {
+                        throw new Error(response.error || '获取案例数据失败');
+                    }
+
+                    const caseData = response.data;
+                    
+                    // 更新页面内容
+                    updateCaseContent(caseData);
+                } catch (error) {
+                    console.error('加载案例详情失败:', error);
+                    alert('加载案例详情失败: ' + error.message);
+                    window.location.href = 'P-CASE_LIBRARY.html';
+                }
+            });
+
+            // 更新页面内容的函数
+            function updateCaseContent(caseData) {
+                // 更新标题
+                document.querySelector('#case-title').textContent = caseData.title || '未命名案例';
+                
+                // 更新案例ID
+                document.querySelector('#case-id').textContent = `CASE-${caseData.id}`;
+                
+                // 更新日期
+                const publishDate = new Date(caseData.created_at).toLocaleDateString('zh-CN');
+                const updateDate = new Date(caseData.updated_at).toLocaleDateString('zh-CN');
+                document.querySelector('#case-publish-date').textContent = publishDate;
+                document.querySelector('#case-update-date').textContent = updateDate;
+                document.querySelector('#publish-date').textContent = publishDate;
+                
+                // 更新统计数据
+                document.querySelector('#case-view-count').textContent = formatNumber(caseData.view_count || 0);
+                document.querySelector('#case-download-count').textContent = formatNumber(caseData.download_count || 0);
+                document.querySelector('#case-favorite-count').textContent = formatNumber(caseData.favorite_count || 0);
+                document.querySelector('#view-count').textContent = formatNumber(caseData.view_count || 0) + ' 次浏览';
+                document.querySelector('#download-count').textContent = formatNumber(caseData.download_count || 0) + ' 次下载';
+                
+                // 更新图片 - 使用visual.png
+                const imageUrl = caseData.image_path 
+                    ? `/${caseData.image_path}` 
+                    : 'https://via.placeholder.com/800x600?text=No+Image';
+                document.querySelector('#case-image').src = imageUrl;
+                document.querySelector('#case-image').alt = caseData.title || '案例图片';
+                
+                // 更新价格
+                const price = caseData.price || 0;
+                const priceElements = document.querySelectorAll('#unlock-btn span, #unlock-content-btn span');
+                priceElements.forEach(el => {
+                    if (el.textContent.includes('¥')) {
+                        el.textContent = `¥${price}`;
+                    }
+                });
+                
+                // 更新标签
+                updateCaseTags(caseData);
+                
+                // 更新描述内容
+                updateCaseDescription(caseData);
+            }
+
+            // 更新案例标签
+            function updateCaseTags(caseData) {
+                const tagsContainer = document.querySelector('#case-tags');
+                if (!tagsContainer) return;
+                
+                tagsContainer.innerHTML = '';
+                
+                if (caseData.industry) {
+                    const industryTag = document.createElement('span');
+                    industryTag.className = 'px-4 py-2 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium';
+                    industryTag.textContent = caseData.industry;
+                    tagsContainer.appendChild(industryTag);
+                }
+                
+                if (caseData.scenario) {
+                    const scenarioTag = document.createElement('span');
+                    scenarioTag.className = 'px-4 py-2 bg-green-100 text-green-800 rounded-lg text-sm font-medium';
+                    scenarioTag.textContent = caseData.scenario;
+                    tagsContainer.appendChild(scenarioTag);
+                }
+                
+                if (caseData.technology) {
+                    const techTag = document.createElement('span');
+                    techTag.className = 'px-4 py-2 bg-purple-100 text-purple-800 rounded-lg text-sm font-medium';
+                    techTag.textContent = caseData.technology;
+                    tagsContainer.appendChild(techTag);
+                }
+            }
+
+            // 更新案例描述
+            function updateCaseDescription(caseData) {
+                // 更新项目背景
+                const backgroundEl = document.querySelector('#project-background');
+                if (backgroundEl && caseData.description) {
+                    backgroundEl.textContent = caseData.description;
+                } else if (backgroundEl && caseData.summary) {
+                    backgroundEl.textContent = caseData.summary;
+                }
+            }
+
+            // 格式化数字
+            function formatNumber(num) {
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'K';
+                }
+                return num.toString();
+            }
+
+            // 解锁按钮点击事件
+            document.querySelector('#unlock-btn').addEventListener('click', function() {
+                document.querySelector('#payment-modal').classList.remove('hidden');
+            });
+
+            document.querySelector('#unlock-content-btn').addEventListener('click', function() {
+                document.querySelector('#payment-modal').classList.remove('hidden');
+            });
+
+            // 生成类似方案按钮
+            document.querySelector('#generate-similar-btn').addEventListener('click', function() {
+                window.location.href = `P-SOLUTION_GENERATOR.html?caseId=${caseId}`;
+            });
+
+            // 分享按钮
+            document.querySelector('#share-btn').addEventListener('click', function() {
+                document.querySelector('#share-modal').classList.remove('hidden');
+            });
+
+            // 支付弹窗相关事件
+            document.querySelector('#cancel-payment-btn').addEventListener('click', function() {
+                document.querySelector('#payment-modal').classList.add('hidden');
+            });
+
+            document.querySelector('#confirm-payment-btn').addEventListener('click', function() {
+                // 模拟支付成功
+                document.querySelector('#payment-modal').classList.add('hidden');
+                
+                // 解锁内容
+                const detailedContent = document.querySelector('#detailed-content');
+                const lockedOverlay = document.querySelector('.locked-overlay');
+                const fullContent = document.querySelector('#full-content');
+                
+                detailedContent.classList.remove('locked-content');
+                lockedOverlay.classList.add('hidden');
+                fullContent.classList.remove('hidden');
+                
+                // 更新按钮状态
+                document.querySelector('#unlock-btn').innerHTML = `
+                    <i class="fas fa-check mr-2"></i>
+                    已解锁
+                `;
+                document.querySelector('#unlock-btn').classList.remove('bg-gradient-primary');
+                document.querySelector('#unlock-btn').classList.add('bg-success');
+                
+                // 显示成功提示
+                alert('支付成功！详细内容已解锁。');
+            });
+
+            // 分享弹窗相关事件
+            document.querySelector('#close-share-btn').addEventListener('click', function() {
+                document.querySelector('#share-modal').classList.add('hidden');
+            });
+
+            document.querySelector('#copy-link-btn').addEventListener('click', function() {
+                const currentUrl = window.location.href;
+                navigator.clipboard.writeText(currentUrl).then(function() {
+                    alert('链接已复制到剪贴板');
+                }).catch(function() {
+                    alert('复制失败，请手动复制');
+                });
+            });
+
+            // 分享平台按钮
+            document.querySelectorAll('.share-platform-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const platform = this.dataset.platform;
+                    const currentUrl = window.location.href;
+                    const title = document.querySelector('#case-title').textContent;
+                    
+                    console.log(`分享到${platform}: ${title} - ${currentUrl}`);
+                    alert(`正在分享到${platform}...`);
+                });
+            });
+
+            // 快速操作按钮
+            document.querySelector('#favorite-btn').addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const text = this.querySelector('span');
+                
+                if (icon.classList.contains('fas')) {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    text.textContent = '取消收藏';
+                } else {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    text.textContent = '收藏案例';
+                }
+            });
+
+            document.querySelector('#download-summary-btn').addEventListener('click', function() {
+                console.log('下载案例摘要');
+                alert('正在下载案例摘要...');
+            });
+
+            document.querySelector('#contact-consultant-btn').addEventListener('click', function() {
+                console.log('联系顾问');
+                alert('正在为您转接专业顾问...');
+            });
+
+            // 相关案例卡片点击事件
+            document.querySelectorAll('.related-case-card').forEach(function(card) {
+                card.addEventListener('click', function() {
+                    const relatedCaseId = this.dataset.caseId;
+                    window.location.href = `P-CASE_DETAIL.html?caseId=${relatedCaseId}`;
+                });
+            });
+
+            // 标签按钮点击事件
+            document.querySelectorAll('.tag-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const tag = this.textContent.trim();
+                    window.location.href = `P-CASE_LIBRARY.html?tag=${encodeURIComponent(tag)}`;
+                });
+            });
+
+            // 导航菜单点击事件
+            document.querySelector('#nav-home').addEventListener('click', function() {
+                window.location.href = 'P-HOME.html';
+            });
+
+            document.querySelector('#nav-generator').addEventListener('click', function() {
+                window.location.href = 'P-SOLUTION_GENERATOR.html';
+            });
+
+            document.querySelector('#nav-library').addEventListener('click', function() {
+                window.location.href = 'P-CASE_LIBRARY.html';
+            });
+
+            document.querySelector('#nav-profile').addEventListener('click', function() {
+                window.location.href = 'P-USER_CENTER.html';
+            });
+
+            document.querySelector('#nav-orders').addEventListener('click', function() {
+                window.location.href = 'P-ORDER_MANAGEMENT.html';
+            });
+
+            document.querySelector('#nav-invoices').addEventListener('click', function() {
+                window.location.href = 'P-INVOICE_MANAGEMENT.html';
+            });
+
+            // 顶部导航点击事件
+            document.querySelector('#user-avatar').addEventListener('click', function() {
+                window.location.href = 'P-USER_CENTER.html';
+            });
+
+            // 点击弹窗外部关闭
+            document.querySelector('#payment-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.add('hidden');
+                }
+            });
+
+            document.querySelector('#share-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

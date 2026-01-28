@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方案详情 - CasePilot · 案例驱动的大模型解决方案平台</title>
+    <script src="assets/tailwind-config.js"></script>
+    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: false, theme: 'default' });
+    </script>
+</head>
+<body class="bg-bg-primary min-h-screen cp-grid-bg">
+    <!-- 顶部导航栏 -->
+    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
+        <div class="flex items-center justify-between h-full px-6">
+            <!-- Logo和产品名称 -->
+            <div id="logo-section" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+                    <i class="fas fa-rocket text-white text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
+            </div>
+            
+            <!-- 主导航菜单 -->
+            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
+                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
+                <a href="P-SOLUTION_GENERATOR.html" class="text-primary font-medium border-b-2 border-primary py-1">方案生成器</a>
+                <a href="P-CASE_LIBRARY.html" class="text-text-secondary hover:text-primary py-1 transition-colors">案例库</a>
+                <a href="P-USER_CENTER.html" class="text-text-secondary hover:text-primary py-1 transition-colors">个人中心</a>
+            </nav>
+            
+            <!-- 搜索框和用户操作区 -->
+            <div id="header-actions" class="flex items-center space-x-4">
+                <!-- 全局搜索 -->
+                <div class="relative hidden lg:block">
+                    <input type="text" id="global-search" placeholder="搜索案例、方案..." 
+                           class="w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
+                </div>
+                
+                <!-- 消息通知 -->
+                <button id="notification-btn" class="relative p-2 text-text-secondary hover:text-primary transition-colors">
+                    <i class="fas fa-bell text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-danger rounded-full"></span>
+                </button>
+                
+                <!-- 用户头像 -->
+                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
+                    <img src="https://s.coze.cn/image/yrx9cAWAbDQ/" 
+                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
+                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
+                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 左侧菜单 -->
+    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
+        <div class="p-6">
+            <!-- 菜单标题 -->
+            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">功能导航</h3>
+            
+            <!-- 菜单项 -->
+            <nav id="sidebar-nav" class="space-y-2">
+                <a href="P-HOME.html" id="nav-home" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="font-medium">首页</span>
+                </a>
+                <a href="P-SOLUTION_GENERATOR.html" id="nav-generator" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
+                    <i class="fas fa-magic text-lg"></i>
+                    <span class="font-medium">方案生成器</span>
+                </a>
+                <a href="P-CASE_LIBRARY.html" id="nav-library" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-book text-lg"></i>
+                    <span class="font-medium">案例库</span>
+                </a>
+                <a href="P-SOLUTION_HISTORY.html" id="nav-history" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-history text-lg"></i>
+                    <span class="font-medium">历史方案</span>
+                </a>
+                <a href="P-USER_CENTER.html" id="nav-profile" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="font-medium">个人中心</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main id="main-content" class="ml-64 mt-16 min-h-screen">
+        <div class="p-8">
+            <!-- 页面头部 -->
+            <div id="page-header" class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2" id="solution-title">电商平台智能推荐系统</h1>
+                        <nav id="breadcrumb" class="text-sm text-text-secondary">
+                            <a href="P-HOME.html" class="hover:text-primary transition-colors">首页</a>
+                            <span class="mx-2">/</span>
+                            <a href="P-SOLUTION_GENERATOR.html" class="hover:text-primary transition-colors">方案生成器</a>
+                            <span class="mx-2">/</span>
+                            <span>方案详情</span>
+                        </nav>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button id="edit-solution-btn" class="px-4 py-2 border border-border-light text-text-secondary rounded-lg hover:border-primary hover:text-primary transition-all">
+                            <i class="fas fa-edit mr-2"></i>
+                            编辑
+                        </button>
+                        <button id="export-solution-btn" class="px-6 py-2 bg-gradient-primary text-white rounded-lg hover:shadow-glow transition-all">
+                            <i class="fas fa-download mr-2"></i>
+                            导出方案
+                        </button>
+                        <button id="delete-solution-btn" class="px-4 py-2 text-danger hover:bg-red-50 rounded-lg transition-all">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 方案基本信息 -->
+            <section id="solution-info" class="mb-8">
+                <div class="solution-section rounded-2xl p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
+                                <i class="fas fa-clock text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-text-secondary text-sm">生成时间</p>
+                                <p class="text-text-primary font-medium" id="solution-time">2024-01-15 14:30</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-secondary rounded-xl flex items-center justify-center">
+                                <i class="fas fa-tags text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-text-secondary text-sm">相关案例</p>
+                                <p class="text-text-primary font-medium" id="related-cases-count">0个</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-warning to-danger rounded-xl flex items-center justify-center">
+                                <i class="fas fa-file-alt text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-text-secondary text-sm">导出次数</p>
+                                <p class="text-text-primary font-medium" id="export-count">5次</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-success to-tertiary rounded-xl flex items-center justify-center">
+                                <i class="fas fa-check-circle text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-text-secondary text-sm">状态</p>
+                                <p class="text-success font-medium" id="solution-status">已完成</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 方案内容区 -->
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+                <!-- 主内容 -->
+                <div class="xl:col-span-3 space-y-8">
+                    <!-- 方案内容区 -->
+                    <section id="solution-content-section" class="solution-section rounded-2xl p-8 bg-white shadow-card mb-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-semibold text-text-primary flex items-center">
+                                <i class="fas fa-file-invoice text-primary mr-3"></i>
+                                技术方案正文
+                            </h2>
+                            <div class="flex space-x-2">
+                                <button class="p-2 text-text-secondary hover:text-primary transition-all" title="全屏查看">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                                <button class="p-2 text-text-secondary hover:text-primary transition-all" title="复制内容">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="solution-markdown-body" class="prose prose-blue max-w-none text-text-primary">
+                            <!-- 动态加载方案 Markdown 内容 -->
+                            <div class="flex items-center justify-center py-12">
+                                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <span class="ml-3 text-text-secondary font-medium">方案深度生成中...</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 参考指标对比看板 -->
+                    <section id="metrics-benchmark-section" class="solution-section rounded-2xl p-8 bg-white shadow-card mb-8 hidden">
+                        <h2 class="text-xl font-semibold text-text-primary mb-6 flex items-center">
+                            <i class="fas fa-chart-line text-primary mr-3"></i>
+                            方案评判参考指标 (Benchmark)
+                        </h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2">
+                                <div class="bg-bg-secondary rounded-xl p-6 border border-border-light">
+                                    <h3 class="font-medium text-text-primary mb-4 flex items-center">
+                                        <i class="fas fa-balance-scale text-secondary mr-2"></i>
+                                        性能对比与可溯源数据
+                                    </h3>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-sm">
+                                            <thead>
+                                                <tr class="text-left border-b border-border-light">
+                                                    <th class="pb-3 font-semibold text-text-secondary">评价维度</th>
+                                                    <th class="pb-3 font-semibold text-text-secondary">历史最优值 (来源)</th>
+                                                    <th class="pb-3 font-semibold text-text-secondary">本方案预期</th>
+                                                    <th class="pb-3 font-semibold text-text-secondary">状态</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="metrics-comparison-table" class="divide-y divide-border-light">
+                                                <!-- 动态填充对比数据 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-success/5 rounded-xl p-6 border border-success/20 overflow-y-auto" style="max-height: 500px;">
+                                    <h3 class="font-medium text-success mb-2">工程交付基准线</h3>
+                                    <p class="text-xs text-text-secondary mb-4">基于检索到的案例计算出的交付标准：</p>
+                                    <ul id="benchmark-list" class="space-y-3 text-sm text-text-primary">
+                                        <!-- 动态填充基准线 -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 方案对话区域 -->
+                    <section id="solution-chat-section" class="solution-section rounded-2xl p-6 flex flex-col" style="min-height: calc(100vh - 300px);">
+                        <div class="flex-1 flex flex-col overflow-hidden">
+                            <!-- 对话消息容器 -->
+                            <div id="chat-messages-container" class="flex-1 overflow-y-auto space-y-6 pr-2 pb-4" style="max-height: calc(100vh - 450px);">
+                                <!-- 用户消息（右侧）- 第一个消息 -->
+                                <div class="flex items-start space-x-3 justify-end">
+                                    <div class="flex-1 max-w-[75%] flex justify-end">
+                                        <div class="bg-gradient-primary rounded-2xl rounded-tr-none p-4 shadow-sm">
+                                            <div class="text-white whitespace-pre-wrap" id="user-message-content">正在加载...</div>
+                                        </div>
+                                    </div>
+                                    <div class="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-user text-white"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- AI回复消息（左侧）- 第二个消息 -->
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-robot text-white"></i>
+                                    </div>
+                                    <div class="flex-1 max-w-[75%]">
+                                        <div class="bg-white border border-border-light rounded-2xl rounded-tl-none p-4 shadow-sm">
+                                            <div id="solution-content" class="prose prose-sm max-w-none text-text-primary">
+                                                <div class="flex items-center justify-center py-8">
+                                                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                                    <span class="ml-3 text-text-secondary">正在加载方案内容...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 输入框区域 -->
+                            <div class="border-t border-border-light pt-3 mt-auto">
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-1">
+                                        <textarea id="chat-input" 
+                                                  rows="2" 
+                                                  placeholder="继续提问，深入了解方案细节..."
+                                                  class="w-full px-4 py-2 border border-border-light rounded-xl form-input-focus resize-none"
+                                                  style="min-height: 50px; max-height: 120px;"></textarea>
+                                    </div>
+                                    <button id="send-message-btn" 
+                                            class="px-6 py-2 bg-gradient-primary text-white rounded-xl font-semibold hover:shadow-glow transition-all flex items-center justify-center flex-shrink-0"
+                                            style="height: 50px; min-height: 50px; max-height: 50px; box-sizing: border-box;">
+                                        <span id="send-btn-text">
+                                            <i class="fas fa-paper-plane mr-2"></i>
+                                            发送
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 预算框架 -->
+                    <section id="budget-section" class="solution-section rounded-2xl p-6">
+                        <h2 class="text-xl font-semibold text-text-primary mb-6 flex items-center">
+                            <i class="fas fa-calculator text-primary mr-3"></i>
+                            预算框架
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <h3 class="font-semibold text-text-primary">开发成本</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-text-secondary">前端开发</span>
+                                        <span class="font-medium">¥150,000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-text-secondary">后端开发</span>
+                                        <span class="font-medium">¥200,000</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-text-secondary">算法开发</span>
+                                        <span class="font-medium">¥250,000</span>
+                                    </div>
+                                    <div class="border-t border-border-light pt-3">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold">小计</span>
+                                            <span class="font-bold text-lg">¥600,000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <h3 class="font-semibold text-text-primary">基础设施成本</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-text-secondary">云服务器</span>
+                                        <span class="font-medium">¥50,000/年</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-text-secondary">数据库</span>
+                                        <span class="font-medium">¥30,000/年</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-text-secondary">CDN服务</span>
+                                        <span class="font-medium">¥20,000/年</span>
+                                    </div>
+                                    <div class="border-t border-border-light pt-3">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold">小计</span>
+                                            <span class="font-bold text-lg">¥100,000/年</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-bg-secondary rounded-xl">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-semibold">项目总预算</span>
+                                <span class="text-2xl font-bold text-primary">¥700,000</span>
+                            </div>
+                            <p class="text-text-secondary text-sm mt-1">包含第一年基础设施成本</p>
+                        </div>
+                    </section>
+
+                    <!-- SOW/SLA -->
+                    <section id="sow-sla-section" class="solution-section rounded-2xl p-6">
+                        <h2 class="text-xl font-semibold text-text-primary mb-6 flex items-center">
+                            <i class="fas fa-handshake text-primary mr-3"></i>
+                            服务协议 (SOW/SLA)
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-semibold text-text-primary mb-4">服务范围</h3>
+                                <ul class="space-y-3 text-text-secondary">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check text-success mt-1"></i>
+                                        <span>系统架构设计与开发</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check text-success mt-1"></i>
+                                        <span>推荐算法开发与优化</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check text-success mt-1"></i>
+                                        <span>数据采集与处理</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check text-success mt-1"></i>
+                                        <span>系统部署与运维</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check text-success mt-1"></i>
+                                        <span>技术培训与文档</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-text-primary mb-4">服务级别</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-text-secondary">系统可用性</span>
+                                            <span class="font-medium">99.9%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gradient-primary h-2 rounded-full" style="width: 99.9%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-text-secondary">响应时间</span>
+                                            <span class="font-medium">&lt; 200ms</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gradient-secondary h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-text-secondary">故障恢复</span>
+                                            <span class="font-medium">&lt; 1小时</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gradient-to-br from-warning to-danger h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 风险与应对策略 -->
+                    <section id="risk-section" class="solution-section rounded-2xl p-6">
+                        <h2 class="text-xl font-semibold text-text-primary mb-6 flex items-center">
+                            <i class="fas fa-shield-alt text-primary mr-3"></i>
+                            风险与应对策略
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="risk-card rounded-xl p-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-danger rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                        <i class="fas fa-exclamation text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary mb-2">数据质量风险</h3>
+                                        <p class="text-text-secondary text-sm mb-3">用户行为数据不完整或质量不高，影响推荐效果</p>
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-lightbulb text-warning text-sm"></i>
+                                            <span class="text-sm font-medium">应对：多源数据采集，数据清洗预处理</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="risk-card rounded-xl p-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-warning rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                        <i class="fas fa-clock text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary mb-2">项目延期风险</h3>
+                                        <p class="text-text-secondary text-sm mb-3">算法开发复杂度超出预期，导致项目延期</p>
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-lightbulb text-warning text-sm"></i>
+                                            <span class="text-sm font-medium">应对：敏捷开发，阶段性交付，预留缓冲时间</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="risk-card rounded-xl p-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-info rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                        <i class="fas fa-server text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary mb-2">性能风险</h3>
+                                        <p class="text-text-secondary text-sm mb-3">系统在高并发下性能下降，影响用户体验</p>
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-lightbulb text-warning text-sm"></i>
+                                            <span class="text-sm font-medium">应对：性能测试，负载均衡，缓存优化</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="risk-card rounded-xl p-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                                        <i class="fas fa-users text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary mb-2">用户接受度风险</h3>
+                                        <p class="text-text-secondary text-sm mb-3">用户对推荐结果不满意，使用率低</p>
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-lightbulb text-warning text-sm"></i>
+                                            <span class="text-sm font-medium">应对：A/B测试，用户反馈收集，持续优化</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- 右侧面板 -->
+                <div class="xl:block hidden space-y-6">
+                    <!-- 项目化工具 -->
+                    <section id="project-tools" class="solution-section rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4 flex items-center">
+                            <i class="fas fa-tools text-primary mr-2"></i>
+                            项目化工具
+                        </h3>
+                        <div class="space-y-4">
+                            <button id="task-decomposition-btn" class="w-full p-3 task-card rounded-xl text-left hover:shadow-card transition-all">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-tasks text-success"></i>
+                                    <span class="font-medium">任务分解</span>
+                                </div>
+                                <p class="text-text-secondary text-sm mt-2">将方案分解为可执行的具体任务</p>
+                            </button>
+                            <button id="milestone-planning-btn" class="w-full p-3 task-card rounded-xl text-left hover:shadow-card transition-all">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-calendar-alt text-primary"></i>
+                                    <span class="font-medium">里程碑规划</span>
+                                </div>
+                                <p class="text-text-secondary text-sm mt-2">制定详细的项目进度计划</p>
+                            </button>
+                            <button id="risk-identification-btn" class="w-full p-3 task-card rounded-xl text-left hover:shadow-card transition-all">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    <span class="font-medium">风险识别</span>
+                                </div>
+                                <p class="text-text-secondary text-sm mt-2">识别项目潜在风险和应对措施</p>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- 相关案例推荐 -->
+                    <section id="related-cases-section" class="solution-section rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4 flex items-center">
+                            <i class="fas fa-lightbulb text-primary mr-2"></i>
+                            相关案例
+                        </h3>
+                        <div class="space-y-4" id="related-cases-container">
+                            <!-- 动态加载的相关案例将显示在这里 -->
+                            <div class="text-center py-4">
+                                <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                                <p class="mt-2 text-text-secondary text-sm">加载中...</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 快速操作 -->
+                    <section id="quick-actions" class="solution-section rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4 flex items-center">
+                            <i class="fas fa-bolt text-primary mr-2"></i>
+                            快速操作
+                        </h3>
+                        <div class="space-y-3">
+                            <button id="regenerate-solution-btn" class="w-full p-3 bg-gradient-primary text-white rounded-xl text-center hover:shadow-glow transition-all">
+                                <i class="fas fa-redo mr-2"></i>
+                                重新生成
+                            </button>
+                            <button id="share-solution-btn" class="w-full p-3 border border-border-light text-text-secondary rounded-xl text-center hover:border-primary hover:text-primary transition-all">
+                                <i class="fas fa-share mr-2"></i>
+                                分享方案
+                            </button>
+                            <button id="save-template-btn" class="w-full p-3 border border-border-light text-text-secondary rounded-xl text-center hover:border-primary hover:text-primary transition-all">
+                                <i class="fas fa-bookmark mr-2"></i>
+                                保存为模板
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部版权信息 -->
+    <footer id="footer" class="ml-64 bg-white border-t border-border-light py-6">
+        <div class="px-8 text-center text-text-secondary text-sm">
+            <p>&copy; 2024 CasePilot. 案例驱动的大模型解决方案平台. 保留所有权利.</p>
+            <p class="mt-1">京ICP备12345678号-1 | 京公网安备11010802012345号</p>
+        </div>
+    </footer>
+
+    <!-- 删除确认弹窗 -->
+    <div id="delete-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-trash text-danger text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-text-primary mb-2">确认删除方案？</h3>
+                <p class="text-text-secondary mb-6">删除后将无法恢复，确定要继续吗？</p>
+                <div class="flex space-x-3">
+                    <button id="cancel-delete-btn" class="flex-1 py-2 border border-border-light text-text-secondary rounded-lg hover:border-primary hover:text-primary transition-all">
+                        取消
+                    </button>
+                    <button id="confirm-delete-btn" class="flex-1 py-2 bg-danger text-white rounded-lg hover:bg-red-600 transition-all">
+                        确认删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详情查看模态框 (通用) -->
+    <div id="details-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-0 max-w-2xl w-full mx-4 overflow-hidden shadow-2xl">
+            <div class="px-6 py-4 border-b border-border-light flex justify-between items-center bg-gray-50">
+                <h3 id="modal-title" class="text-lg font-bold text-text-primary">详情查看</h3>
+                <button onclick="document.querySelector('#details-modal').classList.add('hidden')" class="text-text-secondary hover:text-primary transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="p-6 max-height-[70vh] overflow-y-auto">
+                <!-- 动态内容 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js?v=6"></script>
+    <script>
+        // 等待ApiClient加载完成
+        function waitForApiClient(callback, maxAttempts = 100) {
+            const apiClient = window.ApiClient || window.apiClient || (typeof ApiClient !== 'undefined' ? ApiClient : null);
+            
+            if (apiClient && typeof apiClient.getSolutionById === 'function') {
+                console.log('ApiClient已加载:', typeof apiClient.getSolutionById);
+                if (!window.ApiClient) {
+                    window.ApiClient = apiClient;
+                }
+                callback();
+            } else if (maxAttempts > 0) {
+                if (maxAttempts % 20 === 0) {
+                    console.log('等待ApiClient加载...', maxAttempts);
+                }
+                setTimeout(() => waitForApiClient(callback, maxAttempts - 1), 50);
+            } else {
+                console.error('ApiClient加载超时');
+                alert('API客户端加载失败，请刷新页面重试');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 解析URL参数的辅助函数
+            function getUrlParams() {
+                const params = {};
+                const queryString = window.location.search.substring(1);
+                const urlParams = new URLSearchParams(queryString);
+                
+                for(const [key, value] of urlParams.entries()) {
+                    params[key] = value;
+                }
+                return params;
+            }
+
+            // 获取URL参数
+            const params = getUrlParams();
+            const solutionId = params.solutionId;
+
+            if (!solutionId) {
+                alert('缺少方案ID参数');
+                window.location.href = 'P-SOLUTION_GENERATOR.html';
+                return;
+            }
+
+            // 对话历史管理
+            const CHAT_STORAGE_KEY = `chat_history_${solutionId}`;
+
+            // 保存对话历史到localStorage
+            function saveChatHistory() {
+                const container = document.querySelector('#chat-messages-container');
+                if (!container) return;
+
+                const messages = [];
+                const messageElements = container.querySelectorAll('[data-message-type]');
+                
+                messageElements.forEach(element => {
+                    const messageType = element.getAttribute('data-message-type');
+                    let content = '';
+                    
+                    if (messageType === 'user') {
+                        const contentDiv = element.querySelector('.text-white');
+                        if (contentDiv) {
+                            content = contentDiv.textContent || contentDiv.innerText;
+                        }
+                    } else if (messageType === 'ai') {
+                        const contentDiv = element.querySelector('.prose');
+                        if (contentDiv) {
+                            // 保存原始HTML内容，以便恢复markdown渲染
+                            content = contentDiv.innerHTML;
+                        }
+                    }
+                    
+                    if (content) {
+                        messages.push({
+                            type: messageType,
+                            content: content,
+                            timestamp: Date.now()
+                        });
+                    }
+                });
+
+                try {
+                    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+                    console.log('对话历史已保存，消息数量:', messages.length);
+                } catch (error) {
+                    console.error('保存对话历史失败:', error);
+                }
+            }
+
+            // 从localStorage加载对话历史
+            function loadChatHistory() {
+                try {
+                    const savedData = localStorage.getItem(CHAT_STORAGE_KEY);
+                    if (!savedData) {
+                        console.log('没有找到保存的对话历史');
+                        return false;
+                    }
+
+                    const messages = JSON.parse(savedData);
+                    if (!Array.isArray(messages) || messages.length === 0) {
+                        return false;
+                    }
+
+                    console.log('加载对话历史，消息数量:', messages.length);
+                    
+                    const container = document.querySelector('#chat-messages-container');
+                    if (!container) return false;
+
+                    const initialUserMsg = document.querySelector('#user-message-content');
+                    const initialAIMsg = document.querySelector('#solution-content');
+                    
+                    // 恢复所有消息
+                    messages.forEach((msg, index) => {
+                        if (index < 2) {
+                            // 前两条是初始消息，更新现有元素
+                            if (index === 0 && msg.type === 'user' && initialUserMsg) {
+                                initialUserMsg.textContent = msg.content;
+                                const initialUserContainer = initialUserMsg.closest('.flex.items-start');
+                                if (initialUserContainer) {
+                                    initialUserContainer.setAttribute('data-message-type', 'user');
+                                }
+                            } else if (index === 1 && msg.type === 'ai' && initialAIMsg) {
+                                initialAIMsg.innerHTML = msg.content;
+                                const initialAIContainer = initialAIMsg.closest('.flex.items-start');
+                                if (initialAIContainer) {
+                                    initialAIContainer.setAttribute('data-message-type', 'ai');
+                                }
+                            }
+                        } else {
+                            // 后续消息是新添加的，需要重新创建
+                            // 临时禁用保存，避免在加载过程中重复保存
+                            const tempSave = saveChatHistory;
+                            saveChatHistory = function() {};
+                            
+                            if (msg.type === 'user') {
+                                addUserMessage(msg.content);
+                            } else if (msg.type === 'ai') {
+                                addAIMessage(msg.content, false, false, true); // 第四个参数表示是HTML内容
+                            }
+                            
+                            saveChatHistory = tempSave;
+                        }
+                    });
+
+                    scrollToBottom();
+                    return true;
+                } catch (error) {
+                    console.error('加载对话历史失败:', error);
+                    return false;
+                }
+            }
+
+            // 等待ApiClient加载后获取方案数据
+            waitForApiClient(async function() {
+                try {
+                    // 显示加载状态
+                    document.querySelector('#solution-title').textContent = '加载中...';
+                    
+                    // 从API获取方案数据
+                    const client = window.ApiClient || window.apiClient || ApiClient;
+                    const response = await client.getSolutionById(solutionId);
+                    
+                    if (!response.success || !response.data) {
+                        throw new Error(response.error || '获取方案数据失败');
+                    }
+
+                    const solutionData = response.data;
+                    
+                    // 更新页面内容
+                    updateSolutionContent(solutionData);
+                    
+                    // 加载相关案例
+                    await loadRelatedCases(solutionData.related_case_ids || []);
+                } catch (error) {
+                    console.error('加载方案详情失败:', error);
+                    alert('加载方案详情失败: ' + error.message);
+                    window.location.href = 'P-SOLUTION_GENERATOR.html';
+                }
+            });
+
+            // 更新方案内容的函数
+            function updateSolutionContent(solutionData) {
+                // 更新标题
+                const userInput = solutionData.user_input || {};
+                const title = userInput.title || '未命名方案';
+                document.querySelector('#solution-title').textContent = title;
+                
+                // 更新时间
+                const createdDate = new Date(solutionData.created_at).toLocaleString('zh-CN');
+                document.querySelector('#solution-time').textContent = createdDate;
+                
+                // 更新相关案例数量
+                const caseCount = solutionData.related_case_ids ? solutionData.related_case_ids.length : 0;
+                const countElement = document.querySelector('#related-cases-count');
+                if (countElement) {
+                    countElement.textContent = `${caseCount}个`;
+                }
+                
+                // 更新状态
+                const statusMap = {
+                    'completed': '已完成',
+                    'generating': '生成中',
+                    'failed': '失败'
+                };
+                const statusText = statusMap[solutionData.status] || solutionData.status || '未知';
+                document.querySelector('#solution-status').textContent = statusText;
+                
+                // 更新状态样式
+                const statusElement = document.querySelector('#solution-status');
+                if (solutionData.status === 'completed') {
+                    statusElement.className = 'text-success font-medium';
+                } else if (solutionData.status === 'generating') {
+                    statusElement.className = 'text-warning font-medium';
+                } else if (solutionData.status === 'failed') {
+                    statusElement.className = 'text-danger font-medium';
+                }
+                
+                // 先尝试加载对话历史（如果有的话）
+                const hasHistory = loadChatHistory();
+                
+                // 【修复逻辑】无论是否有聊天历史，都必须渲染方案正文面板
+                const mainContentElement = document.querySelector('#solution-markdown-body');
+                if (mainContentElement) {
+                    if (solutionData.generated_content) {
+                        mainContentElement.innerHTML = formatMessage(solutionData.generated_content);
+                        // 应用项目化工具
+                        applyProjectTools(solutionData.generated_content);
+                        // 渲染后触发渲染器（Mermaid, MathJax）
+                        setTimeout(triggerRendering, 100);
+                    } else if (solutionData.status === 'generating') {
+                        mainContentElement.innerHTML = `
+                            <div class="flex items-center justify-center py-12">
+                                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                <span class="ml-3 text-text-secondary font-medium">方案深度生成中...</span>
+                            </div>`;
+                    } else if (solutionData.status === 'failed') {
+                        mainContentElement.innerHTML = `
+                            <div class="bg-danger/5 border border-danger/20 rounded-xl p-8 text-center">
+                                <i class="fas fa-exclamation-triangle text-danger text-4xl mb-4"></i>
+                                <h3 class="text-lg font-bold text-text-primary mb-2">生成失败</h3>
+                                <p class="text-text-secondary">${solutionData.generated_content || '未知错误'}</p>
+                            </div>`;
+                    }
+                }
+
+                if (!hasHistory) {
+                    // 如果没有历史记录，从API数据更新初始对话消息
+                    // 更新用户消息内容
+                    const userMessageElement = document.querySelector('#user-message-content');
+                    if (userMessageElement) {
+                        if (userInput.method === 'text') {
+                            const userMessage = `项目标题：${userInput.title || ''}\n\n${userInput.description || ''}`;
+                            userMessageElement.textContent = userMessage;
+                        } else {
+                            const userMessage = `项目标题：${userInput.title || ''}
+所属行业：${userInput.industry || ''}
+技术方向：${userInput.technology || ''}
+预算范围：${userInput.budget || '未指定'}
+项目目标：${userInput.objectives || ''}
+技术要求：${userInput.requirements || ''}`;
+                            userMessageElement.textContent = userMessage;
+                        }
+                    }
+                    
+                    // 更新方案内容（对话区域第一条回复）
+                    const chatContentElement = document.querySelector('#solution-content');
+                    if (chatContentElement) {
+                        if (solutionData.generated_content) {
+                            chatContentElement.innerHTML = formatMessage(solutionData.generated_content);
+                            // 渲染后触发
+                            setTimeout(triggerRendering, 100);
+                        } else {
+                            chatContentElement.innerHTML = '<p class="text-text-secondary">方案内容正在生成中，请稍候...</p>';
+                        }
+                    }
+                    
+                    // 为初始消息添加data-message-type属性，以便保存历史
+                    const initialUserContainer = document.querySelector('#user-message-content')?.closest('.flex.items-start');
+                    const initialAIContainer = document.querySelector('#solution-content')?.closest('.flex.items-start');
+                    if (initialUserContainer && !initialUserContainer.hasAttribute('data-message-type')) {
+                        initialUserContainer.setAttribute('data-message-type', 'user');
+                    }
+                    if (initialAIContainer && !initialAIContainer.hasAttribute('data-message-type')) {
+                        initialAIContainer.setAttribute('data-message-type', 'ai');
+                    }
+                    
+                    // 保存初始消息到历史记录
+                    setTimeout(() => {
+                        saveChatHistory();
+                    }, 100);
+                    
+                    // 滚动到底部
+                    const chatContainer = document.querySelector('#chat-messages-container');
+                    if (chatContainer) {
+                        setTimeout(() => {
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                        }, 100);
+                    }
+                } else {
+                    // 如果有历史记录，此时对话区域已经通过 loadChatHistory 渲染了
+                    // 我们只需确保如果 generated_content 已经生成，对话区域的第一条回复（如果还是旧的"生成中"状态）被更新
+                    const firstAIMsgContent = document.querySelector('#solution-content');
+                    if (firstAIMsgContent && (firstAIMsgContent.innerText.includes('生成中') || firstAIMsgContent.innerText.includes('正在生成')) && solutionData.generated_content) {
+                        firstAIMsgContent.innerHTML = formatMessage(solutionData.generated_content);
+                        setTimeout(triggerRendering, 100);
+                    }
+                }
+                
+                // 渲染评估指标对比看板
+                renderEvaluationMetrics(solutionData.evaluation_metrics || []);
+            }
+            
+            // 渲染评估指标对比看板
+            function renderEvaluationMetrics(evaluationMetrics) {
+                const section = document.querySelector('#metrics-benchmark-section');
+                const tableBody = document.querySelector('#metrics-comparison-table');
+                const benchmarkList = document.querySelector('#benchmark-list');
+                
+                if (!section || !tableBody) return;
+                
+                if (!evaluationMetrics || evaluationMetrics.length === 0) {
+                    // 没有指标数据，隐藏该部分
+                    section.classList.add('hidden');
+                    return;
+                }
+                
+                // 显示该部分
+                section.classList.remove('hidden');
+                
+                // 清空现有内容
+                tableBody.innerHTML = '';
+                if (benchmarkList) benchmarkList.innerHTML = '';
+                
+                // 收集所有指标并去重
+                const allMetrics = new Map();
+                const benchmarks = [];
+                
+                evaluationMetrics.forEach(caseMetrics => {
+                    if (caseMetrics.metrics && typeof caseMetrics.metrics === 'object') {
+                        Object.entries(caseMetrics.metrics).forEach(([key, value]) => {
+                            if (!allMetrics.has(key)) {
+                                allMetrics.set(key, []);
+                            }
+                            allMetrics.get(key).push({
+                                value: value,
+                                source: caseMetrics.case_title,
+                                industry: caseMetrics.industry,
+                                score: caseMetrics.relevance_score
+                            });
+                        });
+                    }
+                    
+                    // 收集验收标准
+                    if (caseMetrics.acceptance_standards) {
+                        benchmarks.push({
+                            standard: caseMetrics.acceptance_standards,
+                            source: caseMetrics.case_title
+                        });
+                    }
+                });
+                
+                // 渲染指标对比表
+                allMetrics.forEach((values, metricName) => {
+                    // 按相关度排序，取最高的
+                    values.sort((a, b) => b.score - a.score);
+                    const bestValue = values[0];
+                    
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-bg-secondary transition-colors';
+                    row.innerHTML = `
+                        <td class="py-3 font-medium text-text-primary">${escapeHtml(metricName)}</td>
+                        <td class="py-3">
+                            <span class="font-semibold text-primary">${escapeHtml(String(bestValue.value))}</span>
+                            <span class="text-xs text-text-secondary block">来源: ${escapeHtml(bestValue.source || '未知')}</span>
+                        </td>
+                        <td class="py-3 text-secondary font-medium">待确定</td>
+                        <td class="py-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                <i class="fas fa-chart-line mr-1"></i>参考值
+                            </span>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                
+            // 渲染基准线列表
+            if (benchmarkList && benchmarks.length > 0) {
+                benchmarks.slice(0, 5).forEach(benchmark => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-start space-x-2 bg-white/50 p-3 rounded-lg border border-success/10 mb-2';
+                    li.innerHTML = `
+                        <i class="fas fa-check-circle text-success mt-1 flex-shrink-0"></i>
+                        <div>
+                            <span class="text-text-primary text-sm leading-relaxed">${escapeHtml(benchmark.standard || '')}</span>
+                            <span class="text-xs text-text-secondary block mt-2 pt-2 border-t border-gray-100">
+                                <i class="fas fa-link mr-1"></i>来源: ${escapeHtml(benchmark.source || '未知')}
+                            </span>
+                        </div>
+                    `;
+                    benchmarkList.appendChild(li);
+                });
+            } else if (benchmarkList) {
+                    benchmarkList.innerHTML = '<li class="text-text-secondary text-sm">暂无验收标准数据</li>';
+                }
+                
+                // 如果没有指标但有验收标准
+                if (allMetrics.size === 0 && benchmarks.length > 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4" class="py-4 text-center text-text-secondary">暂无结构化指标数据，请参考工程交付基准线</td></tr>';
+                } else if (allMetrics.size === 0) {
+                    section.classList.add('hidden');
+                }
+            }
+
+            // 加载相关案例
+            async function loadRelatedCases(caseIds) {
+                const container = document.querySelector('#related-cases-container');
+                if (!container) return;
+
+                if (!caseIds || caseIds.length === 0) {
+                    container.innerHTML = '<p class="text-text-secondary text-sm">暂无相关案例</p>';
+                    return;
+                }
+
+                try {
+                    const client = window.ApiClient || window.apiClient || ApiClient;
+
+                    // 清空现有内容
+                    container.innerHTML = '';
+
+                    // 获取所有案例详情
+                    const casePromises = caseIds.map(id => client.getCaseById(id));
+                    const caseResponses = await Promise.all(casePromises);
+                    
+                    // 渲染案例列表
+                    caseResponses.forEach((response, index) => {
+                        if (response.success && response.data) {
+                            const caseData = response.data;
+                            const caseElement = createRelatedCaseElement(caseData, index + 1);
+                            container.appendChild(caseElement);
+                        }
+                    });
+
+                    // 如果没有成功加载的案例
+                    if (container.children.length === 0) {
+                        container.innerHTML = '<p class="text-text-secondary text-sm">暂无相关案例</p>';
+                    }
+                } catch (error) {
+                    console.error('加载相关案例失败:', error);
+                    container.innerHTML = '<p class="text-text-secondary text-sm">加载相关案例失败: ' + error.message + '</p>';
+                }
+            }
+
+            // 创建相关案例元素
+            function createRelatedCaseElement(caseData, index) {
+                const div = document.createElement('div');
+                div.className = 'border border-border-light rounded-lg p-3 hover:border-primary transition-colors cursor-pointer';
+                div.id = `related-case-${index}`;
+                div.dataset.caseId = caseData.id;
+                
+                const industryColor = getIndustryColor(caseData.industry);
+                
+                div.innerHTML = `
+                    <h4 class="font-medium text-text-primary text-sm mb-2">${caseData.title || '未命名案例'}</h4>
+                    <p class="text-text-secondary text-xs mb-2">${(caseData.description || caseData.summary || '').substring(0, 50)}...</p>
+                    <div class="flex items-center justify-between text-xs text-text-secondary">
+                        <span><i class="fas fa-eye mr-1"></i>${formatNumber(caseData.view_count || 0)}</span>
+                        ${caseData.industry ? `<span class="px-2 py-1 ${industryColor} rounded">${caseData.industry}</span>` : ''}
+                    </div>
+                `;
+                
+                // 添加点击事件
+                div.addEventListener('click', function() {
+                    window.location.href = `P-CASE_DETAIL.html?caseId=${caseData.id}`;
+                });
+                
+                return div;
+            }
+
+            // 获取行业颜色
+            function getIndustryColor(industry) {
+                const colors = {
+                    '金融科技': 'bg-blue-100 text-blue-800',
+                    '制造业': 'bg-purple-100 text-purple-800',
+                    '医疗健康': 'bg-teal-100 text-teal-800',
+                    '电商零售': 'bg-red-100 text-red-800',
+                    '教育培训': 'bg-indigo-100 text-indigo-800'
+                };
+                return colors[industry] || 'bg-gray-100 text-gray-800';
+            }
+
+            // 格式化数字
+            function formatNumber(num) {
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'K';
+                }
+                return num.toString();
+            }
+
+            // 导航按钮点击事件
+            document.querySelector('#nav-home').addEventListener('click', function() {
+                window.location.href = 'P-HOME.html';
+            });
+
+            document.querySelector('#nav-generator').addEventListener('click', function() {
+                window.location.href = 'P-SOLUTION_GENERATOR.html';
+            });
+
+            document.querySelector('#nav-library').addEventListener('click', function() {
+                window.location.href = 'P-CASE_LIBRARY.html';
+            });
+
+            document.querySelector('#nav-profile').addEventListener('click', function() {
+                window.location.href = 'P-USER_CENTER.html';
+            });
+            
+            document.querySelector('#nav-history').addEventListener('click', function() {
+                window.location.href = 'P-SOLUTION_HISTORY.html';
+            });
+
+            // 编辑方案按钮
+            document.querySelector('#edit-solution-btn').addEventListener('click', function() {
+                const solutionId = params.solutionId || 'solution1';
+                window.location.href = `P-SOLUTION_GENERATOR.html?solutionId=${solutionId}`;
+            });
+
+            // 导出方案按钮
+            document.querySelector('#export-solution-btn').addEventListener('click', function() {
+                console.log('导出方案功能需要调用第三方接口实现文件生成和下载');
+                // 模拟下载反馈
+                const button = this;
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>导出中...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-check mr-2"></i>导出完成';
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                    }, 2000);
+                }, 2000);
+            });
+
+            // 删除方案按钮
+            document.querySelector('#delete-solution-btn').addEventListener('click', function() {
+                document.querySelector('#delete-modal').classList.remove('hidden');
+            });
+
+            // 取消删除
+            document.querySelector('#cancel-delete-btn').addEventListener('click', function() {
+                document.querySelector('#delete-modal').classList.add('hidden');
+            });
+
+            // 确认删除
+            document.querySelector('#confirm-delete-btn').addEventListener('click', function() {
+                console.log('删除方案功能需要调用API实现');
+                // 模拟删除成功，跳转到个人中心
+                document.querySelector('#delete-modal').classList.add('hidden');
+                window.location.href = 'P-USER_CENTER.html';
+            });
+
+            // 项目化工具按钮逻辑
+            document.querySelector('#task-decomposition-btn').addEventListener('click', function() {
+                const tasks = window._project_tasks;
+                if (!tasks) return alert('该方案尚未生成结构化任务分解');
+                
+                showModal('任务分解清单', `
+                    <div class="space-y-4">
+                        ${tasks.map((t, i) => `
+                            <div class="flex items-start space-x-3 p-4 bg-success/5 rounded-xl border border-success/10">
+                                <div class="w-6 h-6 bg-success text-white rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">${i+1}</div>
+                                <div>
+                                    <h4 class="font-bold text-text-primary">${escapeHtml(t.name)}</h4>
+                                    <p class="text-sm text-text-secondary mt-1">${escapeHtml(t.desc)}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `);
+            });
+
+            document.querySelector('#milestone-planning-btn').addEventListener('click', function() {
+                const milestones = window._project_milestones;
+                if (!milestones) return alert('该方案尚未生成里程碑规划');
+                
+                showModal('项目里程碑规划', `
+                    <div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-primary/20">
+                        ${milestones.map(m => `
+                            <div class="relative">
+                                <div class="absolute -left-[27px] top-1 w-4 h-4 rounded-full bg-white border-4 border-primary z-10"></div>
+                                <div class="flex justify-between items-center">
+                                    <h4 class="font-bold text-text-primary">${escapeHtml(m.name)}</h4>
+                                    <span class="text-xs font-mono bg-primary/10 text-primary px-2 py-1 rounded-full">${escapeHtml(m.date)}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `);
+            });
+
+            document.querySelector('#risk-identification-btn').addEventListener('click', function() {
+                const risks = window._project_risks;
+                if (!risks) return alert('该方案尚未生成风险识别数据');
+                
+                showModal('风险矩阵与应对策略', `
+                    <div class="grid grid-cols-1 gap-4">
+                        ${risks.map(r => `
+                            <div class="p-4 rounded-xl border ${r.impact === '高' ? 'border-danger/20 bg-danger/5' : 'border-warning/20 bg-warning/5'}">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-bold text-text-primary">${escapeHtml(r.name)}</h4>
+                                    <span class="text-xs px-2 py-0.5 rounded ${r.impact === '高' ? 'bg-danger text-white' : 'bg-warning text-white'}">影响: ${escapeHtml(r.impact)}</span>
+                                </div>
+                                <p class="text-sm text-text-secondary mb-3">潜在影响描述与预警</p>
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <i class="fas fa-shield-alt text-success"></i>
+                                    <span class="font-medium">对策：${escapeHtml(r.solution)}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `);
+            });
+
+            function showModal(title, bodyHtml) {
+                const modal = document.querySelector('#details-modal');
+                document.querySelector('#modal-title').textContent = title;
+                document.querySelector('#modal-body').innerHTML = bodyHtml;
+                modal.classList.remove('hidden');
+            }
+
+            // 点击模态框背景关闭
+            document.querySelector('#details-modal').addEventListener('click', function(e) {
+                if (e.target === this) this.classList.add('hidden');
+            });
+
+            // 相关案例点击事件
+            document.querySelectorAll('[id^="related-case-"]').forEach(function(caseElement) {
+                caseElement.addEventListener('click', function() {
+                    const caseId = this.id.replace('related-case-', 'case');
+                    window.location.href = `P-CASE_DETAIL.html?caseId=${caseId}`;
+                });
+            });
+
+            // 快速操作按钮
+            document.querySelector('#regenerate-solution-btn').addEventListener('click', function() {
+                const solutionId = params.solutionId || 'solution1';
+                window.location.href = `P-SOLUTION_GENERATOR.html?regenerate=${solutionId}`;
+            });
+
+            document.querySelector('#share-solution-btn').addEventListener('click', function() {
+                console.log('分享方案功能需要调用第三方接口实现');
+                alert('分享功能正在开发中...');
+            });
+
+            document.querySelector('#save-template-btn').addEventListener('click', function() {
+                console.log('保存为模板功能需要调用API实现');
+                alert('保存为模板功能正在开发中...');
+            });
+
+            // 点击模态框背景关闭
+            document.querySelector('#delete-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.add('hidden');
+                }
+            });
+
+            // 发送消息功能
+            const chatInput = document.querySelector('#chat-input');
+            const sendBtn = document.querySelector('#send-message-btn');
+            const chatContainer = document.querySelector('#chat-messages-container');
+
+            // 防止对话框滚动穿透
+            if (chatContainer) {
+                let touchStartY = 0;
+                let touchStartScrollTop = 0;
+                
+                // 鼠标滚轮事件
+                chatContainer.addEventListener('wheel', function(e) {
+                    const { scrollTop, scrollHeight, clientHeight } = this;
+                    const deltaY = e.deltaY;
+                    
+                    // 检查是否滚动到顶部
+                    const isAtTop = scrollTop === 0;
+                    // 检查是否滚动到底部（允许1px的误差）
+                    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+                    
+                    // 如果向上滚动且已经在顶部，阻止默认行为
+                    if (deltaY < 0 && isAtTop) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                    
+                    // 如果向下滚动且已经在底部，阻止默认行为
+                    if (deltaY > 0 && isAtBottom) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+                }, { passive: false });
+                
+                // 触摸滚动事件（移动设备）
+                chatContainer.addEventListener('touchstart', function(e) {
+                    touchStartY = e.touches[0].clientY;
+                    touchStartScrollTop = this.scrollTop;
+                }, { passive: true });
+                
+                chatContainer.addEventListener('touchmove', function(e) {
+                    const { scrollTop, scrollHeight, clientHeight } = this;
+                    const touchY = e.touches[0].clientY;
+                    const deltaY = touchStartY - touchY;
+                    
+                    // 检查是否滚动到顶部
+                    const isAtTop = scrollTop === 0;
+                    // 检查是否滚动到底部（允许1px的误差）
+                    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+                    
+                    // 如果向上滑动且已经在顶部，阻止默认行为
+                    if (deltaY < 0 && isAtTop) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // 如果向下滑动且已经在底部，阻止默认行为
+                    if (deltaY > 0 && isAtBottom) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }, { passive: false });
+            }
+
+            // 自动调整输入框高度
+            if (chatInput) {
+                chatInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    const newHeight = Math.min(Math.max(this.scrollHeight, 50), 120);
+                    this.style.height = newHeight + 'px';
+                    // 同步调整按钮高度以保持对齐
+                    if (sendBtn) {
+                        sendBtn.style.height = newHeight + 'px';
+                    }
+                });
+
+                // 支持Enter发送，Shift+Enter换行
+                chatInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+
+            // 发送消息
+            async function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) {
+                    return;
+                }
+
+                // 禁用输入框和按钮
+                chatInput.disabled = true;
+                sendBtn.disabled = true;
+                const btnTextElement = document.querySelector('#send-btn-text');
+                const originalBtnText = btnTextElement ? btnTextElement.innerHTML : sendBtn.innerHTML;
+                if (btnTextElement) {
+                    btnTextElement.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>思考中...';
+                } else {
+                    sendBtn.innerHTML = '<span id="send-btn-text"><i class="fas fa-spinner fa-spin mr-2"></i>思考中...</span>';
+                }
+
+                try {
+                    // 添加用户消息到对话
+                    const userMsgId = addUserMessage(message);
+                    
+                    // 清空输入框
+                    chatInput.value = '';
+                    chatInput.style.height = 'auto';
+
+                    // 添加AI思考中的消息
+                    const thinkingId = addAIMessage('正在思考...', true);
+
+                    // 调用API发送消息
+                    const client = window.ApiClient || window.apiClient || ApiClient;
+                    const response = await client.sendChatMessage(solutionId, message);
+
+                    // 移除思考中的消息（使用更可靠的方法）
+                    // 优先使用ID移除，如果失败则使用属性查找
+                    let thinkingRemoved = false;
+                    if (thinkingId) {
+                        const thinkingElement = document.getElementById(thinkingId);
+                        if (thinkingElement) {
+                            thinkingElement.remove();
+                            thinkingRemoved = true;
+                        }
+                    }
+                    // 如果通过ID没有找到，尝试通过属性查找（防止ID冲突或时间戳问题）
+                    if (!thinkingRemoved) {
+                        const thinkingMsg = document.querySelector('[data-thinking="true"]');
+                        if (thinkingMsg) {
+                            thinkingMsg.remove();
+                            thinkingRemoved = true;
+                        }
+                    }
+
+                    if (response.success && response.data) {
+                        // 添加AI回复
+                        addAIMessage(response.data.reply || response.data.message || '抱歉，我无法回答这个问题。');
+                        // 重新渲染公式和图表
+                        setTimeout(triggerRendering, 100);
+                        // 保存对话历史
+                        setTimeout(() => {
+                            saveChatHistory();
+                        }, 100);
+                    } else {
+                        throw new Error(response.error || '获取回复失败');
+                    }
+                } catch (error) {
+                    console.error('发送消息失败:', error);
+                    // 移除思考中的消息（如果存在）
+                    const thinkingMsg = document.querySelector('[data-thinking="true"]');
+                    if (thinkingMsg) {
+                        thinkingMsg.remove();
+                    }
+                    // 添加错误消息
+                    addAIMessage('抱歉，发送消息时出现错误：' + error.message, false, true);
+                } finally {
+                    // 恢复输入框和按钮
+                    chatInput.disabled = false;
+                    sendBtn.disabled = false;
+                    const btnTextElement = document.querySelector('#send-btn-text');
+                    if (btnTextElement) {
+                        btnTextElement.innerHTML = originalBtnText;
+                    } else {
+                        sendBtn.innerHTML = `<span id="send-btn-text">${originalBtnText}</span>`;
+                    }
+                    chatInput.focus();
+                }
+            }
+
+            // 添加用户消息
+            function addUserMessage(message) {
+                const container = document.querySelector('#chat-messages-container');
+                if (!container) {
+                    console.error('addUserMessage: 消息容器不存在');
+                    return null;
+                }
+                
+                // 使用更唯一的ID生成方式
+                const messageId = 'user-msg-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                const messageDiv = document.createElement('div');
+                messageDiv.id = messageId;
+                messageDiv.className = 'flex items-start space-x-3 justify-end';
+                messageDiv.setAttribute('data-message-type', 'user');
+                messageDiv.innerHTML = `
+                    <div class="flex-1 max-w-[75%] flex justify-end">
+                        <div class="bg-gradient-primary rounded-2xl rounded-tr-none p-4 shadow-sm">
+                            <div class="text-white whitespace-pre-wrap">${escapeHtml(message)}</div>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user text-white"></i>
+                    </div>
+                `;
+                container.appendChild(messageDiv);
+                console.log('用户消息已添加，ID:', messageId);
+                scrollToBottom();
+                
+                // 保存历史
+                setTimeout(() => {
+                    saveChatHistory();
+                }, 50);
+                
+                return messageId;
+            }
+
+            // 添加AI消息
+            function addAIMessage(message, isThinking = false, isError = false, isHtml = false) {
+                const container = document.querySelector('#chat-messages-container');
+                if (!container) {
+                    console.error('addAIMessage: 消息容器不存在');
+                    return null;
+                }
+                
+                // 使用更唯一的ID生成方式
+                const messageId = 'ai-msg-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                const messageDiv = document.createElement('div');
+                messageDiv.id = messageId;
+                messageDiv.className = 'flex items-start space-x-3';
+                messageDiv.setAttribute('data-message-type', 'ai');
+                if (isThinking) {
+                    messageDiv.setAttribute('data-thinking', 'true');
+                }
+                
+                const messageClass = isError ? 'text-danger' : 'text-text-primary';
+                const content = isThinking 
+                    ? `<div class="flex items-center space-x-2">
+                        <div class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+                        <span class="text-text-secondary">${escapeHtml(message)}</span>
+                       </div>`
+                    : isHtml 
+                        ? `<div class="prose prose-sm max-w-none ${messageClass}">${message}</div>`
+                        : `<div class="prose prose-sm max-w-none ${messageClass}">${formatMessage(message)}</div>`;
+                
+                messageDiv.innerHTML = `
+                    <div class="w-10 h-10 bg-gradient-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                    <div class="flex-1 max-w-[75%]">
+                        <div class="bg-white border border-border-light rounded-2xl rounded-tl-none p-4 shadow-sm">
+                            ${content}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(messageDiv);
+                console.log('AI消息已添加，ID:', messageId, 'isThinking:', isThinking);
+                scrollToBottom();
+                
+                // 如果不是思考中的消息，保存历史
+                if (!isThinking) {
+                    setTimeout(() => {
+                        saveChatHistory();
+                    }, 50);
+                }
+                
+                return messageId;
+            }
+
+            // 移除消息
+            function removeMessage(messageId) {
+                if (!messageId) {
+                    console.warn('removeMessage: messageId is null or undefined');
+                    return;
+                }
+                const messageElement = document.getElementById(messageId);
+                if (messageElement) {
+                    console.log('移除消息，ID:', messageId);
+                    messageElement.remove();
+                } else {
+                    console.warn('removeMessage: 消息元素未找到，ID:', messageId);
+                    // 尝试查找所有消息，用于调试
+                    const allMessages = document.querySelectorAll('[data-message-type]');
+                    console.log('当前容器中的消息数量:', allMessages.length);
+                }
+            }
+
+            // 滚动到底部
+            function scrollToBottom() {
+                const container = document.querySelector('#chat-messages-container');
+                if (container) {
+                    setTimeout(() => {
+                        container.scrollTop = container.scrollHeight;
+                    }, 100);
+                }
+            }
+
+            // HTML转义
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // 格式化消息内容（支持Markdown、Mermaid、MathJax渲染）
+            function formatMessage(text) {
+                if (!text) return '';
+                
+                // --- LaTeX 公式保护开始 ---
+                const mathPlaceholder = [];
+                // 块级公式 $$ ... $$ 或者 \[ ... \]
+                text = text.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g, (match) => {
+                    const placeholder = `__MATH_BLOCK_${mathPlaceholder.length}__`;
+                    mathPlaceholder.push({ placeholder, original: match });
+                    return placeholder;
+                });
+                // 行内公式 $ ... $ 或者 \( ... \)
+                text = text.replace(/(\$[\s\S]*?\$|\\\([\s\S]*?\\\))/g, (match) => {
+                    const placeholder = `__MATH_INLINE_${mathPlaceholder.length}__`;
+                    mathPlaceholder.push({ placeholder, original: match });
+                    return placeholder;
+                });
+                // --- LaTeX 公式保护结束 ---
+
+                if (typeof marked !== 'undefined') {
+                    try {
+                        // 配置marked拦截mermaid代码块
+                        const renderer = new marked.Renderer();
+                        const originalCode = renderer.code.bind(renderer);
+                        renderer.code = function(code, language, escaped) {
+                            if (language === 'mermaid') {
+                                return `<pre class="mermaid">${code}</pre>`;
+                            }
+                            return originalCode(code, language, escaped);
+                        };
+
+                        // 使用marked.js渲染markdown
+                        let html = marked.parse(text, {
+                            renderer: renderer,
+                            breaks: true,
+                            gfm: true,
+                            headerIds: false,
+                            mangle: false
+                        });
+
+                        // --- 还原 LaTeX 公式 ---
+                        mathPlaceholder.forEach(item => {
+                            html = html.replace(item.placeholder, item.original);
+                        });
+
+                        return html;
+                    } catch (error) {
+                        console.error('Markdown渲染失败:', error);
+                        return formatPlainText(text);
+                    }
+                } else {
+                    return formatPlainText(text);
+                }
+            }
+
+            // 提取并应用项目化工具数据
+            function applyProjectTools(content) {
+                if (!content) return;
+                
+                try {
+                    // 尝试匹配 JSON 块
+                    const match = content.match(/<PROJECT_DATA>([\s\S]*?)<\/PROJECT_DATA>/);
+                    if (match && match[1]) {
+                        const data = JSON.parse(match[1].trim());
+                        
+                        // 更新侧边栏按钮的描述文字为具体数量或状态
+                        if (data.tasks && data.tasks.length > 0) {
+                            const btn = document.querySelector('#task-decomposition-btn p');
+                            if (btn) btn.textContent = `已生成 ${data.tasks.length} 条可执行任务`;
+                            // 存储到全局或本地以便点击查看
+                            window._project_tasks = data.tasks;
+                        }
+                        
+                        if (data.milestones && data.milestones.length > 0) {
+                            const btn = document.querySelector('#milestone-planning-btn p');
+                            if (btn) btn.textContent = `规划了 ${data.milestones.length} 个核心里程碑`;
+                            window._project_milestones = data.milestones;
+                        }
+                        
+                        if (data.risks && data.risks.length > 0) {
+                            const btn = document.querySelector('#risk-identification-btn p');
+                            if (btn) btn.textContent = `识别出 ${data.risks.length} 个潜在风险点`;
+                            window._project_risks = data.risks;
+                        }
+                    }
+                } catch (e) {
+                    console.error('解析项目工具数据失败:', e);
+                }
+            }
+
+            // 触发动态内容的重新渲染 (Mermaid, MathJax)
+            function triggerRendering() {
+                // 渲染 Mermaid
+                if (typeof mermaid !== 'undefined') {
+                    try {
+                        mermaid.run();
+                    } catch (e) {
+                        console.error('Mermaid render error:', e);
+                    }
+                }
+                // 渲染 MathJax
+                if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                    MathJax.typesetPromise().catch((err) => console.log('MathJax error:', err));
+                }
+            }
+            
+            // 格式化普通文本
+            function formatPlainText(text) {
+                // 转义HTML
+                let formatted = escapeHtml(text);
+                // 将换行转换为<br>
+                formatted = formatted.replace(/\n/g, '<br>');
+                // 处理段落（双换行）
+                formatted = formatted.replace(/(<br>\s*){2,}/g, '</p><p>');
+                if (!formatted.startsWith('<p>')) {
+                    formatted = '<p>' + formatted + '</p>';
+                }
+                return formatted;
+            }
+
+            // 绑定发送按钮事件
+            if (sendBtn) {
+                sendBtn.addEventListener('click', sendMessage);
+            }
+        });
+    </script>
+</body>
+</html>
