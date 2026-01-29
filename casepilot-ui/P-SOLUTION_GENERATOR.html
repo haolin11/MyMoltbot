@@ -263,41 +263,36 @@
                 </div>
                 
                 <!-- 聊天消息区 -->
-                <div class="mb-4 bg-white rounded-lg border border-border-light p-4 max-h-[320px] overflow-y-auto" id="expert-chat">
-                  <div class="space-y-3">
+                <div class="mb-4 bg-[#EDEDED] rounded-lg p-4 max-h-[320px] overflow-y-auto" id="expert-chat">
+                  <div class="space-y-4">
                     <!-- 系统消息 -->
                     <div class="text-center">
                       <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-success-light text-xs">
                         <i class="fa-solid fa-check-circle text-success"></i>
                         <span class="text-success font-medium">专家已接入，开始协作</span>
                       </div>
-                      <div class="text-xs text-tertiary mt-1">14:32</div>
                     </div>
                     
-                    <!-- 专家消息 -->
-                    <div class="flex gap-2">
-                      <img src="https://ui-avatars.com/api/?name=专家&background=0369A1&color=fff&size=32" class="w-8 h-8 rounded-full border-2 border-cta flex-shrink-0" />
-                      <div class="flex-1">
-                        <div class="text-xs text-secondary mb-1">张明 · 专家</div>
-                        <div class="bg-cta-lightest border border-cta-light rounded-lg p-3">
-                          <div class="text-sm text-primary leading-relaxed">
-                            您好！我看了您的方案，RAG系统部分可以进一步细化。我建议增加向量数据库的具体选型和检索策略。需要我帮您优化这部分吗？
-                          </div>
+                    <!-- 专家消息 (左侧) -->
+                    <div class="flex gap-2 items-start">
+                      <img src="https://ui-avatars.com/api/?name=专家&background=0369A1&color=fff&size=40" class="w-10 h-10 rounded-md flex-shrink-0" />
+                      <div class="relative max-w-[75%] bg-white rounded p-3 shadow-sm">
+                        <div class="absolute left-[-8px] top-3 border-[6px] border-transparent border-r-white"></div>
+                        <div class="text-sm text-primary leading-relaxed">
+                          您好！我看了您的方案，RAG系统部分可以进一步细化。我建议增加向量数据库的具体选型和检索策略。需要我帮您优化这部分吗？
                         </div>
-                        <div class="text-xs text-tertiary mt-1">14:33</div>
                       </div>
                     </div>
                     
-                    <!-- 用户消息（示例） -->
-                    <div class="flex gap-2 justify-end">
-                      <div class="max-w-[70%]">
-                        <div class="bg-primary text-white rounded-lg p-3">
-                          <div class="text-sm leading-relaxed">
-                            好的，麻烦您帮我优化一下！
-                          </div>
+                    <!-- 用户消息 (右侧，微信绿色) -->
+                    <div class="flex gap-2 items-start justify-end">
+                      <div class="relative max-w-[75%] bg-[#95EC69] rounded p-3 shadow-sm">
+                        <div class="absolute right-[-8px] top-3 border-[6px] border-transparent border-l-[#95EC69]"></div>
+                        <div class="text-sm leading-relaxed">
+                          好的，麻烦您帮我优化一下！
                         </div>
-                        <div class="text-xs text-tertiary mt-1 text-right">14:34</div>
                       </div>
+                      <img src="https://ui-avatars.com/api/?name=我&background=0A84FF&color=fff&size=40" class="w-10 h-10 rounded-md flex-shrink-0" />
                     </div>
                     
                     <!-- 编辑通知 -->
