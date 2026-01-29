@@ -7,32 +7,36 @@
 
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/styles-v5.css" />
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
-  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
+  <header class="sticky top-0 z-50 glass">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="P-HOME.html" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-          <i class="fas fa-cube text-white"></i>
+      <!-- Logo区域 - 固定宽度 -->
+      <a href="P-HOME.html" class="flex items-center gap-3" style="min-width: 220px;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white logo-icon">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
         </div>
         <div class="leading-tight">
-          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">案例库</div>
+          <div class="text-xl font-bold gradient-text whitespace-nowrap logo-text-brand">CasePilot</div>
+          <div class="text-sm text-text-secondary whitespace-nowrap logo-text-subtitle">案例库</div>
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_GENERATOR.html">协作生成</a>
-        <a class="px-3 py-2 rounded-lg text-sm nav-link-active" href="P-CASE_LIBRARY.html">案例库</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_HISTORY.html">历史方案</a>
+      <!-- 导航菜单 - 固定宽度居中 -->
+      <nav class="hidden md:flex items-center gap-1" style="min-width: 380px; justify-content: center;">
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-HOME.html">首页</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="nav-link-active px-4 py-2 text-base whitespace-nowrap" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_HISTORY.html">历史方案</a>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <input class="hidden lg:block px-4 py-2 rounded-xl border border-border-light search-focus bg-white" placeholder="搜索案例（演示）" />
-        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-primary text-white shadow-card-hover">
-          <i class="fas fa-wand-magic-sparkles"></i>
+      <!-- 右侧操作区 - 固定宽度右对齐 -->
+      <div class="flex items-center gap-3 justify-end" style="min-width: 240px;">
+        <input class="hidden lg:block px-4 py-2 rounded-xl border border-border-light search-focus bg-white text-base" placeholder="搜索案例" style="width: 160px;" />
+        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 cp-btn cp-btn-primary text-base px-4 py-2 whitespace-nowrap">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
           用案例生成
         </a>
       </div>
@@ -43,51 +47,78 @@
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
       <div>
         <h1 class="text-3xl font-extrabold">案例库</h1>
-        <p class="mt-2 text-text-secondary">不是“看热闹”，而是复用：指标模板 / 边界声明 / 失败模式。</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <button class="px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">指标模板</button>
-        <button class="px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">失败模式库</button>
-        <button class="px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">基准库</button>
+        <p class="mt-2 text-text-secondary">浏览已验证的交付级方案案例，快速复用最佳实践。</p>
       </div>
     </div>
 
     <div class="mt-6 grid lg:grid-cols-3 gap-4">
-      <a class="cp-card cp-card-hover p-5 block" href="P-CASE_DETAIL.html#c=rag-support">
-        <div class="flex items-start justify-between gap-3">
+      <div class="cp-card p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
           <div>
-            <div class="font-extrabold">售后知识问答（RAG）</div>
+            <div class="font-extrabold text-lg">售后知识问答（RAG）</div>
             <div class="mt-1 text-xs text-text-secondary">场景：工单/客服 · 输出：可追溯答案</div>
           </div>
-          <span class="text-xs cp-pill px-2 py-1 rounded-full">可追溯</span>
+          <div class="flex flex-col items-end gap-2">
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">可追溯</span>
+            <div class="cp-pill cp-pill-expert text-xs">
+              <i class="fa-solid fa-user-tie"></i>
+              有专家
+            </div>
+          </div>
         </div>
-        <div class="mt-4 grid grid-cols-3 gap-2 text-xs">
+        <div class="grid grid-cols-3 gap-2 text-xs mb-4">
           <span class="cp-pill px-2 py-1 rounded-full">证据卡</span>
           <span class="cp-pill-warn px-2 py-1 rounded-full">口径</span>
           <span class="cp-pill-primary px-2 py-1 rounded-full">拒答</span>
         </div>
-      </a>
+        <div class="flex gap-2">
+          <a href="P-CASE_DETAIL.html#c=rag-support" class="cp-btn cp-btn-secondary text-sm flex-1">
+            <i class="fa-solid fa-eye"></i>
+            查看案例
+          </a>
+          <button class="cp-btn cp-btn-expert text-sm" onclick="openExpertRequest('RAG', '张明')">
+            <i class="fa-solid fa-handshake"></i>
+            申请专家
+          </button>
+        </div>
+      </div>
 
-      <a class="cp-card cp-card-hover p-5 block" href="P-CASE_DETAIL.html#c=risk-review">
-        <div class="flex items-start justify-between gap-3">
+      <div class="cp-card p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
           <div>
-            <div class="font-extrabold">合规审核助手</div>
+            <div class="font-extrabold text-lg">合规审核助手</div>
             <div class="mt-1 text-xs text-text-secondary">场景：条款审阅 · 输出：风险点 + 证据</div>
           </div>
-          <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">边界</span>
+          <div class="flex flex-col items-end gap-2">
+            <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">边界</span>
+            <div class="cp-pill cp-pill-expert text-xs">
+              <i class="fa-solid fa-user-tie"></i>
+              有专家
+            </div>
+          </div>
         </div>
-        <div class="mt-4 grid grid-cols-3 gap-2 text-xs">
+        <div class="grid grid-cols-3 gap-2 text-xs mb-4">
           <span class="cp-pill px-2 py-1 rounded-full">证据</span>
           <span class="cp-pill-warn px-2 py-1 rounded-full">验收</span>
           <span class="cp-pill-primary px-2 py-1 rounded-full">复核</span>
         </div>
-      </a>
+        <div class="flex gap-2">
+          <a href="P-CASE_DETAIL.html#c=risk-review" class="cp-btn cp-btn-secondary text-sm flex-1">
+            <i class="fa-solid fa-eye"></i>
+            查看案例
+          </a>
+          <button class="cp-btn cp-btn-expert text-sm" onclick="openExpertRequest('合规', '李华')">
+            <i class="fa-solid fa-handshake"></i>
+            申请专家
+          </button>
+        </div>
+      </div>
 
       <a class="cp-card cp-card-hover p-5 block" href="P-CASE_DETAIL.html#c=benchmark">
         <div class="flex items-start justify-between gap-3">
           <div>
             <div class="font-extrabold">评测与基准（SOTA）</div>
-            <div class="mt-1 text-xs text-text-secondary">把“好不好”变成“怎么算”</div>
+            <div class="mt-1 text-xs text-text-secondary">把"好不好"变成"怎么算"</div>
           </div>
           <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">可验收</span>
         </div>
@@ -100,12 +131,12 @@
     </div>
   </main>
 
-  <footer class="border-t border-border-light bg-white/70">
+  <footer class="border-t border-border glass">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
+      <div class="text-sm text-text-secondary">© CasePilot v5.0 · Engineering-grade AI Output</div>
       <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary" href="P-SOLUTION_GENERATOR.html">协作生成</a>
-        <a class="hover:text-primary" href="P-LOGIN_REGISTER.html">登录</a>
+        <a class="hover:text-accent transition-colors" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="hover:text-accent transition-colors" href="P-LOGIN_REGISTER.html">登录</a>
       </div>
     </div>
   </footer>

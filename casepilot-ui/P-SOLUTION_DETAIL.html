@@ -7,142 +7,488 @@
 
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/styles-v5.css" />
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+  <style>
+    /* Canvas文档画布样式 - 仿ChatGPT Canvas */
+    .canvas-container {
+      background: #F3F4F6;
+      min-height: calc(100vh - 64px);
+    }
+    
+    .canvas-document {
+      background: white;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 
+                  0 2px 8px rgba(0,0,0,0.08), 
+                  0 8px 32px rgba(0,0,0,0.06);
+      border-radius: 8px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 4rem;
+      min-height: calc(100vh - 128px);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    }
+    
+    .canvas-sidebar {
+      background: white;
+      border-left: 1px solid #E5E7EB;
+      width: 320px;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    
+    /* 文档标题层级 */
+    .document-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #111827;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.025em;
+    }
+    
+    .document-meta {
+      color: #6B7280;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid #E5E7EB;
+    }
+    
+    .document-section {
+      margin-bottom: 3rem;
+      page-break-inside: avoid;
+    }
+    
+    .document-section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #E5E7EB;
+      letter-spacing: -0.02em;
+    }
+    
+    .document-subsection-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #374151;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .document-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #374151;
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+    
+    /* 文档卡片 */
+    .document-card {
+      background: linear-gradient(to bottom right, #FAFAFA, #FFFFFF);
+      border: 1px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+      page-break-inside: avoid;
+    }
+    
+    .document-card:hover {
+      border-color: #D1D5DB;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .document-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .document-card-content {
+      font-size: 0.9375rem;
+      color: #6B7280;
+      line-height: 1.7;
+    }
+    
+    .document-card-content strong {
+      color: #374151;
+      font-weight: 600;
+    }
+    
+    /* 工具栏按钮 */
+    .toolbar-btn {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #374151;
+      font-size: 0.875rem;
+      transition: all 0.15s ease;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    
+    .toolbar-btn:hover {
+      background: #F3F4F6;
+      color: #2563EB;
+    }
+    
+    .toolbar-btn i {
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .canvas-document {
+        padding: 2rem;
+      }
+      .document-title {
+        font-size: 2rem;
+      }
+      .document-section-title {
+        font-size: 1.5rem;
+      }
+    }
+    
+    /* 打印优化 */
+    @media print {
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+      
+      body {
+        background: white !important;
+      }
+      
+      .canvas-sidebar, 
+      header,
+      .no-print {
+        display: none !important;
+      }
+      
+      .canvas-container {
+        background: white !important;
+        padding: 0 !important;
+      }
+      
+      .canvas-document {
+        box-shadow: none !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+      }
+      
+      .document-section {
+        page-break-inside: avoid;
+      }
+      
+      .document-card {
+        page-break-inside: avoid;
+        border: 1px solid #D1D5DB !important;
+        box-shadow: none !important;
+      }
+      
+      .document-title {
+        font-size: 2.25rem;
+      }
+      
+      .document-section-title {
+        font-size: 1.5rem;
+        page-break-after: avoid;
+      }
+    }
+    
+    /* 滚动条美化 */
+    .canvas-container::-webkit-scrollbar,
+    .canvas-sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .canvas-container::-webkit-scrollbar-track,
+    .canvas-sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .canvas-container::-webkit-scrollbar-thumb,
+    .canvas-sidebar::-webkit-scrollbar-thumb {
+      background: #D1D5DB;
+      border-radius: 4px;
+    }
+    
+    .canvas-container::-webkit-scrollbar-thumb:hover,
+    .canvas-sidebar::-webkit-scrollbar-thumb:hover {
+      background: #9CA3AF;
+    }
+  </style>
 </head>
-<body class="bg-bg-primary min-h-screen cp-grid-bg">
-  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<body class="bg-gray-100">
+  <!-- 简化的顶栏 -->
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <div class="px-6 h-16 flex items-center justify-between">
+      <!-- Logo区域 -->
       <a href="P-HOME.html" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-          <i class="fas fa-cube text-white"></i>
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center overflow-hidden bg-white">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
         </div>
         <div class="leading-tight">
-          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">交付级方案包</div>
+          <div class="text-lg font-bold gradient-text">CasePilot</div>
         </div>
       </a>
 
+      <!-- 中间标题 -->
+      <div class="flex-1 text-center">
+        <div class="text-sm font-medium text-gray-700" id="header-title">交付级方案书</div>
+      </div>
+
+      <!-- 右侧操作 -->
       <div class="flex items-center gap-3">
-        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light bg-white hover:bg-bg-secondary">
-          <i class="fas fa-arrow-left"></i>
-          返回协作生成
+        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors whitespace-nowrap">
+          <i class="fa-solid fa-arrow-left"></i>
+          返回编辑
         </a>
-        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-primary text-white shadow-card-hover">
-          <i class="fas fa-download"></i>
-          导出
-        </a>
+        <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2 text-sm bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all whitespace-nowrap">
+          <i class="fa-solid fa-download"></i>
+          导出PDF
+        </button>
       </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-      <div>
-        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-pill">
-          <i class="fas fa-shield-check"></i>
-          可追溯 · 可验收 · 可交付
+  <!-- Canvas布局：文档 + 侧边栏 -->
+  <div class="flex">
+    <!-- 主文档区域 -->
+    <main class="flex-1 canvas-container py-8 px-6 overflow-y-auto" style="height: calc(100vh - 64px);">
+      <article class="canvas-document">
+        <!-- 文档标题区 -->
+        <div class="document-meta">
+          <div class="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 mb-4">
+            <i class="fa-solid fa-shield-check text-blue-600"></i>
+            <span class="text-gray-700 font-medium">可追溯 · 可验收 · 可交付</span>
+          </div>
+          <h1 id="cp-title" class="document-title">交付级方案包（演示）</h1>
+          <div class="text-sm text-gray-500">
+            Run ID：<span id="cp-run" class="font-mono">demo</span> · 更新时间：<span id="cp-updated">—</span>
+          </div>
         </div>
-        <h1 id="cp-title" class="mt-4 text-3xl font-extrabold">交付级方案包（演示）</h1>
-        <p class="mt-2 text-text-secondary text-sm">Run ID：<span id="cp-run">demo</span> · 更新：<span id="cp-updated">—</span></p>
-      </div>
 
-      <div class="cp-card shadow-card p-4 w-full lg:w-[420px]">
-        <div class="font-bold">验收摘要</div>
-        <div class="mt-3 grid grid-cols-2 gap-3 text-sm" id="cp-summary"></div>
-      </div>
-    </div>
+        <!-- 方案概述 -->
+        <section class="document-section">
+          <h2 class="document-section-title">方案概述</h2>
+          <div class="document-text">
+            本方案书提供了一套完整的、可验收的、可追溯的交付级解决方案。包含系统架构设计、数据证据链、验收指标体系以及交付物清单。
+          </div>
+          <div class="grid grid-cols-2 gap-4 mt-4" id="cp-summary-cards">
+            <!-- 动态填充验收摘要 -->
+          </div>
+        </section>
 
-    <section class="mt-8 grid lg:grid-cols-12 gap-6">
-      <div class="lg:col-span-8 space-y-6">
-        <div class="cp-card shadow-card p-6 sm:p-8">
-          <h2 class="text-xl font-extrabold">方案结构</h2>
-          <div class="mt-4 grid gap-3 text-sm text-text-secondary">
-            <div class="cp-card p-4">
-              <div class="font-semibold text-text-primary">系统架构</div>
-              <div class="mt-2">RAG + 引用强制 + 置信阈值拒答 + 审核流（演示）。</div>
+        <!-- 方案结构 -->
+        <section class="document-section">
+          <h2 class="document-section-title">方案结构</h2>
+          
+          <div class="document-card">
+            <div class="document-card-title">
+              <i class="fa-solid fa-diagram-project text-blue-600 mr-2"></i>
+              系统架构
             </div>
-            <div class="cp-card p-4">
-              <div class="font-semibold text-text-primary">数据与证据</div>
-              <div class="mt-2">每条关键结论必须引用来源；无来源则拒答或转人工。</div>
-            </div>
-            <div class="cp-card p-4">
-              <div class="font-semibold text-text-primary">验收与口径</div>
-              <div class="mt-2">指标 = 公式 + 口径 + 用例集 + 阈值。</div>
+            <div class="document-card-content">
+              RAG + 引用强制 + 置信阈值拒答 + 审核流。采用检索增强生成（RAG）技术，确保每个输出都有明确的数据来源支撑，当置信度低于阈值时自动转人工审核。
             </div>
           </div>
-        </div>
 
-        <div class="cp-card shadow-card p-6 sm:p-8">
-          <div class="flex items-center justify-between">
-            <h2 class="text-xl font-extrabold">指标（可验收）</h2>
-            <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">口径</span>
+          <div class="document-card">
+            <div class="document-card-title">
+              <i class="fa-solid fa-database text-green-600 mr-2"></i>
+              数据与证据
+            </div>
+            <div class="document-card-content">
+              每条关键结论必须引用来源；无来源则拒答或转人工。建立完整的证据链，确保方案的每一个论断都有据可查，可追溯到原始数据源。
+            </div>
           </div>
-          <div class="mt-4 grid gap-3" id="cp-metrics"></div>
-        </div>
 
-        <div class="cp-card shadow-card p-6 sm:p-8">
-          <div class="flex items-center justify-between">
-            <h2 class="text-xl font-extrabold">边界（不适用）</h2>
-            <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">护栏</span>
+          <div class="document-card">
+            <div class="document-card-title">
+              <i class="fa-solid fa-clipboard-check text-purple-600 mr-2"></i>
+              验收与口径
+            </div>
+            <div class="document-card-content">
+              指标 = 公式 + 口径 + 用例集 + 阈值。定义清晰的验收标准，每个指标都包含计算公式、统计口径、测试用例和及格阈值，确保验收过程客观可量化。
+            </div>
           </div>
-          <div class="mt-4 grid gap-3" id="cp-boundaries"></div>
+        </section>
+
+        <!-- 可验收指标 -->
+        <section class="document-section">
+          <h2 class="document-section-title">
+            <i class="fa-solid fa-chart-line text-orange-600 mr-2"></i>
+            可验收指标
+          </h2>
+          <div class="document-text">
+            以下指标体系用于方案验收，每项指标都包含明确的计算公式、统计口径和目标值。
+          </div>
+          <div id="cp-metrics" class="mt-4">
+            <!-- 动态填充指标 -->
+          </div>
+        </section>
+
+        <!-- 边界与护栏 -->
+        <section class="document-section">
+          <h2 class="document-section-title">
+            <i class="fa-solid fa-shield-halved text-red-600 mr-2"></i>
+            边界与护栏
+          </h2>
+          <div class="document-text">
+            明确定义方案的适用范围和不适用场景，设置必要的护栏机制，防止误用或滥用。
+          </div>
+          <div id="cp-boundaries" class="mt-4">
+            <!-- 动态填充边界 -->
+          </div>
+        </section>
+
+        <!-- 证据溯源 -->
+        <section class="document-section">
+          <h2 class="document-section-title">
+            <i class="fa-solid fa-link text-cyan-600 mr-2"></i>
+            证据溯源
+          </h2>
+          <div class="document-text">
+            方案中的关键论断和数据来源，确保每一条结论都可追溯到原始证据。
+          </div>
+          <div id="cp-evidence" class="mt-4">
+            <!-- 动态填充证据 -->
+          </div>
+        </section>
+
+        <!-- 交付物清单 -->
+        <section class="document-section">
+          <h2 class="document-section-title">
+            <i class="fa-solid fa-box-archive text-indigo-600 mr-2"></i>
+            交付物清单
+          </h2>
+          <div class="document-text">
+            本方案包含以下交付物，涵盖文档、代码、配置和培训材料等。
+          </div>
+          <div id="cp-deliverables" class="mt-4">
+            <!-- 动态填充交付物 -->
+          </div>
+        </section>
+
+        <!-- 文档结尾 -->
+        <div class="mt-12 pt-8 border-t-2 border-gray-200">
+          <div class="text-center text-sm text-gray-500">
+            <p class="font-medium">© CasePilot · Engineering-grade AI Output</p>
+            <p class="mt-2">本文档由 CasePilot 自动生成，确保可追溯、可验收、可交付</p>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <!-- 右侧工具栏 -->
+    <aside class="canvas-sidebar hidden lg:block">
+      <div class="p-6">
+        <div class="text-sm font-semibold text-gray-900 mb-4">文档工具</div>
+        
+        <div class="space-y-2">
+          <button class="toolbar-btn" onclick="window.print()">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>导出为 PDF</span>
+          </button>
+          
+          <button class="toolbar-btn" onclick="alert('Word导出功能开发中')">
+            <i class="fa-solid fa-file-word"></i>
+            <span>导出为 Word</span>
+          </button>
+          
+          <button class="toolbar-btn" onclick="copyToClipboard()">
+            <i class="fa-solid fa-copy"></i>
+            <span>复制全文</span>
+          </button>
+          
+          <hr class="my-4 border-gray-200" />
+          
+          <a href="P-SOLUTION_GENERATOR.html" class="toolbar-btn">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>返回编辑</span>
+          </a>
+          
+          <button class="toolbar-btn" onclick="alert('分享功能开发中')">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>分享方案</span>
+          </button>
+          
+          <hr class="my-4 border-gray-200" />
+          
+          <div class="text-xs text-gray-500 px-4 py-3 bg-gray-50 rounded-lg">
+            <div class="font-semibold mb-2">文档大纲</div>
+            <ul class="space-y-1.5">
+              <li><a href="#" class="hover:text-blue-600">方案概述</a></li>
+              <li><a href="#" class="hover:text-blue-600">方案结构</a></li>
+              <li><a href="#" class="hover:text-blue-600">可验收指标</a></li>
+              <li><a href="#" class="hover:text-blue-600">边界与护栏</a></li>
+              <li><a href="#" class="hover:text-blue-600">证据溯源</a></li>
+              <li><a href="#" class="hover:text-blue-600">交付物清单</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <aside class="lg:col-span-4 space-y-6">
-        <div class="cp-card shadow-card p-6">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">证据（可追溯）</div>
-            <span class="text-xs cp-pill px-2 py-1 rounded-full">来源</span>
-          </div>
-          <div class="mt-4 grid gap-3" id="cp-evidence"></div>
-        </div>
-
-        <div class="cp-card shadow-card p-6">
-          <div class="flex items-center justify-between">
-            <div class="font-bold">交付物</div>
-            <span class="text-xs cp-pill px-2 py-1 rounded-full">输出</span>
-          </div>
-          <div class="mt-4 grid gap-3" id="cp-deliverables"></div>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <footer class="border-t border-border-light bg-white/70">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
-      <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary" href="P-SOLUTION_GENERATOR.html">协作生成</a>
-        <a class="hover:text-primary" href="P-SOLUTION_HISTORY.html">历史方案</a>
-      </div>
-    </div>
-  </footer>
+    </aside>
+  </div>
 
   <script src="assets/app.js"></script>
   <script>
+    // 复制全文功能
+    function copyToClipboard() {
+      const doc = document.querySelector('.canvas-document');
+      const text = doc.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('文档内容已复制到剪贴板');
+      });
+    }
+
     (function(){
       const get = () => { try{ return JSON.parse(localStorage.getItem('cp.collab.state')||'{}'); }catch{ return {}; } };
       const st = get();
       const run = (location.hash.match(/run=([^&]+)/)?.[1]) || st?.meta?.runId || 'demo';
       const title = st?.meta?.title || '交付级方案包（演示）';
-      const updated = st?.meta?.updatedAt || '—';
+      const updated = st?.meta?.updatedAt || new Date().toLocaleString('zh-CN');
 
       const $ = (id)=>document.getElementById(id);
       if($('cp-run')) $('cp-run').textContent = decodeURIComponent(run);
-      if($('cp-title')) $('cp-title').textContent = title;
+      if($('cp-title')) {
+        $('cp-title').textContent = title;
+        if($('header-title')) $('header-title').textContent = title;
+      }
       if($('cp-updated')) $('cp-updated').textContent = updated;
 
       const artifacts = st.artifacts || {};
 
-      const card = (tagCls, tagText, title, body) => (
-        `<div class="cp-card p-4">
-          <div class="flex items-center justify-between gap-3">
-            <div class="font-semibold text-sm">${title}</div>
-            <span class="text-xs px-2 py-1 rounded-full ${tagCls}">${tagText}</span>
+      // 文档卡片样式
+      const docCard = (icon, iconColor, title, body, tag) => (
+        `<div class="document-card">
+          <div class="flex items-center justify-between mb-2">
+            <div class="document-card-title">
+              <i class="fa-solid ${icon} ${iconColor} mr-2"></i>
+              ${title}
+            </div>
+            ${tag ? `<span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">${tag}</span>` : ''}
           </div>
-          <div class="mt-2 text-sm text-text-secondary">${body}</div>
+          <div class="document-card-content">${body}</div>
         </div>`
       );
 
@@ -151,33 +497,62 @@
       const bd = artifacts.boundaries || [];
       const del = artifacts.deliverables || [];
 
-      if($('cp-evidence')) $('cp-evidence').innerHTML = ev.map(e=>card('cp-pill', '可追溯', e.type, `${e.ref}<br/>${e.note||''}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-      if($('cp-metrics')) $('cp-metrics').innerHTML = met.map(m=>card('cp-pill-warn', '可验收', m.name, `公式：${m.formula}<br/>目标：${m.target}`)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-      if($('cp-boundaries')) $('cp-boundaries').innerHTML = bd.map(b=>card('cp-pill-primary', '边界', b.title, b.text)).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-      if($('cp-deliverables')) $('cp-deliverables').innerHTML = del.map(d=>
-        `<div class="cp-card p-4">
-          <div class="flex items-center justify-between gap-3">
-            <div class="font-semibold text-sm">${d.name}</div>
-            <span class="text-xs cp-pill px-2 py-1 rounded-full">输出</span>
-          </div>
-          <ul class="mt-2 text-sm text-text-secondary list-disc pl-5">${(d.items||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
-        </div>`
-      ).join('') || '<div class="text-sm text-text-secondary">暂无</div>';
-
-      // summary chips (minimal)
-      if($('cp-summary')){
+      // 验收摘要卡片
+      if($('cp-summary-cards')){
         const sum = [
-          {k:'完成度', v:`${(st.todos||[]).filter(x=>x.done).length}/${(st.todos||[]).length}`},
-          {k:'可追溯', v:'来源卡'},
-          {k:'可验收', v:'指标卡'},
-          {k:'边界', v:'护栏卡'},
+          {k:'完成度', v:`${(st.todos||[]).filter(x=>x.done).length}/${(st.todos||[]).length}`, icon:'fa-tasks', color:'text-green-600'},
+          {k:'可追溯', v:`${ev.length} 个来源`, icon:'fa-link', color:'text-cyan-600'},
+          {k:'可验收', v:`${met.length} 项指标`, icon:'fa-chart-line', color:'text-orange-600'},
+          {k:'护栏卡', v:`${bd.length} 条边界`, icon:'fa-shield-halved', color:'text-red-600'},
         ];
-        $('cp-summary').innerHTML = sum.map(s=>
-          `<div class="stats-card rounded-xl p-3">
-            <div class="text-xs text-text-secondary">${s.k}</div>
-            <div class="mt-1 font-bold">${s.v}</div>
+        $('cp-summary-cards').innerHTML = sum.map(s=>
+          `<div class="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-lg p-4">
+            <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
+              <i class="fa-solid ${s.icon} ${s.color}"></i>
+              <span>${s.k}</span>
+            </div>
+            <div class="text-2xl font-bold text-gray-900">${s.v}</div>
           </div>`
         ).join('');
+      }
+
+      // 证据
+      if($('cp-evidence')) {
+        $('cp-evidence').innerHTML = ev.length > 0 ? ev.map(e=>
+          docCard('fa-link', 'text-cyan-600', e.type, `<strong>来源：</strong>${e.ref}<br/>${e.note||''}`, '可追溯')
+        ).join('') : '<div class="document-text text-gray-500">暂无证据数据</div>';
+      }
+
+      // 指标
+      if($('cp-metrics')) {
+        $('cp-metrics').innerHTML = met.length > 0 ? met.map(m=>
+          docCard('fa-chart-line', 'text-orange-600', m.name, `<strong>公式：</strong>${m.formula}<br/><strong>目标：</strong>${m.target}`, '可验收')
+        ).join('') : '<div class="document-text text-gray-500">暂无指标数据</div>';
+      }
+
+      // 边界
+      if($('cp-boundaries')) {
+        $('cp-boundaries').innerHTML = bd.length > 0 ? bd.map(b=>
+          docCard('fa-shield-halved', 'text-red-600', b.title, b.text, '护栏')
+        ).join('') : '<div class="document-text text-gray-500">暂无边界设定</div>';
+      }
+
+      // 交付物
+      if($('cp-deliverables')) {
+        $('cp-deliverables').innerHTML = del.length > 0 ? del.map(d=>
+          `<div class="document-card">
+            <div class="flex items-center justify-between mb-2">
+              <div class="document-card-title">
+                <i class="fa-solid fa-box-archive text-indigo-600 mr-2"></i>
+                ${d.name}
+              </div>
+              <span class="text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 font-medium">交付物</span>
+            </div>
+            <ul class="document-card-content list-disc pl-5 space-y-1">
+              ${(d.items||[]).map(i=>`<li>${i}</li>`).join('')}
+            </ul>
+          </div>`
+        ).join('') : '<div class="document-text text-gray-500">暂无交付物清单</div>';
       }
     })();
   </script>

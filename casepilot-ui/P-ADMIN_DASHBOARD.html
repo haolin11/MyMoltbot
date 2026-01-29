@@ -1,1147 +1,461 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理员后台 - CasePilot</title>
-    <script src="assets/tailwind-config.js"></script>
-    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>管理后台 · CasePilot</title>
+
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
-<body class="bg-bg-primary min-h-screen cp-grid-bg">
-    <!-- 顶部导航栏 -->
-    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
-        <div class="flex items-center justify-between h-full px-6">
-            <!-- Logo和产品名称 -->
-            <div id="logo-section" class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
-                    <i class="fas fa-rocket text-white text-lg"></i>
-                </div>
-                <h1 class="text-xl font-bold gradient-text">CasePilot 管理后台</h1>
-            </div>
-            
-            <!-- 管理员信息和操作 -->
-            <div id="header-actions" class="flex items-center space-x-4">
-                <!-- 管理员信息 -->
-                <div id="admin-info" class="flex items-center space-x-2">
-                    <img src="https://s.coze.cn/image/naKmRw2O7Jg/" 
-                         alt="管理员头像" class="w-8 h-8 rounded-full border-2 border-primary">
-                    <span class="hidden md:block text-text-primary font-medium">管理员</span>
-                </div>
-                
-                <!-- 退出登录 -->
-                <button id="logout-btn" class="px-4 py-2 text-text-secondary hover:text-danger transition-colors">
-                    <i class="fas fa-sign-out-alt mr-2"></i>
-                    退出登录
+<body class="bg-bg-primary min-h-screen">
+  <!-- Top Nav -->
+  <header class="sticky top-0 z-50 glass border-b border-border-light">
+    <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="P-HOME.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white logo-icon">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
+        </div>
+        <div class="leading-tight">
+          <div class="text-xl font-bold gradient-text whitespace-nowrap">CasePilot</div>
+          <div class="text-sm text-text-secondary whitespace-nowrap">管理后台</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-1">
+        <a class="nav-link-active px-4 py-2 text-base" href="P-ADMIN_DASHBOARD.html">仪表板</a>
+        <a class="nav-link px-4 py-2 text-base" href="P-ORDER_MANAGEMENT.html">订单管理</a>
+        <a class="nav-link px-4 py-2 text-base" href="P-INVOICE_MANAGEMENT.html">发票管理</a>
+        <a class="nav-link px-4 py-2 text-base" href="#">用户管理</a>
+        <a class="nav-link px-4 py-2 text-base" href="#">系统设置</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button class="cp-btn cp-btn-secondary text-base px-4 py-2">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <a href="P-USER_CENTER.html" class="cp-btn cp-btn-secondary text-base px-4 py-2">
+          <i class="fa-solid fa-user"></i>
+          管理员
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-text-primary mb-2">仪表板</h1>
+      <p class="text-text-secondary">CasePilot 平台运营概览</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="stats-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
+            <i class="fa-solid fa-users text-2xl text-primary"></i>
+          </div>
+          <span class="text-xs cp-pill-success px-2 py-1 rounded-full">
+            <i class="fa-solid fa-arrow-up"></i>
+            +12%
+          </span>
+        </div>
+        <div class="text-3xl font-bold gradient-text mb-1">2,847</div>
+        <div class="text-sm text-text-secondary">总用户数</div>
+      </div>
+
+      <div class="stats-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-100 to-green-50 flex items-center justify-center">
+            <i class="fa-solid fa-file-lines text-2xl text-success"></i>
+          </div>
+          <span class="text-xs cp-pill-success px-2 py-1 rounded-full">
+            <i class="fa-solid fa-arrow-up"></i>
+            +24%
+          </span>
+        </div>
+        <div class="text-3xl font-bold gradient-text mb-1">1,532</div>
+        <div class="text-sm text-text-secondary">生成方案数</div>
+      </div>
+
+      <div class="stats-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
+            <i class="fa-solid fa-user-tie text-2xl text-info"></i>
+          </div>
+          <span class="text-xs cp-pill-success px-2 py-1 rounded-full">
+            <i class="fa-solid fa-arrow-up"></i>
+            +8%
+          </span>
+        </div>
+        <div class="text-3xl font-bold gradient-text mb-1">342</div>
+        <div class="text-sm text-text-secondary">专家协作数</div>
+      </div>
+
+      <div class="stats-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center">
+            <i class="fa-solid fa-dollar-sign text-2xl text-accent"></i>
+          </div>
+          <span class="text-xs cp-pill-success px-2 py-1 rounded-full">
+            <i class="fa-solid fa-arrow-up"></i>
+            +18%
+          </span>
+        </div>
+        <div class="text-3xl font-bold gradient-text mb-1">¥156K</div>
+        <div class="text-sm text-text-secondary">本月收入</div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Left Column -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Recent Solutions -->
+        <div class="cp-card p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-text-primary">
+              <i class="fa-solid fa-clock-rotate-left text-primary mr-2"></i>
+              最近生成的方案
+            </h2>
+            <button class="text-sm text-primary hover:underline">查看全部</button>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-4 p-4 rounded-xl bg-bg-secondary hover:bg-white transition-colors cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-file-lines text-primary"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-text-primary truncate">智能客服RAG系统方案</div>
+                <div class="text-xs text-text-secondary">用户: user@example.com · 2小时前</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="cp-pill-success px-3 py-1 rounded-full text-xs whitespace-nowrap">已交付</span>
+                <button class="cp-btn cp-btn-secondary text-xs px-3 py-1">
+                  <i class="fa-solid fa-eye"></i>
                 </button>
+              </div>
             </div>
+
+            <div class="flex items-center gap-4 p-4 rounded-xl bg-bg-secondary hover:bg-white transition-colors cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-100 to-green-50 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-file-lines text-success"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-text-primary truncate">OCR文档识别方案</div>
+                <div class="text-xs text-text-secondary">用户: admin@company.com · 5小时前</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="cp-pill-warn px-3 py-1 rounded-full text-xs whitespace-nowrap">进行中</span>
+                <button class="cp-btn cp-btn-secondary text-xs px-3 py-1">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 p-4 rounded-xl bg-bg-secondary hover:bg-white transition-colors cursor-pointer">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center flex-shrink-0">
+                <i class="fa-solid fa-file-lines text-info"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-text-primary truncate">企业知识库问答系统</div>
+                <div class="text-xs text-text-secondary">用户: tech@startup.com · 1天前</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="cp-pill-success px-3 py-1 rounded-full text-xs whitespace-nowrap">已交付</span>
+                <button class="cp-btn cp-btn-secondary text-xs px-3 py-1">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    </header>
 
-    <!-- 左侧菜单 -->
-    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
-        <div class="p-6">
-            <!-- 菜单标题 -->
-            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">管理功能</h3>
-            
-            <!-- 菜单项 -->
-            <nav id="sidebar-nav" class="space-y-2">
-                <a href="#" id="nav-overview" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
-                    <i class="fas fa-chart-line text-lg"></i>
-                    <span class="font-medium">概览</span>
-                </a>
-                <a href="#" id="nav-users" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-users text-lg"></i>
-                    <span class="font-medium">用户管理</span>
-                </a>
-                <a href="#" id="nav-cases" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-book text-lg"></i>
-                    <span class="font-medium">案例管理</span>
-                </a>
-                <a href="#" id="nav-orders" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-shopping-bag text-lg"></i>
-                    <span class="font-medium">订单管理</span>
-                </a>
-                <a href="#" id="nav-settings" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
-                    <i class="fas fa-cog text-lg"></i>
-                    <span class="font-medium">系统设置</span>
-                </a>
-            </nav>
+        <!-- Expert Activities -->
+        <div class="cp-card p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-text-primary">
+              <i class="fa-solid fa-user-tie text-primary mr-2"></i>
+              专家活动
+            </h2>
+            <button class="text-sm text-primary hover:underline">管理专家</button>
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <img 
+                src="https://ui-avatars.com/api/?name=张明&background=0A84FF&color=fff&size=40" 
+                class="w-10 h-10 rounded-full border-2 border-primary flex-shrink-0"
+                alt="专家头像"
+              />
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-text-primary">张明</span>
+                  <span class="text-xs text-text-secondary">15分钟前</span>
+                </div>
+                <div class="text-sm text-text-secondary">审核并通过了"智能客服RAG系统"方案的风险评估</div>
+                <div class="mt-2 flex items-center gap-2">
+                  <span class="text-xs cp-pill px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-star mr-1"></i>
+                    评分 4.9
+                  </span>
+                  <span class="text-xs cp-pill px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-clock mr-1"></i>
+                    协作 23次
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <img 
+                src="https://ui-avatars.com/api/?name=李华&background=00C2B2&color=fff&size=40" 
+                class="w-10 h-10 rounded-full border-2 border-secondary flex-shrink-0"
+                alt="专家头像"
+              />
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-text-primary">李华</span>
+                  <span class="text-xs text-text-secondary">1小时前</span>
+                </div>
+                <div class="text-sm text-text-secondary">提供了OCR文档识别方案的技术建议和优化方案</div>
+                <div class="mt-2 flex items-center gap-2">
+                  <span class="text-xs cp-pill px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-star mr-1"></i>
+                    评分 4.8
+                  </span>
+                  <span class="text-xs cp-pill px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-clock mr-1"></i>
+                    协作 18次
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <img 
+                src="https://ui-avatars.com/api/?name=王芳&background=18B881&color=fff&size=40" 
+                class="w-10 h-10 rounded-full border-2 border-success flex-shrink-0"
+                alt="专家头像"
+              />
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-semibold text-text-primary">王芳</span>
+                  <span class="text-xs text-text-secondary">3小时前</span>
+                </div>
+                <div class="text-sm text-text-secondary">完成了企业知识库问答系统的验收指标审核</div>
+                <div class="mt-2 flex items-center gap-2">
+                  <span class="text-xs cp-pill px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-star mr-1"></i>
+                    评分 5.0
+                  </span>
+                  <span class="text-xs cp-pill px-2 py-1 rounded-full">
+                    <i class="fa-solid fa-clock mr-1"></i>
+                    协作 31次
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </aside>
 
-    <!-- 主内容区 -->
-    <main id="main-content" class="ml-64 mt-16 min-h-screen">
-        <div class="p-8">
-            <!-- 概览页面 -->
-            <div id="overview-page" class="admin-page">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-text-primary mb-2">系统概览</h1>
-                    <nav id="breadcrumb" class="text-sm text-text-secondary">
-                        <span>管理员后台</span>
-                    </nav>
-                </div>
+        <!-- System Status -->
+        <div class="cp-card p-6">
+          <h2 class="text-xl font-bold text-text-primary mb-6">
+            <i class="fa-solid fa-server text-primary mr-2"></i>
+            系统状态
+          </h2>
 
-                <!-- 数据统计 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="stats-card rounded-2xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-text-secondary text-sm font-medium">用户总数</p>
-                                <p class="text-3xl font-bold text-text-primary mt-2">12,586</p>
-                                <p class="text-success text-sm mt-1">
-                                    <i class="fas fa-arrow-up mr-1"></i>
-                                    +12% 本月
-                                </p>
-                            </div>
-                            <div class="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
-                                <i class="fas fa-users text-white text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="stats-card rounded-2xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-text-secondary text-sm font-medium">案例总数</p>
-                                <p class="text-3xl font-bold text-text-primary mt-2">528</p>
-                                <p class="text-success text-sm mt-1">
-                                    <i class="fas fa-arrow-up mr-1"></i>
-                                    +8% 本月
-                                </p>
-                            </div>
-                            <div class="w-12 h-12 bg-gradient-secondary rounded-xl flex items-center justify-center">
-                                <i class="fas fa-book text-white text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="stats-card rounded-2xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-text-secondary text-sm font-medium">订单总额</p>
-                                <p class="text-3xl font-bold text-text-primary mt-2">¥456,890</p>
-                                <p class="text-success text-sm mt-1">
-                                    <i class="fas fa-arrow-up mr-1"></i>
-                                    +15% 本月
-                                </p>
-                            </div>
-                            <div class="w-12 h-12 bg-gradient-to-br from-warning to-danger rounded-xl flex items-center justify-center">
-                                <i class="fas fa-coins text-white text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="stats-card rounded-2xl p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-text-secondary text-sm font-medium">待处理事项</p>
-                                <p class="text-3xl font-bold text-text-primary mt-2">23</p>
-                                <p class="text-warning text-sm mt-1">
-                                    <i class="fas fa-clock mr-1"></i>
-                                    需要关注
-                                </p>
-                            </div>
-                            <div class="w-12 h-12 bg-gradient-to-br from-secondary to-tertiary rounded-xl flex items-center justify-center">
-                                <i class="fas fa-tasks text-white text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-green-50 border border-green-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-green-900">API服务</span>
+                <i class="fa-solid fa-circle-check text-green-600"></i>
+              </div>
+              <div class="text-xs text-green-700">正常运行 · 99.9% 可用性</div>
             </div>
 
-            <!-- 用户管理页面 -->
-            <div id="users-page" class="admin-page hidden">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-text-primary mb-2">用户管理</h1>
-                    <nav id="breadcrumb" class="text-sm text-text-secondary">
-                        <span>管理员后台 > 用户管理</span>
-                    </nav>
-                </div>
-
-                <!-- 工具栏 -->
-                <div class="bg-white rounded-2xl shadow-card p-6 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="relative">
-                                <input type="text" id="user-search" placeholder="搜索用户名、邮箱..." 
-                                       class="w-full sm:w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
-                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
-                            </div>
-                            <select id="user-role-filter" class="px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                <option value="">全部角色</option>
-                                <option value="admin">管理员</option>
-                                <option value="paid">付费用户</option>
-                                <option value="regular">普通用户</option>
-                            </select>
-                        </div>
-                        <button id="add-user-btn" class="px-6 py-2 bg-gradient-primary text-white rounded-lg font-medium hover:shadow-glow transition-all">
-                            <i class="fas fa-plus mr-2"></i>
-                            添加用户
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 用户列表 -->
-                <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-bg-secondary">
-                                <tr>
-                                    <th class="px-6 py-4 text-left">
-                                        <input type="checkbox" id="select-all-users" class="rounded border-border-light">
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="id">
-                                        用户ID <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="username">
-                                        用户名 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="email">
-                                        邮箱 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="role">
-                                        角色 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="register_time">
-                                        注册时间 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="users-table-body" class="divide-y divide-border-light">
-                                <!-- 用户数据将通过JavaScript动态生成 -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- 分页 -->
-                    <div class="px-6 py-4 border-t border-border-light flex items-center justify-between">
-                        <div class="text-sm text-text-secondary">
-                            显示第 <span id="page-start">1</span> - <span id="page-end">10</span> 条，共 <span id="total-count">12586</span> 条
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <button id="prev-page" class="px-3 py-1 border border-border-light rounded hover:bg-bg-secondary transition-colors">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <span id="current-page" class="px-3 py-1 bg-primary text-white rounded">1</span>
-                            <button id="next-page" class="px-3 py-1 border border-border-light rounded hover:bg-bg-secondary transition-colors">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="p-4 rounded-xl bg-green-50 border border-green-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-green-900">数据库</span>
+                <i class="fa-solid fa-circle-check text-green-600"></i>
+              </div>
+              <div class="text-xs text-green-700">正常运行 · 平均响应 12ms</div>
             </div>
 
-            <!-- 案例管理页面 -->
-            <div id="cases-page" class="admin-page hidden">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-text-primary mb-2">案例管理</h1>
-                    <nav id="breadcrumb" class="text-sm text-text-secondary">
-                        <span>管理员后台 > 案例管理</span>
-                    </nav>
-                </div>
-
-                <!-- 工具栏 -->
-                <div class="bg-white rounded-2xl shadow-card p-6 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="relative">
-                                <input type="text" id="case-search" placeholder="搜索案例标题、摘要..." 
-                                       class="w-full sm:w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
-                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
-                            </div>
-                            <select id="case-status-filter" class="px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                <option value="">全部状态</option>
-                                <option value="published">已发布</option>
-                                <option value="draft">草稿</option>
-                                <option value="pending">待审核</option>
-                                <option value="rejected">已拒绝</option>
-                            </select>
-                        </div>
-                        <button id="add-case-btn" class="px-6 py-2 bg-gradient-primary text-white rounded-lg font-medium hover:shadow-glow transition-all">
-                            <i class="fas fa-plus mr-2"></i>
-                            添加案例
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 案例列表 -->
-                <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-bg-secondary">
-                                <tr>
-                                    <th class="px-6 py-4 text-left">
-                                        <input type="checkbox" id="select-all-cases" class="rounded border-border-light">
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="id">
-                                        案例ID <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="title">
-                                        标题 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">行业</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="status">
-                                        状态 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="create_time">
-                                        创建时间 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cases-table-body" class="divide-y divide-border-light">
-                                <!-- 案例数据将通过JavaScript动态生成 -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- 分页 -->
-                    <div class="px-6 py-4 border-t border-border-light flex items-center justify-between">
-                        <div class="text-sm text-text-secondary">
-                            显示第 <span id="cases-page-start">1</span> - <span id="cases-page-end">10</span> 条，共 <span id="cases-total-count">528</span> 条
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <button id="cases-prev-page" class="px-3 py-1 border border-border-light rounded hover:bg-bg-secondary transition-colors">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <span id="cases-current-page" class="px-3 py-1 bg-primary text-white rounded">1</span>
-                            <button id="cases-next-page" class="px-3 py-1 border border-border-light rounded hover:bg-bg-secondary transition-colors">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="p-4 rounded-xl bg-green-50 border border-green-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-green-900">LLM服务</span>
+                <i class="fa-solid fa-circle-check text-green-600"></i>
+              </div>
+              <div class="text-xs text-green-700">正常运行 · 平均延迟 1.2s</div>
             </div>
 
-            <!-- 订单管理页面 -->
-            <div id="orders-page" class="admin-page hidden">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-text-primary mb-2">订单管理</h1>
-                    <nav id="breadcrumb" class="text-sm text-text-secondary">
-                        <span>管理员后台 > 订单管理</span>
-                    </nav>
-                </div>
-
-                <!-- 工具栏 -->
-                <div class="bg-white rounded-2xl shadow-card p-6 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <div class="relative">
-                                <input type="text" id="order-search" placeholder="搜索订单号、商品名称..." 
-                                       class="w-full sm:w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
-                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
-                            </div>
-                            <select id="order-status-filter" class="px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                <option value="">全部状态</option>
-                                <option value="pending">待支付</option>
-                                <option value="paid">已支付</option>
-                                <option value="cancelled">已取消</option>
-                                <option value="refunding">退款中</option>
-                                <option value="refunded">已退款</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 订单列表 -->
-                <div class="bg-white rounded-2xl shadow-card overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-bg-secondary">
-                                <tr>
-                                    <th class="px-6 py-4 text-left">
-                                        <input type="checkbox" id="select-all-orders" class="rounded border-border-light">
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="id">
-                                        订单号 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">商品名称</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="amount">
-                                        金额 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="status">
-                                        状态 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary cursor-pointer hover:text-primary" data-sort="create_time">
-                                        下单时间 <i class="fas fa-sort ml-1"></i>
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orders-table-body" class="divide-y divide-border-light">
-                                <!-- 订单数据将通过JavaScript动态生成 -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- 分页 -->
-                    <div class="px-6 py-4 border-t border-border-light flex items-center justify-between">
-                        <div class="text-sm text-text-secondary">
-                            显示第 <span id="orders-page-start">1</span> - <span id="orders-page-end">10</span> 条，共 <span id="orders-total-count">1256</span> 条
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <button id="orders-prev-page" class="px-3 py-1 border border-border-light rounded hover:bg-bg-secondary transition-colors">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <span id="orders-current-page" class="px-3 py-1 bg-primary text-white rounded">1</span>
-                            <button id="orders-next-page" class="px-3 py-1 border border-border-light rounded hover:bg-bg-secondary transition-colors">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="p-4 rounded-xl bg-green-50 border border-green-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-green-900">存储服务</span>
+                <i class="fa-solid fa-circle-check text-green-600"></i>
+              </div>
+              <div class="text-xs text-green-700">正常运行 · 使用率 42%</div>
             </div>
-
-            <!-- 系统设置页面 -->
-            <div id="settings-page" class="admin-page hidden">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-text-primary mb-2">系统设置</h1>
-                    <nav id="breadcrumb" class="text-sm text-text-secondary">
-                        <span>管理员后台 > 系统设置</span>
-                    </nav>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- 基本设置 -->
-                    <div class="bg-white rounded-2xl shadow-card p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">基本设置</h3>
-                        <form id="basic-settings-form" class="space-y-4">
-                            <div>
-                                <label for="site-title" class="block text-sm font-medium text-text-primary mb-2">网站标题</label>
-                                <input type="text" id="site-title" name="site-title" value="CasePilot" 
-                                       class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                            </div>
-                            <div>
-                                <label for="site-description" class="block text-sm font-medium text-text-primary mb-2">网站描述</label>
-                                <textarea id="site-description" name="site-description" rows="3" 
-                                         class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">案例驱动的大模型解决方案平台</textarea>
-                            </div>
-                            <div>
-                                <label for="contact-email" class="block text-sm font-medium text-text-primary mb-2">联系邮箱</label>
-                                <input type="email" id="contact-email" name="contact-email" value="support@casepilot.com" 
-                                       class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                            </div>
-                            <button type="submit" class="px-6 py-2 bg-gradient-primary text-white rounded-lg font-medium hover:shadow-glow transition-all">
-                                保存设置
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- 安全设置 -->
-                    <div class="bg-white rounded-2xl shadow-card p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">安全设置</h3>
-                        <form id="security-settings-form" class="space-y-4">
-                            <div>
-                                <label for="password-policy" class="block text-sm font-medium text-text-primary mb-2">密码策略</label>
-                                <select id="password-policy" name="password-policy" 
-                                        class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                    <option value="strong">强密码（8位以上，包含字母数字特殊字符）</option>
-                                    <option value="medium">中等（6位以上，包含字母数字）</option>
-                                    <option value="weak">简单（任意长度）</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="login-attempts" class="block text-sm font-medium text-text-primary mb-2">登录失败次数限制</label>
-                                <input type="number" id="login-attempts" name="login-attempts" value="5" 
-                                       class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="checkbox" id="enable-2fa" name="enable-2fa" checked 
-                                       class="rounded border-border-light">
-                                <label for="enable-2fa" class="text-sm font-medium text-text-primary">启用双因素认证</label>
-                            </div>
-                            <button type="submit" class="px-6 py-2 bg-gradient-primary text-white rounded-lg font-medium hover:shadow-glow transition-all">
-                                保存设置
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </main>
+      </div>
 
-    <!-- 用户编辑模态框 -->
-    <div id="user-edit-modal" class="fixed inset-0 z-50 hidden">
-        <div class="modal-overlay absolute inset-0"></div>
-        <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div class="modal-content bg-white rounded-2xl shadow-card w-full max-w-md">
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-text-primary">编辑用户</h3>
-                        <button id="close-user-modal" class="text-text-secondary hover:text-text-primary transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <form id="user-edit-form" class="space-y-4">
-                        <div>
-                            <label for="edit-username" class="block text-sm font-medium text-text-primary mb-2">用户名</label>
-                            <input type="text" id="edit-username" name="username" 
-                                   class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                        </div>
-                        <div>
-                            <label for="edit-email" class="block text-sm font-medium text-text-primary mb-2">邮箱</label>
-                            <input type="email" id="edit-email" name="email" 
-                                   class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                        </div>
-                        <div>
-                            <label for="edit-role" class="block text-sm font-medium text-text-primary mb-2">角色</label>
-                            <select id="edit-role" name="role" 
-                                    class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                <option value="regular">普通用户</option>
-                                <option value="paid">付费用户</option>
-                                <option value="admin">管理员</option>
-                            </select>
-                        </div>
-                        <div class="flex space-x-3 pt-4">
-                            <button type="button" id="cancel-user-edit" class="flex-1 px-4 py-2 border border-border-light text-text-secondary rounded-lg hover:bg-bg-secondary transition-colors">
-                                取消
-                            </button>
-                            <button type="submit" class="flex-1 px-4 py-2 bg-gradient-primary text-white rounded-lg hover:shadow-glow transition-all">
-                                保存
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+      <!-- Right Column -->
+      <div class="space-y-6">
+        <!-- Quick Actions -->
+        <div class="cp-card p-6">
+          <h3 class="font-bold text-text-primary mb-4">
+            <i class="fa-solid fa-bolt text-primary mr-2"></i>
+            快速操作
+          </h3>
+
+          <div class="space-y-2">
+            <button class="w-full cp-btn cp-btn-primary justify-start">
+              <i class="fa-solid fa-plus"></i>
+              添加新用户
+            </button>
+            <button class="w-full cp-btn cp-btn-secondary justify-start">
+              <i class="fa-solid fa-user-tie"></i>
+              添加专家
+            </button>
+            <button class="w-full cp-btn cp-btn-secondary justify-start">
+              <i class="fa-solid fa-folder-plus"></i>
+              上传案例
+            </button>
+            <button class="w-full cp-btn cp-btn-secondary justify-start">
+              <i class="fa-solid fa-cog"></i>
+              系统配置
+            </button>
+          </div>
         </div>
+
+        <!-- Subscription Overview -->
+        <div class="cp-card p-6">
+          <h3 class="font-bold text-text-primary mb-4">
+            <i class="fa-solid fa-crown text-primary mr-2"></i>
+            订阅统计
+          </h3>
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 rounded-xl bg-bg-secondary">
+              <div>
+                <div class="text-xs text-text-secondary">免费版</div>
+                <div class="font-bold text-text-primary">1,842</div>
+              </div>
+              <div class="text-xs text-text-secondary">64.7%</div>
+            </div>
+
+            <div class="flex items-center justify-between p-3 rounded-xl bg-bg-secondary">
+              <div>
+                <div class="text-xs text-text-secondary">专业版</div>
+                <div class="font-bold text-text-primary">856</div>
+              </div>
+              <div class="text-xs text-text-secondary">30.1%</div>
+            </div>
+
+            <div class="flex items-center justify-between p-3 rounded-xl bg-bg-secondary">
+              <div>
+                <div class="text-xs text-text-secondary">企业版</div>
+                <div class="font-bold text-text-primary">149</div>
+              </div>
+              <div class="text-xs text-text-secondary">5.2%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Alerts -->
+        <div class="cp-card p-6">
+          <h3 class="font-bold text-text-primary mb-4">
+            <i class="fa-solid fa-bell text-primary mr-2"></i>
+            系统通知
+          </h3>
+
+          <div class="space-y-3">
+            <div class="p-3 rounded-xl bg-blue-50 border border-blue-200">
+              <div class="flex items-start gap-2">
+                <i class="fa-solid fa-info-circle text-blue-600 mt-1"></i>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-blue-900 mb-1">系统更新</div>
+                  <div class="text-xs text-blue-700">v2.5.0 已发布，包含性能优化</div>
+                  <div class="text-xs text-blue-600 mt-1">2小时前</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-green-50 border border-green-200">
+              <div class="flex items-start gap-2">
+                <i class="fa-solid fa-check-circle text-green-600 mt-1"></i>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-green-900 mb-1">备份完成</div>
+                  <div class="text-xs text-green-700">数据库自动备份成功</div>
+                  <div class="text-xs text-green-600 mt-1">6小时前</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-yellow-50 border border-yellow-200">
+              <div class="flex items-start gap-2">
+                <i class="fa-solid fa-exclamation-triangle text-yellow-600 mt-1"></i>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-yellow-900 mb-1">存储警告</div>
+                  <div class="text-xs text-yellow-700">存储空间使用已达70%</div>
+                  <div class="text-xs text-yellow-600 mt-1">1天前</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Cases -->
+        <div class="cp-card p-6">
+          <h3 class="font-bold text-text-primary mb-4">
+            <i class="fa-solid fa-fire text-primary mr-2"></i>
+            热门案例
+          </h3>
+
+          <div class="space-y-3">
+            <div class="p-3 rounded-xl bg-bg-secondary hover:bg-white transition-colors cursor-pointer">
+              <div class="font-semibold text-text-primary text-sm mb-1">智能客服RAG系统</div>
+              <div class="flex items-center justify-between text-xs text-text-secondary">
+                <span><i class="fa-solid fa-eye mr-1"></i>1,234 次</span>
+                <span><i class="fa-solid fa-heart mr-1"></i>89</span>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-bg-secondary hover:bg-white transition-colors cursor-pointer">
+              <div class="font-semibold text-text-primary text-sm mb-1">OCR文档识别</div>
+              <div class="flex items-center justify-between text-xs text-text-secondary">
+                <span><i class="fa-solid fa-eye mr-1"></i>987 次</span>
+                <span><i class="fa-solid fa-heart mr-1"></i>67</span>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-bg-secondary hover:bg-white transition-colors cursor-pointer">
+              <div class="font-semibold text-text-primary text-sm mb-1">企业知识库问答</div>
+              <div class="flex items-center justify-between text-xs text-text-secondary">
+                <span><i class="fa-solid fa-eye mr-1"></i>876 次</span>
+                <span><i class="fa-solid fa-heart mr-1"></i>54</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </main>
 
-    <!-- 案例编辑模态框 -->
-    <div id="case-edit-modal" class="fixed inset-0 z-50 hidden">
-        <div class="modal-overlay absolute inset-0"></div>
-        <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div class="modal-content bg-white rounded-2xl shadow-card w-full max-w-2xl">
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-text-primary">编辑案例</h3>
-                        <button id="close-case-modal" class="text-text-secondary hover:text-text-primary transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <form id="case-edit-form" class="space-y-4">
-                        <div>
-                            <label for="edit-case-title" class="block text-sm font-medium text-text-primary mb-2">案例标题</label>
-                            <input type="text" id="edit-case-title" name="title" 
-                                   class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                        </div>
-                        <div>
-                            <label for="edit-case-industry" class="block text-sm font-medium text-text-primary mb-2">行业</label>
-                            <select id="edit-case-industry" name="industry" 
-                                    class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                <option value="fintech">金融科技</option>
-                                <option value="manufacturing">制造业</option>
-                                <option value="healthcare">医疗健康</option>
-                                <option value="education">教育</option>
-                                <option value="retail">零售电商</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="edit-case-status" class="block text-sm font-medium text-text-primary mb-2">状态</label>
-                            <select id="edit-case-status" name="status" 
-                                    class="w-full px-4 py-2 border border-border-light rounded-lg form-input-focus">
-                                <option value="draft">草稿</option>
-                                <option value="pending">待审核</option>
-                                <option value="published">已发布</option>
-                                <option value="rejected">已拒绝</option>
-                            </select>
-                        </div>
-                        <div class="flex space-x-3 pt-4">
-                            <button type="button" id="cancel-case-edit" class="flex-1 px-4 py-2 border border-border-light text-text-secondary rounded-lg hover:bg-bg-secondary transition-colors">
-                                取消
-                            </button>
-                            <button type="submit" class="flex-1 px-4 py-2 bg-gradient-primary text-white rounded-lg hover:shadow-glow transition-all">
-                                保存
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <footer class="border-t border-border-light bg-white/70 mt-12">
+    <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div class="text-sm text-text-secondary">© CasePilot Admin · Engineering-grade AI Output</div>
+      <div class="text-sm text-text-secondary">
+        系统版本 v2.5.0 · 最后更新: 2024-01-29
+      </div>
     </div>
-
-    <!-- 订单详情模态框 -->
-    <div id="order-detail-modal" class="fixed inset-0 z-50 hidden">
-        <div class="modal-overlay absolute inset-0"></div>
-        <div class="relative flex items-center justify-center min-h-screen p-4">
-            <div class="modal-content bg-white rounded-2xl shadow-card w-full max-w-2xl">
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-text-primary">订单详情</h3>
-                        <button id="close-order-modal" class="text-text-secondary hover:text-text-primary transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div id="order-detail-content" class="space-y-4">
-                        <!-- 订单详情内容将通过JavaScript动态生成 -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 模拟数据
-            const mockUsers = [
-                { id: 'U001', username: '张经理', email: 'zhang@example.com', role: 'paid', registerTime: '2024-01-15 10:30' },
-                { id: 'U002', username: '李经理', email: 'li@example.com', role: 'regular', registerTime: '2024-01-12 14:20' },
-                { id: 'U003', username: '王总监', email: 'wang@example.com', role: 'admin', registerTime: '2024-01-10 09:15' },
-                { id: 'U004', username: '赵专家', email: 'zhao@example.com', role: 'paid', registerTime: '2024-01-08 16:45' },
-                { id: 'U005', username: '刘顾问', email: 'liu@example.com', role: 'regular', registerTime: '2024-01-05 11:20' }
-            ];
-
-            const mockCases = [
-                { id: 'C001', title: '智能信贷风控系统解决方案', industry: '金融科技', status: 'published', createTime: '2024-01-15 10:30' },
-                { id: 'C002', title: '工业物联网设备监控平台', industry: '制造业', status: 'pending', createTime: '2024-01-12 14:20' },
-                { id: 'C003', title: '医学影像智能诊断系统', industry: '医疗健康', status: 'draft', createTime: '2024-01-10 09:15' },
-                { id: 'C004', title: '在线教育智能推荐系统', industry: '教育', status: 'published', createTime: '2024-01-08 16:45' },
-                { id: 'C005', title: '电商平台用户画像分析', industry: '零售电商', status: 'rejected', createTime: '2024-01-05 11:20' }
-            ];
-
-            const mockOrders = [
-                { id: 'O001', itemName: '智能信贷风控系统解决方案', amount: '¥299', status: 'paid', createTime: '2024-01-15 10:30' },
-                { id: 'O002', itemName: '工业物联网设备监控平台', amount: '¥199', status: 'pending', createTime: '2024-01-12 14:20' },
-                { id: 'O003', itemName: '医学影像智能诊断系统', amount: '¥399', status: 'cancelled', createTime: '2024-01-10 09:15' },
-                { id: 'O004', itemName: '在线教育智能推荐系统', amount: '¥149', status: 'refunding', createTime: '2024-01-08 16:45' },
-                { id: 'O005', itemName: '电商平台用户画像分析', amount: '¥249', status: 'paid', createTime: '2024-01-05 11:20' }
-            ];
-
-            // 页面切换功能
-            const pages = document.querySelectorAll('.admin-page');
-            const navLinks = document.querySelectorAll('#sidebar-nav a');
-
-            function switchPage(pageId, navId) {
-                // 隐藏所有页面
-                pages.forEach(page => page.classList.add('hidden'));
-                
-                // 显示目标页面
-                document.querySelector(`#${pageId}`).classList.remove('hidden');
-                
-                // 更新导航状态
-                navLinks.forEach(link => link.classList.remove('nav-link-active'));
-                document.querySelector(`#${navId}`).classList.add('nav-link-active');
-            }
-
-            // 导航点击事件
-            document.querySelector('#nav-overview').addEventListener('click', function(e) {
-                e.preventDefault();
-                switchPage('overview-page', 'nav-overview');
-            });
-
-            document.querySelector('#nav-users').addEventListener('click', function(e) {
-                e.preventDefault();
-                switchPage('users-page', 'nav-users');
-                renderUsersTable();
-            });
-
-            document.querySelector('#nav-cases').addEventListener('click', function(e) {
-                e.preventDefault();
-                switchPage('cases-page', 'nav-cases');
-                renderCasesTable();
-            });
-
-            document.querySelector('#nav-orders').addEventListener('click', function(e) {
-                e.preventDefault();
-                switchPage('orders-page', 'nav-orders');
-                renderOrdersTable();
-            });
-
-            document.querySelector('#nav-settings').addEventListener('click', function(e) {
-                e.preventDefault();
-                switchPage('settings-page', 'nav-settings');
-            });
-
-            // 渲染用户表格
-            function renderUsersTable() {
-                const tbody = document.querySelector('#users-table-body');
-                tbody.innerHTML = '';
-
-                mockUsers.forEach(user => {
-                    const row = document.createElement('tr');
-                    row.className = 'table-row-hover';
-                    row.innerHTML = `
-                        <td class="px-6 py-4">
-                            <input type="checkbox" class="user-checkbox rounded border-border-light" data-user-id="${user.id}">
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-primary font-medium cursor-pointer hover:text-primary" data-action="edit" data-user-id="${user.id}">
-                            ${user.id}
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-primary">${user.username}</td>
-                        <td class="px-6 py-4 text-sm text-text-secondary">${user.email}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 ${getRoleClass(user.role)} rounded-lg text-sm font-medium">
-                                ${getRoleText(user.role)}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-secondary">${user.registerTime}</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center space-x-2">
-                                <button class="text-primary hover:text-secondary transition-colors" data-action="edit" data-user-id="${user.id}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-warning hover:text-yellow-700 transition-colors" data-action="toggle" data-user-id="${user.id}">
-                                    <i class="fas fa-ban"></i>
-                                </button>
-                                <button class="text-danger hover:text-red-700 transition-colors" data-action="delete" data-user-id="${user.id}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-
-                // 绑定用户表格事件
-                bindUsersTableEvents();
-            }
-
-            // 渲染案例表格
-            function renderCasesTable() {
-                const tbody = document.querySelector('#cases-table-body');
-                tbody.innerHTML = '';
-
-                mockCases.forEach(caseItem => {
-                    const row = document.createElement('tr');
-                    row.className = 'table-row-hover';
-                    row.innerHTML = `
-                        <td class="px-6 py-4">
-                            <input type="checkbox" class="case-checkbox rounded border-border-light" data-case-id="${caseItem.id}">
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-primary font-medium cursor-pointer hover:text-primary" data-action="edit" data-case-id="${caseItem.id}">
-                            ${caseItem.id}
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-primary">${caseItem.title}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm font-medium">
-                                ${caseItem.industry}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 ${getStatusClass(caseItem.status)} rounded-lg text-sm font-medium">
-                                ${getStatusText(caseItem.status)}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-secondary">${caseItem.createTime}</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center space-x-2">
-                                <button class="text-primary hover:text-secondary transition-colors" data-action="edit" data-case-id="${caseItem.id}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-warning hover:text-yellow-700 transition-colors" data-action="review" data-case-id="${caseItem.id}">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="text-danger hover:text-red-700 transition-colors" data-action="delete" data-case-id="${caseItem.id}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-
-                // 绑定案例表格事件
-                bindCasesTableEvents();
-            }
-
-            // 渲染订单表格
-            function renderOrdersTable() {
-                const tbody = document.querySelector('#orders-table-body');
-                tbody.innerHTML = '';
-
-                mockOrders.forEach(order => {
-                    const row = document.createElement('tr');
-                    row.className = 'table-row-hover';
-                    row.innerHTML = `
-                        <td class="px-6 py-4">
-                            <input type="checkbox" class="order-checkbox rounded border-border-light" data-order-id="${order.id}">
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-primary font-medium cursor-pointer hover:text-primary" data-action="view" data-order-id="${order.id}">
-                            ${order.id}
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-primary">${order.itemName}</td>
-                        <td class="px-6 py-4 text-sm text-text-primary font-medium">${order.amount}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-3 py-1 ${getStatusClass(order.status)} rounded-lg text-sm font-medium">
-                                ${getStatusText(order.status)}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-text-secondary">${order.createTime}</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center space-x-2">
-                                <button class="text-primary hover:text-secondary transition-colors" data-action="view" data-order-id="${order.id}">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="text-warning hover:text-yellow-700 transition-colors" data-action="refund" data-order-id="${order.id}">
-                                    <i class="fas fa-undo"></i>
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-
-                // 绑定订单表格事件
-                bindOrdersTableEvents();
-            }
-
-            // 绑定用户表格事件
-            function bindUsersTableEvents() {
-                // 编辑用户
-                document.querySelectorAll('[data-action="edit"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const userId = this.dataset.userId;
-                        openUserEditModal(userId);
-                    });
-                });
-
-                // 禁用/启用用户
-                document.querySelectorAll('[data-action="toggle"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const userId = this.dataset.userId;
-                        toggleUserStatus(userId);
-                    });
-                });
-
-                // 删除用户
-                document.querySelectorAll('[data-action="delete"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const userId = this.dataset.userId;
-                        deleteUser(userId);
-                    });
-                });
-
-                // 全选
-                document.querySelector('#select-all-users').addEventListener('change', function() {
-                    const checkboxes = document.querySelectorAll('.user-checkbox');
-                    checkboxes.forEach(checkbox => {
-                        checkbox.checked = this.checked;
-                    });
-                });
-            }
-
-            // 绑定案例表格事件
-            function bindCasesTableEvents() {
-                // 编辑案例
-                document.querySelectorAll('[data-action="edit"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const caseId = this.dataset.caseId;
-                        openCaseEditModal(caseId);
-                    });
-                });
-
-                // 审核案例
-                document.querySelectorAll('[data-action="review"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const caseId = this.dataset.caseId;
-                        reviewCase(caseId);
-                    });
-                });
-
-                // 删除案例
-                document.querySelectorAll('[data-action="delete"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const caseId = this.dataset.caseId;
-                        deleteCase(caseId);
-                    });
-                });
-
-                // 全选
-                document.querySelector('#select-all-cases').addEventListener('change', function() {
-                    const checkboxes = document.querySelectorAll('.case-checkbox');
-                    checkboxes.forEach(checkbox => {
-                        checkbox.checked = this.checked;
-                    });
-                });
-            }
-
-            // 绑定订单表格事件
-            function bindOrdersTableEvents() {
-                // 查看订单详情
-                document.querySelectorAll('[data-action="view"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const orderId = this.dataset.orderId;
-                        openOrderDetailModal(orderId);
-                    });
-                });
-
-                // 退款处理
-                document.querySelectorAll('[data-action="refund"]').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const orderId = this.dataset.orderId;
-                        processRefund(orderId);
-                    });
-                });
-
-                // 全选
-                document.querySelector('#select-all-orders').addEventListener('change', function() {
-                    const checkboxes = document.querySelectorAll('.order-checkbox');
-                    checkboxes.forEach(checkbox => {
-                        checkbox.checked = this.checked;
-                    });
-                });
-            }
-
-            // 打开用户编辑模态框
-            function openUserEditModal(userId) {
-                const user = mockUsers.find(u => u.id === userId);
-                if (user) {
-                    document.querySelector('#edit-username').value = user.username;
-                    document.querySelector('#edit-email').value = user.email;
-                    document.querySelector('#edit-role').value = user.role;
-                    document.querySelector('#user-edit-modal').classList.remove('hidden');
-                }
-            }
-
-            // 打开案例编辑模态框
-            function openCaseEditModal(caseId) {
-                const caseItem = mockCases.find(c => c.id === caseId);
-                if (caseItem) {
-                    document.querySelector('#edit-case-title').value = caseItem.title;
-                    document.querySelector('#edit-case-industry').value = caseItem.industry;
-                    document.querySelector('#edit-case-status').value = caseItem.status;
-                    document.querySelector('#case-edit-modal').classList.remove('hidden');
-                }
-            }
-
-            // 打开订单详情模态框
-            function openOrderDetailModal(orderId) {
-                const order = mockOrders.find(o => o.id === orderId);
-                if (order) {
-                    const content = document.querySelector('#order-detail-content');
-                    content.innerHTML = `
-                        <div class="border-b border-border-light pb-4">
-                            <h4 class="font-medium text-text-primary mb-2">订单信息</h4>
-                            <div class="grid grid-cols-2 gap-4 text-sm">
-                                <div>
-                                    <span class="text-text-secondary">订单号：</span>
-                                    <span class="text-text-primary">${order.id}</span>
-                                </div>
-                                <div>
-                                    <span class="text-text-secondary">下单时间：</span>
-                                    <span class="text-text-primary">${order.createTime}</span>
-                                </div>
-                                <div>
-                                    <span class="text-text-secondary">商品名称：</span>
-                                    <span class="text-text-primary">${order.itemName}</span>
-                                </div>
-                                <div>
-                                    <span class="text-text-secondary">金额：</span>
-                                    <span class="text-text-primary font-medium">${order.amount}</span>
-                                </div>
-                                <div>
-                                    <span class="text-text-secondary">状态：</span>
-                                    <span class="px-2 py-1 ${getStatusClass(order.status)} rounded text-sm font-medium">
-                                        ${getStatusText(order.status)}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pt-4">
-                            <h4 class="font-medium text-text-primary mb-2">操作记录</h4>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between">
-                                    <span class="text-text-secondary">订单创建</span>
-                                    <span class="text-text-primary">${order.createTime}</span>
-                                </div>
-                                ${order.status === 'paid' ? `
-                                <div class="flex justify-between">
-                                    <span class="text-text-secondary">支付完成</span>
-                                    <span class="text-text-primary">${order.createTime}</span>
-                                </div>
-                                ` : ''}
-                            </div>
-                        </div>
-                    `;
-                    document.querySelector('#order-detail-modal').classList.remove('hidden');
-                }
-            }
-
-            // 关闭模态框
-            document.querySelector('#close-user-modal').addEventListener('click', function() {
-                document.querySelector('#user-edit-modal').classList.add('hidden');
-            });
-
-            document.querySelector('#cancel-user-edit').addEventListener('click', function() {
-                document.querySelector('#user-edit-modal').classList.add('hidden');
-            });
-
-            document.querySelector('#close-case-modal').addEventListener('click', function() {
-                document.querySelector('#case-edit-modal').classList.add('hidden');
-            });
-
-            document.querySelector('#cancel-case-edit').addEventListener('click', function() {
-                document.querySelector('#case-edit-modal').classList.add('hidden');
-            });
-
-            document.querySelector('#close-order-modal').addEventListener('click', function() {
-                document.querySelector('#order-detail-modal').classList.add('hidden');
-            });
-
-            // 模态框背景点击关闭
-            document.querySelectorAll('.modal-overlay').forEach(overlay => {
-                overlay.addEventListener('click', function() {
-                    this.parentElement.classList.add('hidden');
-                });
-            });
-
-            // 用户编辑表单提交
-            document.querySelector('#user-edit-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                // 这里处理表单提交逻辑
-                console.log('用户编辑表单提交');
-                document.querySelector('#user-edit-modal').classList.add('hidden');
-            });
-
-            // 案例编辑表单提交
-            document.querySelector('#case-edit-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                // 这里处理表单提交逻辑
-                console.log('案例编辑表单提交');
-                document.querySelector('#case-edit-modal').classList.add('hidden');
-            });
-
-            // 系统设置表单提交
-            document.querySelector('#basic-settings-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('基本设置表单提交');
-            });
-
-            document.querySelector('#security-settings-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('安全设置表单提交');
-            });
-
-            // 退出登录
-            document.querySelector('#logout-btn').addEventListener('click', function() {
-                if (confirm('确定要退出登录吗？')) {
-                    window.location.href = 'P-LOGIN_REGISTER.html';
-                }
-            });
-
-            // 辅助函数
-            function getRoleClass(role) {
-                switch(role) {
-                    case 'admin': return 'bg-red-100 text-red-800';
-                    case 'paid': return 'bg-green-100 text-green-800';
-                    case 'regular': return 'bg-blue-100 text-blue-800';
-                    default: return 'bg-gray-100 text-gray-800';
-                }
-            }
-
-            function getRoleText(role) {
-                switch(role) {
-                    case 'admin': return '管理员';
-                    case 'paid': return '付费用户';
-                    case 'regular': return '普通用户';
-                    default: return '未知角色';
-                }
-            }
-
-            function getStatusClass(status) {
-                switch(status) {
-                    case 'published': return 'bg-green-100 text-green-800';
-                    case 'pending': return 'bg-yellow-100 text-yellow-800';
-                    case 'draft': return 'bg-gray-100 text-gray-800';
-                    case 'rejected': return 'bg-red-100 text-red-800';
-                    case 'paid': return 'bg-green-100 text-green-800';
-                    case 'pending': return 'bg-yellow-100 text-yellow-800';
-                    case 'cancelled': return 'bg-gray-100 text-gray-800';
-                    case 'refunding': return 'bg-orange-100 text-orange-800';
-                    case 'refunded': return 'bg-red-100 text-red-800';
-                    default: return 'bg-gray-100 text-gray-800';
-                }
-            }
-
-            function getStatusText(status) {
-                switch(status) {
-                    case 'published': return '已发布';
-                    case 'pending': return '待审核';
-                    case 'draft': return '草稿';
-                    case 'rejected': return '已拒绝';
-                    case 'paid': return '已支付';
-                    case 'pending': return '待支付';
-                    case 'cancelled': return '已取消';
-                    case 'refunding': return '退款中';
-                    case 'refunded': return '已退款';
-                    default: return '未知状态';
-                }
-            }
-
-            // 其他操作函数
-            function toggleUserStatus(userId) {
-                console.log('切换用户状态:', userId);
-            }
-
-            function deleteUser(userId) {
-                if (confirm('确定要删除这个用户吗？')) {
-                    console.log('删除用户:', userId);
-                }
-            }
-
-            function reviewCase(caseId) {
-                console.log('审核案例:', caseId);
-            }
-
-            function deleteCase(caseId) {
-                if (confirm('确定要删除这个案例吗？')) {
-                    console.log('删除案例:', caseId);
-                }
-            }
-
-            function processRefund(orderId) {
-                if (confirm('确定要处理这个订单的退款吗？')) {
-                    console.log('处理退款:', orderId);
-                }
-            }
-
-            // 搜索功能
-            document.querySelector('#user-search').addEventListener('input', function() {
-                console.log('用户搜索:', this.value);
-            });
-
-            document.querySelector('#case-search').addEventListener('input', function() {
-                console.log('案例搜索:', this.value);
-            });
-
-            document.querySelector('#order-search').addEventListener('input', function() {
-                console.log('订单搜索:', this.value);
-            });
-
-            // 筛选功能
-            document.querySelector('#user-role-filter').addEventListener('change', function() {
-                console.log('用户角色筛选:', this.value);
-            });
-
-            document.querySelector('#case-status-filter').addEventListener('change', function() {
-                console.log('案例状态筛选:', this.value);
-            });
-
-            document.querySelector('#order-status-filter').addEventListener('change', function() {
-                console.log('订单状态筛选:', this.value);
-            });
-
-            // 排序功能
-            document.querySelectorAll('[data-sort]').forEach(header => {
-                header.addEventListener('click', function() {
-                    console.log('排序:', this.dataset.sort);
-                });
-            });
-
-            // 分页功能
-            document.querySelector('#prev-page').addEventListener('click', function() {
-                console.log('上一页');
-            });
-
-            document.querySelector('#next-page').addEventListener('click', function() {
-                console.log('下一页');
-            });
-
-            // 初始化时显示概览页面
-            switchPage('overview-page', 'nav-overview');
-        });
-    </script>
+  </footer>
 </body>
 </html>

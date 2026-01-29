@@ -4,136 +4,222 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>登录/注册 · CasePilot</title>
+
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
   <link rel="stylesheet" href="assets/styles.css" />
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg" data-page="auth">
-  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
+  <!-- Top Nav -->
+  <header class="sticky top-0 z-50 glass">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="P-HOME.html" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-          <i class="fas fa-cube text-white"></i>
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white logo-icon">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
         </div>
         <div class="leading-tight">
-          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">交付级 AI 方案生成平台</div>
+          <div class="text-xl font-bold gradient-text whitespace-nowrap">CasePilot</div>
+          <div class="text-sm text-text-secondary whitespace-nowrap">交付级AI方案平台</div>
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-HOME.html">首页</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_GENERATOR.html">方案生成器</a>
-      </nav>
-
-      <div class="flex items-center gap-3">
-        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border-light bg-white hover:bg-bg-secondary text-sm">
-          <i class="fas fa-arrow-right"></i>
-          进入产品
-        </a>
-      </div>
+      <a href="P-HOME.html" class="inline-flex items-center gap-2 cp-btn cp-btn-secondary text-base px-4 py-2">
+        <i class="fa-solid fa-arrow-left"></i>
+        返回首页
+      </a>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid lg:grid-cols-12 gap-8 items-start">
-      <div class="lg:col-span-6">
-        <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full cp-badge">
-          <i class="fas fa-shield-check"></i>
-          登录后可保存方案、沉淀失败模式库与基准库（演示）
+    <div class="max-w-md mx-auto">
+      <!-- Auth Card -->
+      <div class="cp-card p-8">
+        <!-- Tabs -->
+        <div class="flex items-center gap-2 p-1 bg-bg-secondary rounded-xl mb-6">
+          <button class="cp-tab active flex-1" data-tab="login" type="button">
+            登录
+          </button>
+          <button class="cp-tab flex-1" data-tab="register" type="button">
+            注册
+          </button>
         </div>
-        <h1 class="mt-4 text-4xl font-extrabold text-text-primary">登录 / 注册</h1>
-        <p class="mt-3 text-text-secondary leading-relaxed">
-          面向“为结果负责”的 AI 交付方：从生成到验收，把关键指标写清楚、把风险边界说透。
-        </p>
 
-        <div class="mt-8 grid sm:grid-cols-2 gap-4">
-          <div class="stats-card rounded-2xl p-5">
-            <div class="font-bold">可追溯</div>
-            <div class="mt-1 text-sm text-text-secondary">每条关键结论必须给出处。</div>
+        <!-- Login Panel -->
+        <div data-panel="login">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-text-primary">欢迎回来</h2>
+            <p class="mt-2 text-sm text-text-secondary">登录您的账户继续使用</p>
           </div>
-          <div class="stats-card rounded-2xl p-5">
-            <div class="font-bold">可验收</div>
-            <div class="mt-1 text-sm text-text-secondary">指标公式 + 口径 + 用例集。</div>
+
+          <form id="cp-login-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">
+                <i class="fa-solid fa-envelope mr-2"></i>
+                邮箱地址
+              </label>
+              <input 
+                type="email" 
+                id="cp-login-email" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-border-light search-focus text-sm"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">
+                <i class="fa-solid fa-lock mr-2"></i>
+                密码
+              </label>
+              <input 
+                type="password" 
+                id="cp-login-password" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-border-light search-focus text-sm"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <label class="flex items-center gap-2">
+                <input type="checkbox" class="rounded accent-color-primary" />
+                <span class="text-text-secondary">记住我</span>
+              </label>
+              <a href="#" class="text-primary hover:underline">忘记密码？</a>
+            </div>
+
+            <button type="submit" class="cp-btn cp-btn-primary w-full text-base py-3">
+              <i class="fa-solid fa-sign-in-alt"></i>
+              登录
+            </button>
+          </form>
+
+          <!-- Social Login -->
+          <div class="mt-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-border-light"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-white text-text-secondary">或使用</span>
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              <button class="cp-btn cp-btn-secondary py-3">
+                <i class="fa-brands fa-github"></i>
+                GitHub
+              </button>
+              <button class="cp-btn cp-btn-secondary py-3">
+                <i class="fa-brands fa-google"></i>
+                Google
+              </button>
+            </div>
           </div>
         </div>
+
+        <!-- Register Panel -->
+        <div data-panel="register" class="hidden">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-text-primary">创建账户</h2>
+            <p class="mt-2 text-sm text-text-secondary">开始生成交付级AI方案</p>
+          </div>
+
+          <form id="cp-register-form" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">
+                <i class="fa-solid fa-user mr-2"></i>
+                用户名
+              </label>
+              <input 
+                type="text" 
+                id="cp-reg-username" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-border-light search-focus text-sm"
+                placeholder="您的名字"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">
+                <i class="fa-solid fa-envelope mr-2"></i>
+                邮箱地址
+              </label>
+              <input 
+                type="email" 
+                id="cp-reg-email" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-border-light search-focus text-sm"
+                placeholder="your@email.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">
+                <i class="fa-solid fa-lock mr-2"></i>
+                密码
+              </label>
+              <input 
+                type="password" 
+                id="cp-reg-password" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-border-light search-focus text-sm"
+                placeholder="至少8位字符"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">
+                <i class="fa-solid fa-lock mr-2"></i>
+                确认密码
+              </label>
+              <input 
+                type="password" 
+                id="cp-reg-confirm" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-border-light search-focus text-sm"
+                placeholder="再次输入密码"
+              />
+            </div>
+
+            <div class="flex items-start gap-2 text-sm">
+              <input type="checkbox" required class="mt-1 rounded accent-color-primary" />
+              <span class="text-text-secondary">
+                我同意 <a href="#" class="text-primary hover:underline">服务条款</a> 和 
+                <a href="#" class="text-primary hover:underline">隐私政策</a>
+              </span>
+            </div>
+
+            <button type="submit" class="cp-btn cp-btn-primary w-full text-base py-3">
+              <i class="fa-solid fa-user-plus"></i>
+              注册
+            </button>
+          </form>
+        </div>
+
+        <!-- Message -->
+        <div id="cp-auth-msg" class="hidden mt-4 p-3 rounded-xl bg-success-light text-success text-sm text-center"></div>
       </div>
 
-      <div class="lg:col-span-6">
-        <div class="bg-white rounded-3xl border border-border-light shadow-card p-6 sm:p-8">
-          <div class="flex items-center gap-2">
-            <button data-tab="login" type="button" class="px-4 py-2 rounded-xl text-sm nav-link-active">登录</button>
-            <button data-tab="register" type="button" class="px-4 py-2 rounded-xl text-sm text-text-secondary hover:bg-bg-secondary">注册</button>
-          </div>
-
-          <div id="cp-auth-msg" class="hidden mt-4 p-3 rounded-xl border border-border-light bg-bg-secondary text-sm"></div>
-
-          <!-- Login -->
-          <div class="mt-6" data-panel="login">
-            <form id="cp-login-form" class="space-y-4">
-              <div>
-                <label class="text-sm font-semibold">邮箱</label>
-                <input id="cp-login-email" type="email" required class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="name@company.com" />
-              </div>
-              <div>
-                <label class="text-sm font-semibold">密码</label>
-                <input type="password" required class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="••••••••" />
-              </div>
-              <button class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover" type="submit">
-                <i class="fas fa-right-to-bracket"></i>
-                登录（演示）
-              </button>
-              <div class="text-xs text-text-secondary">提示：此页为演示，提交后会跳转到方案生成器。</div>
-            </form>
-          </div>
-
-          <!-- Register -->
-          <div class="mt-6 hidden" data-panel="register">
-            <form id="cp-register-form" class="space-y-4">
-              <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="text-sm font-semibold">姓名</label>
-                  <input type="text" required class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="张三" />
-                </div>
-                <div>
-                  <label class="text-sm font-semibold">公司</label>
-                  <input type="text" class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="某某科技" />
-                </div>
-              </div>
-              <div>
-                <label class="text-sm font-semibold">邮箱</label>
-                <input id="cp-reg-email" type="email" required class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="name@company.com" />
-              </div>
-              <div>
-                <label class="text-sm font-semibold">密码</label>
-                <input type="password" required class="mt-2 w-full px-4 py-3 rounded-xl border border-border-light search-focus" placeholder="至少 8 位" />
-              </div>
-              <button class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-primary text-white shadow-card-hover" type="submit">
-                <i class="fas fa-user-plus"></i>
-                注册（演示）
-              </button>
-              <div class="text-xs text-text-secondary">注册成功后会自动登录并跳转到方案生成器。</div>
-            </form>
-          </div>
-
-          <div class="mt-6 text-xs text-text-secondary">
-            继续即表示你同意：所有关键指标必须可计算；所有关键数据必须可追溯；明确风险边界。
-          </div>
+      <!-- Features -->
+      <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+        <div>
+          <i class="fa-solid fa-shield-check text-2xl text-primary mb-2"></i>
+          <div class="text-sm text-text-secondary">安全可靠</div>
+        </div>
+        <div>
+          <i class="fa-solid fa-bolt text-2xl text-primary mb-2"></i>
+          <div class="text-sm text-text-secondary">快速生成</div>
+        </div>
+        <div>
+          <i class="fa-solid fa-users text-2xl text-primary mb-2"></i>
+          <div class="text-sm text-text-secondary">专家协作</div>
         </div>
       </div>
     </div>
   </main>
-
-  <footer class="border-t border-border-light bg-white/70">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
-      <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary" href="P-HOME.html">首页</a>
-        <a class="hover:text-primary" href="P-SOLUTION_GENERATOR.html">方案生成器</a>
-      </div>
-    </div>
-  </footer>
 
   <script src="assets/app.js"></script>
 </body>

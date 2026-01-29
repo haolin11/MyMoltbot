@@ -1,166 +1,322 @@
-/**
- * API客户端
- * 统一管理所有API调用
- */
+/* CasePilot API Client
+   Client-side API wrapper for CasePilot backend services
+   Handles authentication, request/response formatting, and error handling
+*/
 
-const API_BASE_URL = 'http://localhost:3000/api';
-
-class ApiClient {
-  /**
-   * 通用请求方法
-   */
-  async request(url, options = {}) {
-    const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
-    
-    const defaultOptions = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const config = {
-      ...defaultOptions,
-      ...options,
-      headers: {
-        ...defaultOptions.headers,
-        ...options.headers,
-      },
-    };
-
-    try {
-      const response = await fetch(fullUrl, config);
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || data.message || '请求失败');
-      }
-      
-      return data;
-    } catch (error) {
-      console.error('API请求失败:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * GET请求
-   */
-  async get(url, params = {}) {
-    const queryString = new URLSearchParams(params).toString();
-    const fullUrl = queryString ? `${url}?${queryString}` : url;
-    return this.request(fullUrl, { method: 'GET' });
-  }
-
-  /**
-   * POST请求
-   */
-  async post(url, data = {}) {
-    return this.request(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  /**
-   * PUT请求
-   */
-  async put(url, data = {}) {
-    return this.request(url, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
-  }
-
-  /**
-   * DELETE请求
-   */
-  async delete(url) {
-    return this.request(url, { method: 'DELETE' });
-  }
-
-  // ========== 案例相关API ==========
-
-  /**
-   * 获取案例列表
-   */
-  async getCases(params = {}) {
-    return this.get('/cases', params);
-  }
-
-  /**
-   * 获取案例详情
-   */
-  async getCaseById(id) {
-    return this.get(`/cases/${id}`);
-  }
-
-  /**
-   * 搜索案例
-   */
-  async searchCases(query, topK = 5) {
-    return this.get('/cases/search', { q: query, topK });
-  }
-
-  // ========== 方案相关API ==========
-
-  /**
-   * 生成方案
-   */
-  async generateSolution(userInput) {
-    return this.post('/solutions/generate', userInput);
-  }
-
-  /**
-   * 获取方案详情
-   */
-  async getSolutionById(id) {
-    return this.get(`/solutions/${id}`);
-  }
-
-  /**
-   * 获取方案列表
-   */
-  async getSolutions(params = {}) {
-    return this.get('/solutions', params);
-  }
-
-  /**
-   * 发送对话消息（针对方案进行进一步提问）
-   */
-  async sendChatMessage(solutionId, message) {
-    return this.post(`/solutions/${solutionId}/chat`, { message });
-  }
-}
-
-// 创建单例
-const apiClient = new ApiClient();
-
-// 验证实例方法
-if (!apiClient.getCases || typeof apiClient.getCases !== 'function') {
-  console.error('ApiClient实例创建失败，getCases方法不存在', {
-    apiClient: apiClient,
-    getCases: apiClient.getCases,
-    methods: Object.getOwnPropertyNames(Object.getPrototypeOf(apiClient))
-  });
-}
-
-// 导出 - 确保在浏览器环境中全局可用
-(function() {
+(function (global) {
   'use strict';
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = apiClient;
-  } else {
-    // 确保全局可用
-    window.ApiClient = apiClient;
-    window.apiClient = apiClient;
-    // 也设置全局变量（非严格模式）
-    if (typeof globalThis !== 'undefined') {
-      globalThis.ApiClient = apiClient;
-    }
-    console.log('ApiClient已初始化并导出到全局作用域', {
-      hasGetCases: typeof window.ApiClient.getCases === 'function',
-      methods: Object.getOwnPropertyNames(Object.getPrototypeOf(window.ApiClient))
-    });
-  }
-})();
 
+  // Configuration
+  const API_BASE_URL = '/api/v1';
+  const API_TIMEOUT = 30000; // 30 seconds
+
+  // Storage helper
+  const storage = {
+    get(key, fallback = null) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch {
+        return fallback;
+      }
+    },
+    set(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        console.error('Storage error:', e);
+      }
+    },
+    remove(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {
+        console.error('Storage error:', e);
+      }
+    }
+  };
+
+  // HTTP client
+  class APIClient {
+    constructor(baseURL = API_BASE_URL) {
+      this.baseURL = baseURL;
+      this.timeout = API_TIMEOUT;
+    }
+
+    // Get auth token
+    getAuthToken() {
+      const user = storage.get('cp.auth.user');
+      return user?.token || null;
+    }
+
+    // Build headers
+    buildHeaders(customHeaders = {}) {
+      const headers = {
+        'Content-Type': 'application/json',
+        ...customHeaders
+      };
+
+      const token = this.getAuthToken();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      return headers;
+    }
+
+    // Make request
+    async request(method, endpoint, options = {}) {
+      const url = `${this.baseURL}${endpoint}`;
+      const { body, headers, timeout = this.timeout } = options;
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+      try {
+        const response = await fetch(url, {
+          method,
+          headers: this.buildHeaders(headers),
+          body: body ? JSON.stringify(body) : undefined,
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw {
+            status: response.status,
+            message: data.message || 'Request failed',
+            data
+          };
+        }
+
+        return data;
+      } catch (error) {
+        clearTimeout(timeoutId);
+
+        if (error.name === 'AbortError') {
+          throw { status: 408, message: 'Request timeout' };
+        }
+
+        throw error;
+      }
+    }
+
+    // HTTP methods
+    get(endpoint, options) {
+      return this.request('GET', endpoint, options);
+    }
+
+    post(endpoint, body, options = {}) {
+      return this.request('POST', endpoint, { ...options, body });
+    }
+
+    put(endpoint, body, options = {}) {
+      return this.request('PUT', endpoint, { ...options, body });
+    }
+
+    patch(endpoint, body, options = {}) {
+      return this.request('PATCH', endpoint, { ...options, body });
+    }
+
+    delete(endpoint, options) {
+      return this.request('DELETE', endpoint, options);
+    }
+  }
+
+  // API Modules
+  const api = {
+    client: new APIClient(),
+
+    // Auth
+    auth: {
+      login(email, password) {
+        return api.client.post('/auth/login', { email, password });
+      },
+
+      register(data) {
+        return api.client.post('/auth/register', data);
+      },
+
+      logout() {
+        return api.client.post('/auth/logout');
+      },
+
+      getProfile() {
+        return api.client.get('/auth/profile');
+      },
+
+      updateProfile(data) {
+        return api.client.patch('/auth/profile', data);
+      }
+    },
+
+    // Solutions
+    solutions: {
+      list(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return api.client.get(`/solutions${query ? '?' + query : ''}`);
+      },
+
+      get(id) {
+        return api.client.get(`/solutions/${id}`);
+      },
+
+      create(data) {
+        return api.client.post('/solutions', data);
+      },
+
+      update(id, data) {
+        return api.client.put(`/solutions/${id}`, data);
+      },
+
+      delete(id) {
+        return api.client.delete(`/solutions/${id}`);
+      },
+
+      generate(data) {
+        return api.client.post('/solutions/generate', data);
+      },
+
+      export(id, format = 'pdf') {
+        return api.client.get(`/solutions/${id}/export?format=${format}`);
+      }
+    },
+
+    // Cases
+    cases: {
+      list(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return api.client.get(`/cases${query ? '?' + query : ''}`);
+      },
+
+      get(id) {
+        return api.client.get(`/cases/${id}`);
+      },
+
+      search(query) {
+        return api.client.post('/cases/search', { query });
+      }
+    },
+
+    // Experts
+    experts: {
+      list(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return api.client.get(`/experts${query ? '?' + query : ''}`);
+      },
+
+      get(id) {
+        return api.client.get(`/experts/${id}`);
+      },
+
+      requestCollaboration(solutionId, expertId, message) {
+        return api.client.post('/experts/collaborate', {
+          solutionId,
+          expertId,
+          message
+        });
+      }
+    },
+
+    // Orders
+    orders: {
+      list(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return api.client.get(`/orders${query ? '?' + query : ''}`);
+      },
+
+      get(id) {
+        return api.client.get(`/orders/${id}`);
+      },
+
+      create(data) {
+        return api.client.post('/orders', data);
+      },
+
+      cancel(id) {
+        return api.client.post(`/orders/${id}/cancel`);
+      }
+    },
+
+    // Invoices
+    invoices: {
+      list(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return api.client.get(`/invoices${query ? '?' + query : ''}`);
+      },
+
+      get(id) {
+        return api.client.get(`/invoices/${id}`);
+      },
+
+      create(data) {
+        return api.client.post('/invoices', data);
+      },
+
+      download(id) {
+        return api.client.get(`/invoices/${id}/download`);
+      }
+    },
+
+    // Admin
+    admin: {
+      stats() {
+        return api.client.get('/admin/stats');
+      },
+
+      users(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return api.client.get(`/admin/users${query ? '?' + query : ''}`);
+      },
+
+      systemStatus() {
+        return api.client.get('/admin/system/status');
+      }
+    }
+  };
+
+  // Error handler helper
+  api.handleError = function (error) {
+    console.error('API Error:', error);
+
+    // Handle specific error codes
+    if (error.status === 401) {
+      // Unauthorized - redirect to login
+      storage.remove('cp.auth.user');
+      window.location.href = '/P-LOGIN_REGISTER.html';
+      return;
+    }
+
+    if (error.status === 403) {
+      // Forbidden
+      alert('您没有权限执行此操作');
+      return;
+    }
+
+    if (error.status === 404) {
+      // Not found
+      alert('请求的资源不存在');
+      return;
+    }
+
+    if (error.status === 500) {
+      // Server error
+      alert('服务器错误，请稍后重试');
+      return;
+    }
+
+    // Generic error
+    alert(error.message || '请求失败，请检查网络连接');
+  };
+
+  // Export to global
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  } else {
+    global.CasePilotAPI = api;
+  }
+
+})(typeof window !== 'undefined' ? window : this);

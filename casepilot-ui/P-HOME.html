@@ -8,38 +8,41 @@
   <!-- Tailwind (keep the same stack as reference code) -->
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/styles-v5.css" />
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
   <!-- Top Nav -->
-  <header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b border-border-light">
+  <header class="sticky top-0 z-50 glass">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="P-HOME.html" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-          <i class="fas fa-cube text-white"></i>
+      <!-- Logo区域 - 固定宽度 -->
+      <a href="P-HOME.html" class="flex items-center gap-3" style="min-width: 220px;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white logo-icon">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
         </div>
         <div class="leading-tight">
-          <div class="text-lg font-extrabold gradient-text">CasePilot</div>
-          <div class="text-xs text-text-secondary">交付级 AI 方案生成平台</div>
+          <div class="text-xl font-bold gradient-text whitespace-nowrap logo-text-brand">CasePilot</div>
+          <div class="text-sm text-text-secondary whitespace-nowrap logo-text-subtitle">交付级AI方案平台</div>
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="#value">价值主张</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="#flow">四步生成流</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="#trust">可信验收</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="#position">定位</a>
-        <a class="px-3 py-2 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary" href="P-SOLUTION_GENERATOR.html">进入产品</a>
+      <!-- 导航菜单 - 固定宽度居中 -->
+      <nav class="hidden md:flex items-center gap-1" style="min-width: 480px; justify-content: center;">
+        <a class="nav-link-active px-4 py-2 text-base whitespace-nowrap" href="P-HOME.html">首页</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="#value">价值主张</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="#flow">四步生成流</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="#trust">可信验收</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_GENERATOR.html">进入产品</a>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <a href="P-LOGIN_REGISTER.html" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border-light bg-white hover:bg-bg-secondary text-sm">
-          <i class="fas fa-user"></i>
+      <!-- 右侧操作区 - 固定宽度右对齐 -->
+      <div class="flex items-center gap-3 justify-end" style="min-width: 240px;">
+        <a href="P-LOGIN_REGISTER.html" class="hidden sm:inline-flex items-center gap-2 cp-btn cp-btn-secondary text-base px-4 py-2 whitespace-nowrap">
+          <i class="fa-solid fa-user"></i>
           登录
         </a>
-        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-primary text-white text-sm shadow-card-hover">
-          <i class="fas fa-bolt"></i>
+        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 cp-btn cp-btn-primary text-base px-4 py-2 whitespace-nowrap">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
           生成方案
         </a>
       </div>

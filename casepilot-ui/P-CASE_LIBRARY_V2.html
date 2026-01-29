@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>案例库 · CasePilot</title>
+
+  <script src="assets/tailwind-config.js"></script>
+  <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+  <link rel="stylesheet" href="assets/styles-v5.css" />
+  <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+  <style>
+    /* Modal样式 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    
+    .modal-overlay.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.3);
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .pricing-option {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .pricing-option input[type="radio"] {
+      display: none;
+    }
+    
+    .pricing-option input:checked + .option-card {
+      border-color: #0369A1;
+      background: #F0F9FF;
+    }
+    
+    .option-card {
+      border: 2px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s;
+    }
+    
+    .option-card:hover {
+      border-color: #CBD5E1;
+    }
+  </style>
+</head>
+<body class="bg-bg-primary min-h-screen cp-grid-bg">
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-border-light">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo区域 - 固定宽度 -->
+      <a href="P-HOME.html" class="flex items-center gap-3" style="min-width: 220px;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white logo-icon">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
+        </div>
+        <div class="leading-tight">
+          <div class="text-xl font-bold gradient-text whitespace-nowrap logo-text-brand">CasePilot</div>
+          <div class="text-sm text-text-secondary whitespace-nowrap logo-text-subtitle">案例库</div>
+        </div>
+      </a>
+
+      <!-- 导航菜单 - 固定宽度居中 -->
+      <nav class="hidden md:flex items-center gap-1" style="min-width: 380px; justify-content: center;">
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-HOME.html">首页</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="nav-link-active px-4 py-2 text-base whitespace-nowrap" href="P-CASE_LIBRARY_V2.html">案例库</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_HISTORY.html">历史方案</a>
+      </nav>
+
+      <!-- 右侧操作区 - 固定宽度右对齐 -->
+      <div class="flex items-center gap-3 justify-end" style="min-width: 240px;">
+        <input class="hidden lg:block px-4 py-2 rounded-xl border border-border-light search-focus bg-white text-base" placeholder="搜索案例" style="width: 160px;" />
+        <a href="P-SOLUTION_GENERATOR.html" class="inline-flex items-center gap-2 cp-btn cp-btn-cta text-base px-4 py-2 whitespace-nowrap">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          用案例生成
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+      <div>
+        <h1 class="text-3xl font-extrabold">案例库</h1>
+        <p class="mt-2 text-text-secondary">浏览已验证的交付级方案案例，快速复用最佳实践，获得<span class="text-expert font-semibold">专家支持</span>。</p>
+      </div>
+    </div>
+
+    <div class="mt-6 grid lg:grid-cols-3 gap-4">
+      <!-- 案例1：RAG -->
+      <div class="cp-card p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <div class="font-extrabold text-lg">售后知识问答（RAG）</div>
+            <div class="mt-1 text-xs text-text-secondary">场景：工单/客服 · 输出：可追溯答案</div>
+          </div>
+          <div class="flex flex-col items-end gap-2">
+            <span class="text-xs cp-pill px-2 py-1 rounded-full">可追溯</span>
+            <div class="cp-pill cp-pill-expert text-xs">
+              <i class="fa-solid fa-user-tie"></i>
+              有专家
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-xs mb-4">
+          <span class="cp-pill px-2 py-1 rounded-full">证据卡</span>
+          <span class="cp-pill-warn px-2 py-1 rounded-full">口径</span>
+          <span class="cp-pill-primary px-2 py-1 rounded-full">拒答</span>
+        </div>
+        <div class="flex gap-2">
+          <a href="P-CASE_DETAIL.html#c=rag-support" class="cp-btn cp-btn-secondary text-sm flex-1">
+            <i class="fa-solid fa-eye"></i>
+            查看案例
+          </a>
+          <button class="cp-btn cp-btn-expert text-sm" onclick="openExpertRequest('RAG系统', '张明', 'AI解决方案 · 10年经验', 4.9, 156)">
+            <i class="fa-solid fa-handshake"></i>
+            申请专家
+          </button>
+        </div>
+      </div>
+
+      <!-- 案例2：合规 -->
+      <div class="cp-card p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <div class="font-extrabold text-lg">合规审核助手</div>
+            <div class="mt-1 text-xs text-text-secondary">场景：条款审阅 · 输出：风险点 + 证据</div>
+          </div>
+          <div class="flex flex-col items-end gap-2">
+            <span class="text-xs cp-pill-primary px-2 py-1 rounded-full">边界</span>
+            <div class="cp-pill cp-pill-expert text-xs">
+              <i class="fa-solid fa-user-tie"></i>
+              有专家
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-xs mb-4">
+          <span class="cp-pill px-2 py-1 rounded-full">证据</span>
+          <span class="cp-pill-warn px-2 py-1 rounded-full">验收</span>
+          <span class="cp-pill-primary px-2 py-1 rounded-full">复核</span>
+        </div>
+        <div class="flex gap-2">
+          <a href="P-CASE_DETAIL.html#c=risk-review" class="cp-btn cp-btn-secondary text-sm flex-1">
+            <i class="fa-solid fa-eye"></i>
+            查看案例
+          </a>
+          <button class="cp-btn cp-btn-expert text-sm" onclick="openExpertRequest('合规审核', '李华', '法务合规 · 8年经验', 4.8, 98)">
+            <i class="fa-solid fa-handshake"></i>
+            申请专家
+          </button>
+        </div>
+      </div>
+
+      <!-- 案例3：评测 -->
+      <div class="cp-card p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <div class="font-extrabold text-lg">评测与基准（SOTA）</div>
+            <div class="mt-1 text-xs text-text-secondary">把"好不好"变成"怎么算"</div>
+          </div>
+          <div class="flex flex-col items-end gap-2">
+            <span class="text-xs cp-pill-warn px-2 py-1 rounded-full">可验收</span>
+            <div class="cp-pill cp-pill-expert text-xs">
+              <i class="fa-solid fa-user-tie"></i>
+              有专家
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-xs mb-4">
+          <span class="cp-pill-warn px-2 py-1 rounded-full">公式</span>
+          <span class="cp-pill px-2 py-1 rounded-full">用例集</span>
+          <span class="cp-pill-primary px-2 py-1 rounded-full">边界</span>
+        </div>
+        <div class="flex gap-2">
+          <a href="P-CASE_DETAIL.html#c=benchmark" class="cp-btn cp-btn-secondary text-sm flex-1">
+            <i class="fa-solid fa-eye"></i>
+            查看案例
+          </a>
+          <button class="cp-btn cp-btn-expert text-sm" onclick="openExpertRequest('评测基准', '王芳', '数据科学 · 12年经验', 5.0, 203)">
+            <i class="fa-solid fa-handshake"></i>
+            申请专家
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 专家申请Modal -->
+  <div class="modal-overlay" id="expertModal">
+    <div class="modal-content">
+      <!-- 匹配中状态 -->
+      <div id="matching-state" class="p-8">
+        <div class="text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cta-lightest mb-4">
+            <i class="fa-solid fa-spinner fa-spin text-cta text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">正在匹配专家...</h3>
+          <p class="text-sm text-secondary">根据案例为您推荐最合适的专家</p>
+        </div>
+      </div>
+
+      <!-- 专家资料+报价状态 -->
+      <div id="expert-profile-state" class="hidden">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between p-6 border-b border-border-light">
+          <h2 class="text-xl font-bold">申请专家协作</h2>
+          <button onclick="closeExpertModal()" class="w-8 h-8 rounded-full hover:bg-bg-secondary flex items-center justify-center text-secondary">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
+
+        <!-- 案例信息 -->
+        <div class="p-6 bg-bg-secondary border-b border-border-light">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-file-lines text-cta text-2xl"></i>
+            <div>
+              <div class="text-sm font-semibold" id="case-title">案例名称</div>
+              <div class="text-xs text-secondary">该案例由专家完成，匹配度 <span class="text-cta font-semibold">95%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 专家资料 -->
+        <div class="p-6 border-b border-border-light">
+          <div class="flex items-start gap-4">
+            <div class="relative">
+              <img id="expert-avatar" src="https://ui-avatars.com/api/?name=专家&background=0369A1&color=fff&size=80" class="w-20 h-20 rounded-full border-3 border-cta" />
+              <div class="absolute bottom-0 right-0 w-4 h-4 bg-success rounded-full border-2 border-white"></div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h3 class="text-lg font-bold" id="expert-name">张明</h3>
+                <span class="cp-pill cp-pill-cta text-xs">
+                  <i class="fa-solid fa-circle-check"></i>
+                  认证专家
+                </span>
+              </div>
+              <p class="text-sm text-secondary mb-3" id="expert-expertise">AI解决方案 · 10年经验</p>
+              <div class="flex items-center gap-4 text-xs text-secondary">
+                <span>
+                  <i class="fa-solid fa-star text-warning"></i>
+                  <strong id="expert-rating" class="text-primary ml-1">4.9</strong>
+                </span>
+                <span>
+                  <i class="fa-solid fa-briefcase text-cta"></i>
+                  <strong id="expert-projects" class="text-primary ml-1">156</strong>个项目
+                </span>
+                <span>
+                  <i class="fa-solid fa-clock text-cta"></i>
+                  平均<strong class="text-primary ml-1">2小时</strong>响应
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 p-4 rounded-lg bg-bg-secondary">
+            <div class="text-sm font-semibold mb-2">专家简介</div>
+            <p class="text-sm text-secondary leading-relaxed">
+              专注于AI解决方案设计与落地，擅长RAG系统、NLP应用和知识图谱。曾为多家500强企业和创业公司提供技术咨询服务，具有丰富的项目经验和行业洞察。
+            </p>
+          </div>
+        </div>
+
+        <!-- 服务报价 -->
+        <div class="p-6 border-b border-border-light">
+          <div class="text-base font-bold mb-4">选择服务套餐</div>
+          <div class="space-y-3">
+            <label class="pricing-option">
+              <input type="radio" name="service-package" value="299" checked onchange="updatePrice(299)" />
+              <div class="option-card">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-semibold text-base">方案咨询</div>
+                  <div class="text-cta font-bold text-lg">¥299</div>
+                </div>
+                <p class="text-sm text-secondary">30分钟视频咨询，提供专业改进建议</p>
+              </div>
+            </label>
+
+            <label class="pricing-option">
+              <input type="radio" name="service-package" value="899" onchange="updatePrice(899)" />
+              <div class="option-card">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-semibold text-base">方案优化</div>
+                  <div class="text-cta font-bold text-lg">¥899</div>
+                </div>
+                <p class="text-sm text-secondary">完整优化方案，包含2次修改，提供详细文档</p>
+              </div>
+            </label>
+
+            <label class="pricing-option">
+              <input type="radio" name="service-package" value="2999" onchange="updatePrice(2999)" />
+              <div class="option-card">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-semibold text-base">深度协作</div>
+                  <div class="text-cta font-bold text-lg">¥2999</div>
+                </div>
+                <p class="text-sm text-secondary">全程参与，不限次数沟通和修改，直到满意为止</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-6 flex items-center justify-between bg-bg-secondary">
+          <div class="text-sm text-secondary">
+            合计：<span class="text-2xl font-bold text-primary ml-2">¥<span id="total-price">299</span></span>
+          </div>
+          <div class="flex gap-3">
+            <button onclick="closeExpertModal()" class="cp-btn cp-btn-secondary text-base">
+              取消
+            </button>
+            <button onclick="confirmPayment()" class="cp-btn cp-btn-cta text-base">
+              <i class="fa-solid fa-credit-card"></i>
+              确认付费
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 支付状态 -->
+      <div id="payment-state" class="p-8 hidden">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cta-lightest mb-4">
+            <i class="fa-solid fa-credit-card text-cta text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">确认支付</h3>
+          <div class="text-3xl font-bold text-cta mb-2">¥<span id="payment-amount">299</span></div>
+          <p class="text-sm text-secondary">方案咨询服务 · 专家张明</p>
+        </div>
+
+        <div class="flex justify-center gap-4 mb-6">
+          <button class="w-32 h-20 rounded-lg border-2 border-cta bg-cta-lightest flex flex-col items-center justify-center gap-2 transition-all hover:border-cta-dark" id="pay-alipay">
+            <i class="fa-brands fa-alipay text-3xl text-cta"></i>
+            <span class="text-sm font-semibold text-primary">支付宝</span>
+          </button>
+          <button class="w-32 h-20 rounded-lg border-2 border-border hover:border-success bg-white flex flex-col items-center justify-center gap-2 transition-all" id="pay-wechat">
+            <i class="fa-brands fa-weixin text-3xl text-success"></i>
+            <span class="text-sm font-semibold text-primary">微信支付</span>
+          </button>
+        </div>
+
+        <div class="flex gap-3">
+          <button onclick="showExpertProfile()" class="cp-btn cp-btn-secondary text-base flex-1">
+            返回
+          </button>
+          <button onclick="completePayment()" class="cp-btn cp-btn-cta text-base flex-1">
+            <i class="fa-solid fa-check"></i>
+            确认支付
+          </button>
+        </div>
+      </div>
+
+      <!-- 支付成功状态 -->
+      <div id="success-state" class="p-8 text-center hidden">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-success-light mb-4">
+          <i class="fa-solid fa-check text-success text-3xl"></i>
+        </div>
+        <h3 class="text-2xl font-bold mb-2">支付成功</h3>
+        <p class="text-base text-secondary mb-6">
+          专家 <span class="text-primary font-semibold" id="success-expert-name">张明</span> 已接入，即将开始协作
+        </p>
+        <button onclick="startCollaboration()" class="cp-btn cp-btn-success text-base px-8">
+          <i class="fa-solid fa-comments"></i>
+          进入协作窗口
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-border-light bg-white/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div class="text-sm text-text-secondary">© CasePilot · Engineering-grade AI Output</div>
+      <div class="text-sm text-text-secondary flex items-center gap-4">
+        <a class="hover:text-cta" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="hover:text-cta" href="P-LOGIN_REGISTER.html">登录</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let currentExpertData = {};
+
+    // 打开专家申请Modal
+    function openExpertRequest(caseTitle, expertName, expertise, rating, projects) {
+      currentExpertData = { caseTitle, expertName, expertise, rating, projects };
+      
+      // 显示Modal
+      document.getElementById('expertModal').classList.add('active');
+      
+      // 显示匹配中状态
+      document.getElementById('matching-state').style.display = 'block';
+      document.getElementById('expert-profile-state').classList.add('hidden');
+      
+      // 更新案例标题
+      document.getElementById('case-title').textContent = caseTitle;
+      
+      // 模拟匹配延迟
+      setTimeout(() => {
+        showExpertProfile();
+      }, 1500);
+    }
+
+    // 显示专家资料
+    function showExpertProfile() {
+      document.getElementById('matching-state').style.display = 'none';
+      document.getElementById('expert-profile-state').classList.remove('hidden');
+      document.getElementById('payment-state').classList.add('hidden');
+      document.getElementById('success-state').classList.add('hidden');
+      
+      // 填充专家信息
+      document.getElementById('expert-name').textContent = currentExpertData.expertName;
+      document.getElementById('expert-expertise').textContent = currentExpertData.expertise;
+      document.getElementById('expert-rating').textContent = currentExpertData.rating;
+      document.getElementById('expert-projects').textContent = currentExpertData.projects;
+      document.getElementById('expert-avatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentExpertData.expertName)}&background=0369A1&color=fff&size=80`;
+    }
+
+    // 关闭Modal
+    function closeExpertModal() {
+      document.getElementById('expertModal').classList.remove('active');
+    }
+
+    // 更新价格
+    function updatePrice(price) {
+      document.getElementById('total-price').textContent = price;
+    }
+
+    // 确认付费
+    function confirmPayment() {
+      const price = document.querySelector('input[name="service-package"]:checked').value;
+      document.getElementById('payment-amount').textContent = price;
+      document.getElementById('expert-profile-state').classList.add('hidden');
+      document.getElementById('payment-state').classList.remove('hidden');
+    }
+
+    // 完成支付
+    function completePayment() {
+      document.getElementById('payment-state').classList.add('hidden');
+      document.getElementById('success-state').classList.remove('hidden');
+      document.getElementById('success-expert-name').textContent = currentExpertData.expertName;
+    }
+
+    // 开始协作
+    function startCollaboration() {
+      // 保存专家信息到localStorage
+      localStorage.setItem('cp.expert.active', JSON.stringify({
+        name: currentExpertData.expertName,
+        expertise: currentExpertData.expertise,
+        rating: currentExpertData.rating,
+        joinedAt: new Date().toISOString(),
+        serviceTime: 30 // 分钟
+      }));
+      
+      // 跳转到协作生成页面
+      window.location.href = 'P-SOLUTION_GENERATOR.html#tab=expert';
+    }
+
+    // 点击Modal外部关闭
+    document.getElementById('expertModal')?.addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeExpertModal();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -7,37 +7,40 @@
 
   <script src="assets/tailwind-config.js"></script>
   <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/styles-v5.css" />
   <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
 </head>
 <body class="bg-bg-primary min-h-screen cp-grid-bg">
   <!-- Header -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-border-light">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-      <a href="P-HOME.html" class="flex items-center gap-2.5">
-        <div class="w-9 h-9 bg-gradient-to-br from-teal-600 to-teal-500 rounded-xl flex items-center justify-center">
-          <i class="fas fa-cube text-white text-sm"></i>
+  <header class="sticky top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo区域 - 固定宽度 -->
+      <a href="P-HOME.html" class="flex items-center gap-3" style="min-width: 220px;">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden bg-white logo-icon">
+          <img src="assets/logo.png" alt="CasePilot Logo" class="w-full h-full object-contain" />
         </div>
         <div class="leading-tight">
-          <div class="text-base font-bold gradient-text">CasePilot</div>
-          <div class="text-[10px] text-text-secondary -mt-0.5">交付级方案书</div>
+          <div class="text-xl font-bold gradient-text whitespace-nowrap logo-text-brand">CasePilot</div>
+          <div class="text-sm text-text-secondary whitespace-nowrap logo-text-subtitle">交付级方案书</div>
         </div>
       </a>
 
-      <nav class="hidden md:flex items-center gap-1">
-        <a class="px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary transition-colors" href="P-HOME.html">首页</a>
-        <a class="px-3 py-1.5 rounded-lg text-sm nav-link-active" href="P-SOLUTION_GENERATOR.html">协作生成</a>
-        <a class="px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary transition-colors" href="P-CASE_LIBRARY.html">案例库</a>
-        <a class="px-3 py-1.5 rounded-lg text-sm text-text-secondary hover:text-primary hover:bg-bg-secondary transition-colors" href="P-SOLUTION_HISTORY.html">历史</a>
+      <!-- 导航菜单 - 固定宽度居中 -->
+      <nav class="hidden md:flex items-center gap-1" style="min-width: 380px; justify-content: center;">
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-HOME.html">首页</a>
+        <a class="nav-link-active px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_GENERATOR.html">协作生成</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-CASE_LIBRARY.html">案例库</a>
+        <a class="nav-link px-4 py-2 text-base whitespace-nowrap" href="P-SOLUTION_HISTORY.html">历史方案</a>
       </nav>
 
-      <div class="flex items-center gap-2">
-        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full cp-pill">
+      <!-- 右侧操作区 - 固定宽度右对齐 -->
+      <div class="flex items-center gap-3 justify-end" style="min-width: 240px;">
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full cp-pill whitespace-nowrap">
           <span class="cp-dot"></span>
           <span id="cp-status">未保存</span>
         </span>
-        <a href="P-SOLUTION_DETAIL.html#run=draft" id="cp-go-detail" class="cp-btn cp-btn-secondary text-xs py-1.5 px-3">
-          <i class="fas fa-eye"></i>
+        <a href="P-SOLUTION_DETAIL.html#run=draft" id="cp-go-detail" class="cp-btn cp-btn-secondary text-base px-4 py-2 whitespace-nowrap">
+          <i class="fa-solid fa-eye"></i>
           预览
         </a>
       </div>
@@ -60,7 +63,7 @@
     </div>
 
     <!-- Main grid: document 7 cols + sidebar 5 cols -->
-    <section class="mt-6 grid lg:grid-cols-12 gap-6">
+    <section class="mt-6 grid lg:grid-cols-12 gap-8 lg:gap-16">
       <!-- Document area -->
       <div class="lg:col-span-7 xl:col-span-8">
         <div class="cp-doc-card p-6 lg:p-8">
@@ -136,20 +139,23 @@
           <!-- Tab buttons -->
           <div class="flex items-center gap-1 p-1 bg-bg-secondary rounded-xl">
             <button class="cp-tab active flex-1" data-pane-tab="chat" type="button">
-              <i class="fas fa-comments mr-1.5"></i>对话
+              <i class="fa-solid fa-comments mr-1.5"></i>对话
             </button>
             <button class="cp-tab flex-1" data-pane-tab="todo" type="button">
-              <i class="fas fa-list-check mr-1.5"></i>清单
+              <i class="fa-solid fa-list-check mr-1.5"></i>清单
             </button>
             <button class="cp-tab flex-1" data-pane-tab="refs" type="button">
-              <i class="fas fa-link mr-1.5"></i>引用
+              <i class="fa-solid fa-link mr-1.5"></i>引用
+            </button>
+            <button class="cp-tab flex-1" data-pane-tab="expert" type="button">
+              <i class="fa-solid fa-user-tie mr-1.5"></i>专家
             </button>
           </div>
 
           <!-- Chat pane -->
           <div class="mt-4" data-pane="chat">
-            <div class="cp-chat max-h-[320px] overflow-y-auto" id="cp-chat"></div>
-            <div class="mt-4 space-y-3">
+            <div class="cp-chat max-h-[420px] overflow-y-auto p-3 bg-gradient-to-b from-slate-50/30 to-white/10 rounded-xl" id="cp-chat"></div>
+            <div class="mt-5 space-y-3">
               <textarea id="cp-input" rows="2" class="w-full px-4 py-3 rounded-xl border border-border-light search-focus resize-none text-sm" placeholder="输入需求或修改点，按 Ctrl+Enter 发送"></textarea>
               <button id="cp-send" class="cp-btn cp-btn-primary w-full">
                 <i class="fas fa-paper-plane"></i>
@@ -170,15 +176,159 @@
             </div>
           </div>
 
-          <!-- References pane -->
+          <!-- References & Expert pane -->
           <div class="mt-4 hidden" data-pane="refs">
-            <div class="space-y-2" id="cp-evidence"></div>
+            <!-- 专家协作提示 -->
+            <div class="mb-4 p-4 rounded-lg bg-gradient-to-r from-blue-50 to-orange-50 border border-blue-200">
+              <div class="flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-lightbulb text-expert"></i>
+                <span class="text-sm font-semibold text-primary">需要专家帮助？</span>
+              </div>
+              <div class="text-xs text-secondary mb-3">
+                从案例库中选择相关案例，即可申请该案例的专家接入协作
+              </div>
+              <a href="P-CASE_LIBRARY.html" class="cp-btn cp-btn-expert text-sm w-full">
+                <i class="fa-solid fa-search"></i>
+                浏览案例库
+              </a>
+            </div>
+
+            <!-- 引用/证据列表 -->
+            <div class="mb-3">
+              <div class="flex items-center justify-between">
+                <div class="text-sm font-semibold text-primary">引用与证据</div>
+                <div class="text-xs text-secondary" id="evidence-count">0 条</div>
+              </div>
+            </div>
+            <div class="space-y-2" id="cp-evidence">
+              <!-- 动态填充引用 -->
+            </div>
+            
             <div class="mt-4 pt-4 border-t border-border-light">
-              <div class="text-xs font-medium text-text-secondary mb-2">快速添加</div>
+              <div class="text-xs font-medium text-secondary mb-2">快速添加</div>
               <div class="flex flex-wrap gap-2">
-                <button class="cp-pill hover:bg-teal-50 transition-colors cursor-pointer">+ 论文</button>
-                <button class="cp-pill hover:bg-teal-50 transition-colors cursor-pointer">+ 基准</button>
-                <button class="cp-pill hover:bg-teal-50 transition-colors cursor-pointer">+ 历史项目</button>
+                <button class="cp-pill hover:bg-cta-lightest transition-colors cursor-pointer">
+                  <i class="fa-solid fa-file-lines text-cta"></i>
+                  论文
+                </button>
+                <button class="cp-pill hover:bg-cta-lightest transition-colors cursor-pointer">
+                  <i class="fa-solid fa-chart-line text-cta"></i>
+                  基准
+                </button>
+                <button class="cp-pill hover:bg-cta-lightest transition-colors cursor-pointer">
+                  <i class="fa-solid fa-folder-open text-cta"></i>
+                  历史项目
+                </button>
+                <button class="cp-pill hover:bg-expert-lightest transition-colors cursor-pointer">
+                  <i class="fa-solid fa-book text-expert"></i>
+                  知识库
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Expert Collaboration pane (新增) -->
+          <div class="mt-4 hidden" data-pane="expert">
+            <div id="expert-panel-content">
+              <!-- 未接入状态 -->
+              <div class="text-center py-8" id="expert-empty-state">
+                <div class="text-4xl mb-4">👨‍💼</div>
+                <div class="text-sm font-medium text-primary mb-2">暂无专家协作</div>
+                <div class="text-xs text-secondary mb-4">
+                  从案例库选择相关案例，申请专家接入
+                </div>
+                <a href="P-CASE_LIBRARY.html" class="cp-btn cp-btn-cta text-sm">
+                  <i class="fa-solid fa-search"></i>
+                  浏览案例库
+                </a>
+              </div>
+              
+              <!-- 专家已接入状态（示例，实际动态显示） -->
+              <div class="hidden" id="expert-active-state">
+                <!-- 专家信息条 -->
+                <div class="mb-4 p-3 rounded-lg bg-white border border-border-light flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="relative">
+                      <img src="https://ui-avatars.com/api/?name=专家&background=0369A1&color=fff&size=40" class="w-10 h-10 rounded-full border-2 border-cta" />
+                      <div class="absolute bottom-0 right-0 w-3 h-3 bg-success rounded-full border-2 border-white"></div>
+                    </div>
+                    <div>
+                      <div class="text-sm font-semibold text-primary">张明 · AI方案专家</div>
+                      <div class="text-xs text-secondary">在线 · 剩余23分钟</div>
+                    </div>
+                  </div>
+                  <button class="cp-pill cp-pill-expert text-xs">
+                    服务中
+                  </button>
+                </div>
+                
+                <!-- 聊天消息区 -->
+                <div class="mb-4 bg-white rounded-lg border border-border-light p-4 max-h-[320px] overflow-y-auto" id="expert-chat">
+                  <div class="space-y-3">
+                    <!-- 系统消息 -->
+                    <div class="text-center">
+                      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-success-light text-xs">
+                        <i class="fa-solid fa-check-circle text-success"></i>
+                        <span class="text-success font-medium">专家已接入，开始协作</span>
+                      </div>
+                      <div class="text-xs text-tertiary mt-1">14:32</div>
+                    </div>
+                    
+                    <!-- 专家消息 -->
+                    <div class="flex gap-2">
+                      <img src="https://ui-avatars.com/api/?name=专家&background=0369A1&color=fff&size=32" class="w-8 h-8 rounded-full border-2 border-cta flex-shrink-0" />
+                      <div class="flex-1">
+                        <div class="text-xs text-secondary mb-1">张明 · 专家</div>
+                        <div class="bg-cta-lightest border border-cta-light rounded-lg p-3">
+                          <div class="text-sm text-primary leading-relaxed">
+                            您好！我看了您的方案，RAG系统部分可以进一步细化。我建议增加向量数据库的具体选型和检索策略。需要我帮您优化这部分吗？
+                          </div>
+                        </div>
+                        <div class="text-xs text-tertiary mt-1">14:33</div>
+                      </div>
+                    </div>
+                    
+                    <!-- 用户消息（示例） -->
+                    <div class="flex gap-2 justify-end">
+                      <div class="max-w-[70%]">
+                        <div class="bg-primary text-white rounded-lg p-3">
+                          <div class="text-sm leading-relaxed">
+                            好的，麻烦您帮我优化一下！
+                          </div>
+                        </div>
+                        <div class="text-xs text-tertiary mt-1 text-right">14:34</div>
+                      </div>
+                    </div>
+                    
+                    <!-- 编辑通知 -->
+                    <div class="bg-expert-lightest border border-expert-light rounded-lg p-3">
+                      <div class="flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-pen-to-square text-expert"></i>
+                        <span class="text-expert font-medium">专家正在编辑"系统架构"部分...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 输入区 -->
+                <div class="space-y-2">
+                  <textarea 
+                    rows="2" 
+                    class="w-full px-4 py-3 rounded-lg border border-border-light search-focus resize-none text-sm" 
+                    placeholder="向专家提问或说明需求..."
+                    id="expert-input"
+                  ></textarea>
+                  <div class="flex items-center justify-between">
+                    <div class="text-xs text-tertiary flex items-center gap-2">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>剩余: 23分钟</span>
+                    </div>
+                    <button class="cp-btn cp-btn-cta text-sm" id="expert-send-btn">
+                      <i class="fa-solid fa-paper-plane"></i>
+                      发送
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -218,15 +368,58 @@
           p.classList.toggle('hidden', p.getAttribute('data-pane') !== tab);
         });
       });
+
+      // 申请专家协作
+      document.getElementById('request-expert-btn')?.addEventListener('click', function() {
+        const btn = this;
+        const originalHTML = btn.innerHTML;
+        
+        // 显示loading状态
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 正在连接专家...';
+        btn.disabled = true;
+        
+        // 模拟请求（实际应该调用API）
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> 专家已加入';
+          btn.classList.remove('cp-btn-accent');
+          btn.classList.add('cp-btn-success');
+          
+          // 添加一条专家消息到引用区
+          const evidenceContainer = document.getElementById('cp-evidence');
+          const newEvidence = document.createElement('div');
+          newEvidence.className = 'evidence-card from-expert';
+          newEvidence.innerHTML = `
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div class="evidence-badge expert">
+                <i class="fa-solid fa-user-tie"></i>
+                专家提供
+              </div>
+              <div class="text-xs text-secondary">刚刚</div>
+            </div>
+            <div class="text-sm font-medium text-primary mb-1">
+              专家已加入协作
+            </div>
+            <div class="text-xs text-secondary leading-relaxed">
+              来源：行业专家 · "您好，我是${['AI解决方案', '技术架构', '产品设计', '数据科学'][Math.floor(Math.random()*4)]}领域的专家。我将为您的方案提供专业建议和引用支持。有任何问题可以随时向我提问。"
+            </div>
+          `;
+          evidenceContainer.insertBefore(newEvidence, evidenceContainer.firstChild);
+          
+          // 更新计数
+          const count = evidenceContainer.querySelectorAll('.evidence-card').length;
+          document.getElementById('evidence-count').textContent = `${count} 条`;
+          
+        }, 1500);
+      });
     </script>
   </main>
 
-  <footer class="border-t border-border-light bg-white/80 mt-12">
+  <footer class="border-t border-border glass mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-      <div class="text-sm text-text-secondary">© CasePilot · 交付级 AI 方案</div>
+      <div class="text-sm text-text-secondary">© CasePilot v5.0 · 交付级 AI 方案</div>
       <div class="text-sm text-text-secondary flex items-center gap-4">
-        <a class="hover:text-primary transition-colors" href="P-CASE_LIBRARY.html">案例库</a>
-        <a class="hover:text-primary transition-colors" href="P-SOLUTION_HISTORY.html">历史方案</a>
+        <a class="hover:text-accent transition-colors" href="P-CASE_LIBRARY_V2.html">案例库</a>
+        <a class="hover:text-accent transition-colors" href="P-SOLUTION_HISTORY.html">历史方案</a>
       </div>
     </div>
   </footer>
