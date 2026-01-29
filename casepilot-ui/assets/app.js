@@ -176,13 +176,12 @@
         const role = m.role === "user" ? "user" : m.role === "expert" ? "expert" : "ai";
         const iconClass = role === "user" ? "fa-solid fa-user" : role === "expert" ? "fa-solid fa-user-tie" : "fa-solid fa-robot";
         
+        // WeChat style: avatar + bubble, no timestamp
         return `<div class="cp-msg cp-msg-${role}">
           <div class="cp-msg-avatar">
             <i class="${iconClass}"></i>
           </div>
-          <div class="cp-msg-bubble">
-            ${esc(m.text || "")}
-          </div>
+          <div class="cp-msg-bubble">${esc(m.text || "")}</div>
         </div>`;
       })
       .join("");

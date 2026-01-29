@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的发票 - CasePilot · 案例驱动的大模型解决方案平台</title>
+    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#8B5CF6',
+                        tertiary: '#06B6D4',
+                        success: '#10B981',
+                        danger: '#EF4444',
+                        warning: '#F59E0B',
+                        info: '#3B82F6',
+                        'text-primary': '#1F2937',
+                        'text-secondary': '#6B7280',
+                        'bg-primary': '#F8FAFC',
+                        'bg-secondary': '#F1F5F9',
+                        'border-light': '#E2E8F0',
+                        'card-bg': '#FFFFFF'
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.3)'
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)',
+                        'gradient-secondary': 'linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%)',
+                        'gradient-card': 'linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sidebar-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link-active {
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .search-focus:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .filter-tag {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .filter-tag:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+        }
+        
+        .filter-tag.active {
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            color: white;
+        }
+        
+        .table-row:hover {
+            background-color: #F8FAFC;
+        }
+        
+        .sortable-header {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .sortable-header:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .sort-indicator {
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sort-indicator.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-bg-primary min-h-screen">
+    <!-- 顶部导航栏 -->
+    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
+        <div class="flex items-center justify-between h-full px-6">
+            <!-- Logo和产品名称 -->
+            <div id="logo-section" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+                    <i class="fas fa-rocket text-white text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
+            </div>
+            
+            <!-- 主导航菜单 -->
+            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
+                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
+                <a href="P-SOLUTION_GENERATOR.html" class="text-text-secondary hover:text-primary py-1 transition-colors">方案生成器</a>
+                <a href="P-CASE_LIBRARY.html" class="text-text-secondary hover:text-primary py-1 transition-colors">案例库</a>
+                <a href="P-USER_CENTER.html" class="text-primary font-medium border-b-2 border-primary py-1">个人中心</a>
+            </nav>
+            
+            <!-- 搜索框和用户操作区 -->
+            <div id="header-actions" class="flex items-center space-x-4">
+                <!-- 全局搜索 -->
+                <div class="relative hidden lg:block">
+                    <input type="text" id="global-search" placeholder="搜索案例、方案..." 
+                           class="w-80 pl-10 pr-4 py-2 border border-border-light rounded-lg search-focus">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
+                </div>
+                
+                <!-- 消息通知 -->
+                <button id="notification-btn" class="relative p-2 text-text-secondary hover:text-primary transition-colors">
+                    <i class="fas fa-bell text-lg"></i>
+                    <span class="absolute -top-1 -right-1 w-3 h-3 bg-danger rounded-full"></span>
+                </button>
+                
+                <!-- 用户头像 -->
+                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
+                    <img src="https://s.coze.cn/image/dJBgk-V-l8c/" 
+                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
+                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
+                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 左侧菜单 -->
+    <aside id="sidebar" class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-border-light sidebar-transition z-40">
+        <div class="p-6">
+            <!-- 菜单标题 -->
+            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-4">功能导航</h3>
+            
+            <!-- 菜单项 -->
+            <nav id="sidebar-nav" class="space-y-2">
+                <a href="P-HOME.html" id="nav-home" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-home text-lg"></i>
+                    <span class="font-medium">首页</span>
+                </a>
+                <a href="P-SOLUTION_GENERATOR.html" id="nav-generator" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-magic text-lg"></i>
+                    <span class="font-medium">方案生成器</span>
+                </a>
+                <a href="P-CASE_LIBRARY.html" id="nav-library" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-book text-lg"></i>
+                    <span class="font-medium">案例库</span>
+                </a>
+                <a href="P-SOLUTION_HISTORY.html" id="nav-history" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-primary transition-all">
+                    <i class="fas fa-history text-lg"></i>
+                    <span class="font-medium">历史方案</span>
+                </a>
+                <a href="P-USER_CENTER.html" id="nav-profile" class="flex items-center space-x-3 px-4 py-3 rounded-xl nav-link-active">
+                    <i class="fas fa-user text-lg"></i>
+                    <span class="font-medium">个人中心</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main id="main-content" class="ml-64 mt-16 min-h-screen">
+        <div class="p-8">
+            <!-- 页面头部 -->
+            <div id="page-header" class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">我的发票</h1>
+                        <nav id="breadcrumb" class="text-sm text-text-secondary">
+                            <span>首页</span>
+                            <i class="fas fa-chevron-right mx-2"></i>
+                            <span>个人中心</span>
+                            <i class="fas fa-chevron-right mx-2"></i>
+                            <span>我的发票</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工具栏区域 -->
+            <section id="toolbar" class="bg-white rounded-2xl shadow-card p-6 mb-6">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                    <!-- 搜索框 -->
+                    <div class="flex-1 lg:max-w-md">
+                        <div class="relative">
+                            <input type="text" id="invoice-search" placeholder="搜索发票号码、订单号..." 
+                                   class="w-full pl-10 pr-4 py-3 border border-border-light rounded-lg search-focus">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 筛选条件 -->
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                        <!-- 状态筛选 -->
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-medium text-text-primary">状态：</span>
+                            <div class="flex space-x-2">
+                                <button id="filter-all" class="filter-tag px-3 py-1.5 text-sm rounded-lg border border-border-light active">
+                                    全部
+                                </button>
+                                <button id="filter-pending" class="filter-tag px-3 py-1.5 text-sm rounded-lg border border-border-light">
+                                    待开具
+                                </button>
+                                <button id="filter-issued" class="filter-tag px-3 py-1.5 text-sm rounded-lg border border-border-light">
+                                    已开具
+                                </button>
+                                <button id="filter-cancelled" class="filter-tag px-3 py-1.5 text-sm rounded-lg border border-border-light">
+                                    已作废
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 时间范围 -->
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-medium text-text-primary">时间：</span>
+                            <select id="time-filter" class="px-3 py-1.5 text-sm border border-border-light rounded-lg search-focus">
+                                <option value="all">全部时间</option>
+                                <option value="today">今天</option>
+                                <option value="week">最近一周</option>
+                                <option value="month">最近一月</option>
+                                <option value="quarter">最近三月</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 数据展示区域 -->
+            <section id="invoice-list" class="bg-white rounded-2xl shadow-card overflow-hidden mb-6">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-bg-secondary">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary sortable-header" data-sort="invoice-number">
+                                    <div class="flex items-center space-x-2">
+                                        <span>发票号码</span>
+                                        <i class="fas fa-sort sort-indicator"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary sortable-header" data-sort="order-number">
+                                    <div class="flex items-center space-x-2">
+                                        <span>订单号</span>
+                                        <i class="fas fa-sort sort-indicator"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary sortable-header" data-sort="amount">
+                                    <div class="flex items-center space-x-2">
+                                        <span>金额</span>
+                                        <i class="fas fa-sort sort-indicator"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary sortable-header" data-sort="status">
+                                    <div class="flex items-center space-x-2">
+                                        <span>状态</span>
+                                        <i class="fas fa-sort sort-indicator"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary sortable-header" data-sort="issue-date">
+                                    <div class="flex items-center space-x-2">
+                                        <span>开具时间</span>
+                                        <i class="fas fa-sort sort-indicator"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-text-primary">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-table-body" class="divide-y divide-border-light">
+                            <!-- 发票数据将通过JavaScript动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 空状态 -->
+                <div id="empty-state" class="hidden text-center py-16">
+                    <div class="w-24 h-24 bg-bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-file-invoice text-3xl text-text-secondary"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-text-primary mb-2">暂无发票记录</h3>
+                    <p class="text-text-secondary">您还没有开具任何发票</p>
+                </div>
+            </section>
+
+            <!-- 分页区域 -->
+            <section id="pagination" class="flex items-center justify-between">
+                <div class="text-sm text-text-secondary">
+                    显示 <span id="page-start">1</span> - <span id="page-end">10</span> 条，共 <span id="total-count">0</span> 条记录
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <button id="prev-page" class="px-3 py-1.5 text-sm border border-border-light rounded-lg hover:bg-bg-secondary transition-colors disabled:opacity-50" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div id="page-numbers" class="flex space-x-1">
+                        <!-- 页码按钮将通过JavaScript动态生成 -->
+                    </div>
+                    
+                    <button id="next-page" class="px-3 py-1.5 text-sm border border-border-light rounded-lg hover:bg-bg-secondary transition-colors disabled:opacity-50">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <div class="flex items-center space-x-2 ml-4">
+                        <span class="text-sm text-text-secondary">每页</span>
+                        <select id="page-size" class="px-2 py-1 text-sm border border-border-light rounded search-focus">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                        <span class="text-sm text-text-secondary">条</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 底部版权信息 -->
+    <footer id="footer" class="ml-64 bg-white border-t border-border-light py-6">
+        <div class="px-8 text-center text-text-secondary text-sm">
+            <p>&copy; 2024 CasePilot. 案例驱动的大模型解决方案平台. 保留所有权利.</p>
+            <p class="mt-1">京ICP备12345678号-1 | 京公网安备11010802012345号</p>
+        </div>
+    </footer>
+
+    <!-- 订单详情模态框 -->
+    <div id="order-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-96 overflow-y-auto">
+                <div class="p-6 border-b border-border-light">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-text-primary">订单详情</h3>
+                        <button id="close-modal" class="text-text-secondary hover:text-text-primary transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="modal-content" class="p-6">
+                    <!-- 订单详情内容将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟发票数据
+        const mockInvoices = [
+            {
+                id: 'INV20240115001',
+                orderId: 'ORD20240115001',
+                amount: 299.00,
+                status: '已开具',
+                issueDate: '2024-01-15 14:30:00',
+                orderDetails: {
+                    itemName: '智能信贷风控系统解决方案',
+                    itemType: '案例解锁',
+                    orderAmount: 299.00,
+                    orderDate: '2024-01-15 10:15:00',
+                    paymentMethod: '微信支付'
+                }
+            },
+            {
+                id: 'INV20240112002',
+                orderId: 'ORD20240112002',
+                amount: 199.00,
+                status: '已开具',
+                issueDate: '2024-01-12 16:45:00',
+                orderDetails: {
+                    itemName: '工业物联网设备监控平台',
+                    itemType: '案例解锁',
+                    orderAmount: 199.00,
+                    orderDate: '2024-01-12 09:30:00',
+                    paymentMethod: '支付宝'
+                }
+            },
+            {
+                id: 'INV20240110003',
+                orderId: 'ORD20240110003',
+                amount: 399.00,
+                status: '已开具',
+                issueDate: '2024-01-10 11:20:00',
+                orderDetails: {
+                    itemName: '医学影像智能诊断系统',
+                    itemType: '案例解锁',
+                    orderAmount: 399.00,
+                    orderDate: '2024-01-10 08:45:00',
+                    paymentMethod: '银联支付'
+                }
+            },
+            {
+                id: 'INV20240108004',
+                orderId: 'ORD20240108004',
+                amount: 149.00,
+                status: '待开具',
+                issueDate: '',
+                orderDetails: {
+                    itemName: '电商平台智能推荐系统',
+                    itemType: '案例解锁',
+                    orderAmount: 149.00,
+                    orderDate: '2024-01-08 15:20:00',
+                    paymentMethod: '微信支付'
+                }
+            },
+            {
+                id: 'INV20240105005',
+                orderId: 'ORD20240105005',
+                amount: 249.00,
+                status: '已作废',
+                issueDate: '2024-01-05 13:15:00',
+                orderDetails: {
+                    itemName: '企业内部知识管理系统',
+                    itemType: '案例解锁',
+                    orderAmount: 249.00,
+                    orderDate: '2024-01-05 10:00:00',
+                    paymentMethod: '支付宝'
+                }
+            }
+        ];
+
+        // 状态样式映射
+        const statusStyles = {
+            '已开具': 'bg-green-100 text-green-800',
+            '待开具': 'bg-blue-100 text-blue-800',
+            '已作废': 'bg-gray-100 text-gray-800'
+        };
+
+        // 分页和筛选状态
+        let currentPage = 1;
+        let pageSize = 10;
+        let filteredInvoices = [...mockInvoices];
+        let currentSort = { field: 'issue-date', direction: 'desc' };
+        let currentFilter = { status: 'all', time: 'all' };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化页面
+            initializePage();
+            
+            // 绑定事件监听器
+            bindEventListeners();
+            
+            // 渲染发票列表
+            renderInvoiceList();
+        });
+
+        function initializePage() {
+            // 设置初始状态
+            updatePaginationInfo();
+        }
+
+        function bindEventListeners() {
+            // 搜索框事件
+            document.querySelector('#invoice-search').addEventListener('input', function() {
+                handleSearch(this.value);
+            });
+
+            // 状态筛选事件
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    handleStatusFilter(this.id);
+                });
+            });
+
+            // 时间筛选事件
+            document.querySelector('#time-filter').addEventListener('change', function() {
+                handleTimeFilter(this.value);
+            });
+
+            // 排序事件
+            document.querySelectorAll('.sortable-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    handleSort(this.dataset.sort);
+                });
+            });
+
+            // 分页事件
+            document.querySelector('#prev-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderInvoiceList();
+                }
+            });
+
+            document.querySelector('#next-page').addEventListener('click', function() {
+                const totalPages = Math.ceil(filteredInvoices.length / pageSize);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderInvoiceList();
+                }
+            });
+
+            document.querySelector('#page-size').addEventListener('change', function() {
+                pageSize = parseInt(this.value);
+                currentPage = 1;
+                renderInvoiceList();
+            });
+
+            // 模态框事件
+            document.querySelector('#close-modal').addEventListener('click', function() {
+                closeModal();
+            });
+
+            document.querySelector('#order-detail-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // 导航事件
+            document.querySelector('#nav-home').addEventListener('click', function() {
+                window.location.href = 'P-HOME.html';
+            });
+
+            document.querySelector('#nav-generator').addEventListener('click', function() {
+                window.location.href = 'P-SOLUTION_GENERATOR.html';
+            });
+
+            document.querySelector('#nav-library').addEventListener('click', function() {
+                window.location.href = 'P-CASE_LIBRARY.html';
+            });
+
+            document.querySelector('#nav-profile').addEventListener('click', function() {
+                window.location.href = 'P-USER_CENTER.html';
+            });
+
+            document.querySelector('#nav-orders').addEventListener('click', function() {
+                window.location.href = 'P-ORDER_MANAGEMENT.html';
+            });
+
+            document.querySelector('#nav-invoices').addEventListener('click', function() {
+                // 已在当前页面，无需操作
+            });
+        }
+
+        function handleSearch(keyword) {
+            currentFilter.keyword = keyword.toLowerCase();
+            applyFilters();
+        }
+
+        function handleStatusFilter(filterId) {
+            // 更新筛选按钮状态
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            document.querySelector(`#${filterId}`).classList.add('active');
+
+            // 设置筛选状态
+            switch(filterId) {
+                case 'filter-all':
+                    currentFilter.status = 'all';
+                    break;
+                case 'filter-pending':
+                    currentFilter.status = '待开具';
+                    break;
+                case 'filter-issued':
+                    currentFilter.status = '已开具';
+                    break;
+                case 'filter-cancelled':
+                    currentFilter.status = '已作废';
+                    break;
+            }
+            
+            applyFilters();
+        }
+
+        function handleTimeFilter(timeRange) {
+            currentFilter.time = timeRange;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            filteredInvoices = mockInvoices.filter(invoice => {
+                // 状态筛选
+                if (currentFilter.status !== 'all' && invoice.status !== currentFilter.status) {
+                    return false;
+                }
+
+                // 关键词筛选
+                if (currentFilter.keyword && 
+                    !invoice.id.toLowerCase().includes(currentFilter.keyword) && 
+                    !invoice.orderId.toLowerCase().includes(currentFilter.keyword)) {
+                    return false;
+                }
+
+                // 时间筛选
+                if (currentFilter.time !== 'all') {
+                    const issueDate = new Date(invoice.issueDate || 0);
+                    const now = new Date();
+                    
+                    switch(currentFilter.time) {
+                        case 'today':
+                            if (!invoice.issueDate || !isSameDay(issueDate, now)) return false;
+                            break;
+                        case 'week':
+                            if (!invoice.issueDate || (now - issueDate) > 7 * 24 * 60 * 60 * 1000) return false;
+                            break;
+                        case 'month':
+                            if (!invoice.issueDate || (now - issueDate) > 30 * 24 * 60 * 60 * 1000) return false;
+                            break;
+                        case 'quarter':
+                            if (!invoice.issueDate || (now - issueDate) > 90 * 24 * 60 * 60 * 1000) return false;
+                            break;
+                    }
+                }
+
+                return true;
+            });
+
+            // 应用排序
+            applySorting();
+            
+            currentPage = 1;
+            renderInvoiceList();
+        }
+
+        function applySorting() {
+            filteredInvoices.sort((a, b) => {
+                let aValue, bValue;
+
+                switch(currentSort.field) {
+                    case 'invoice-number':
+                        aValue = a.id;
+                        bValue = b.id;
+                        break;
+                    case 'order-number':
+                        aValue = a.orderId;
+                        bValue = b.orderId;
+                        break;
+                    case 'amount':
+                        aValue = a.amount;
+                        bValue = b.amount;
+                        break;
+                    case 'status':
+                        aValue = a.status;
+                        bValue = b.status;
+                        break;
+                    case 'issue-date':
+                        aValue = a.issueDate ? new Date(a.issueDate) : 0;
+                        bValue = b.issueDate ? new Date(b.issueDate) : 0;
+                        break;
+                }
+
+                if (aValue < bValue) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aValue > bValue) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+
+        function handleSort(field) {
+            // 更新排序状态
+            if (currentSort.field === field) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.field = field;
+                currentSort.direction = 'asc';
+            }
+
+            // 更新排序图标
+            document.querySelectorAll('.sort-indicator').forEach(indicator => {
+                indicator.classList.remove('active');
+                indicator.className = 'fas fa-sort sort-indicator';
+            });
+
+            const currentIndicator = document.querySelector(`[data-sort="${field}"] .sort-indicator`);
+            currentIndicator.classList.add('active');
+            currentIndicator.className = `fas fa-sort-${currentSort.direction === 'asc' ? 'up' : 'down'} sort-indicator active`;
+
+            applySorting();
+            renderInvoiceList();
+        }
+
+        function renderInvoiceList() {
+            const tableBody = document.querySelector('#invoice-table-body');
+            const emptyState = document.querySelector('#empty-state');
+
+            if (filteredInvoices.length === 0) {
+                tableBody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            // 计算分页范围
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = Math.min(startIndex + pageSize, filteredInvoices.length);
+            const pageInvoices = filteredInvoices.slice(startIndex, endIndex);
+
+            // 生成表格行
+            tableBody.innerHTML = pageInvoices.map(invoice => `
+                <tr class="table-row transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-invoice text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-text-primary">${invoice.id}</h4>
+                                <p class="text-sm text-text-secondary">发票号码</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button class="text-primary hover:text-secondary transition-colors font-medium" onclick="showOrderDetail('${invoice.orderId}')">
+                            ${invoice.orderId}
+                            <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </button>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-lg font-semibold text-text-primary">¥${invoice.amount.toFixed(2)}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 ${statusStyles[invoice.status]} rounded-lg text-sm font-medium">
+                            ${invoice.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-sm text-text-secondary">
+                            ${invoice.issueDate || '--'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center space-x-2">
+                            ${invoice.status === '已开具' ? `
+                                <button class="text-primary hover:text-secondary transition-colors" onclick="downloadInvoice('${invoice.id}')" title="下载发票">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            ` : `
+                                <span class="text-text-secondary text-sm">--</span>
+                            `}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            updatePaginationInfo();
+            updatePaginationButtons();
+        }
+
+        function updatePaginationInfo() {
+            const startIndex = (currentPage - 1) * pageSize + 1;
+            const endIndex = Math.min(currentPage * pageSize, filteredInvoices.length);
+            
+            document.querySelector('#page-start').textContent = startIndex;
+            document.querySelector('#page-end').textContent = endIndex;
+            document.querySelector('#total-count').textContent = filteredInvoices.length;
+        }
+
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(filteredInvoices.length / pageSize);
+            
+            // 更新上一页按钮
+            document.querySelector('#prev-page').disabled = currentPage === 1;
+            
+            // 更新下一页按钮
+            document.querySelector('#next-page').disabled = currentPage === totalPages || totalPages === 0;
+            
+            // 生成页码按钮
+            const pageNumbers = document.querySelector('#page-numbers');
+            pageNumbers.innerHTML = '';
+            
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const button = document.createElement('button');
+                button.className = `px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                    i === currentPage 
+                        ? 'bg-gradient-primary text-white' 
+                        : 'border border-border-light hover:bg-bg-secondary'
+                }`;
+                button.textContent = i;
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    renderInvoiceList();
+                });
+                pageNumbers.appendChild(button);
+            }
+        }
+
+        function showOrderDetail(orderId) {
+            const invoice = mockInvoices.find(inv => inv.orderId === orderId);
+            if (!invoice) return;
+            
+            const modalContent = document.querySelector('#modal-content');
+            const details = invoice.orderDetails;
+            
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                        <span class="text-sm text-text-secondary">订单号</span>
+                        <span class="font-medium text-text-primary">${invoice.orderId}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                        <span class="text-sm text-text-secondary">商品名称</span>
+                        <span class="font-medium text-text-primary">${details.itemName}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                        <span class="text-sm text-text-secondary">商品类型</span>
+                        <span class="font-medium text-text-primary">${details.itemType}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                        <span class="text-sm text-text-secondary">订单金额</span>
+                        <span class="font-semibold text-text-primary">¥${details.orderAmount.toFixed(2)}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                        <span class="text-sm text-text-secondary">下单时间</span>
+                        <span class="font-medium text-text-primary">${details.orderDate}</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-bg-secondary rounded-lg">
+                        <span class="text-sm text-text-secondary">支付方式</span>
+                        <span class="font-medium text-text-primary">${details.paymentMethod}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelector('#order-detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.querySelector('#order-detail-modal').classList.add('hidden');
+        }
+
+        function downloadInvoice(invoiceId) {
+            console.log('需要调用第三方接口实现发票下载功能');
+            // 注释：此功能需要调用文件下载API，在原型阶段仅做UI展示
+            
+            // 模拟下载反馈
+            const button = event.target.closest('button');
+            const originalIcon = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    button.innerHTML = originalIcon;
+                    button.disabled = false;
+                }, 1000);
+            }, 1500);
+        }
+
+        function isSameDay(date1, date2) {
+            return date1.getFullYear() === date2.getFullYear() &&
+                   date1.getMonth() === date2.getMonth() &&
+                   date1.getDate() === date2.getDate();
+        }
+    </script>
+</body>
+</html>

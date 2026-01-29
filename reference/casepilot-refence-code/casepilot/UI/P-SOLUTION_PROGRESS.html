@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方案生成中 - CasePilot</title>
+    <script src="https://unpkg.byted-static.com/coze/space_ppt_lib/1.0.3-alpha.12/lib/tailwindcss.js"></script>
+    <script src="https://unpkg.byted-static.com/fortawesome/fontawesome-free/6.7.2/js/all.min.js" data-auto-replace-svg="nest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#8B5CF6',
+                        tertiary: '#06B6D4',
+                        success: '#10B981',
+                        danger: '#EF4444',
+                        warning: '#F59E0B',
+                        info: '#3B82F6',
+                        'text-primary': '#1F2937',
+                        'text-secondary': '#6B7280',
+                        'bg-primary': '#F8FAFC',
+                        'bg-secondary': '#F1F5F9',
+                        'border-light': '#E2E8F0',
+                        'card-bg': '#FFFFFF'
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.3)'
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)',
+                        'gradient-secondary': 'linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%)',
+                        'gradient-card': 'linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-spinner {
+            animation: spin 2s linear infinite;
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-bg-primary min-h-screen">
+    <!-- 顶部导航栏 -->
+    <header id="top-navbar" class="fixed top-0 left-0 right-0 bg-white border-b border-border-light h-16 z-50">
+        <div class="flex items-center justify-between h-full px-6">
+            <!-- Logo和产品名称 -->
+            <div id="logo-section" class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
+                    <i class="fas fa-rocket text-white text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold gradient-text">CasePilot</h1>
+            </div>
+            
+            <!-- 主导航菜单 -->
+            <nav id="main-nav" class="hidden md:flex items-center space-x-8">
+                <a href="P-HOME.html" class="text-text-secondary hover:text-primary py-1 transition-colors">首页</a>
+                <a href="P-SOLUTION_GENERATOR.html" class="text-primary font-medium border-b-2 border-primary py-1">方案生成器</a>
+                <a href="P-CASE_LIBRARY.html" class="text-text-secondary hover:text-primary py-1 transition-colors">案例库</a>
+                <a href="P-USER_CENTER.html" class="text-text-secondary hover:text-primary py-1 transition-colors">个人中心</a>
+            </nav>
+            
+            <!-- 搜索框和用户操作区 -->
+            <div id="header-actions" class="flex items-center space-x-4">
+                <!-- 用户头像 -->
+                <div id="user-avatar" class="flex items-center space-x-2 cursor-pointer">
+                    <img src="https://s.coze.cn/image/yrx9cAWAbDQ/" 
+                         alt="用户头像" class="w-8 h-8 rounded-full border-2 border-primary">
+                    <span class="hidden md:block text-text-primary font-medium">张经理</span>
+                    <i class="fas fa-chevron-down text-text-secondary text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main id="main-content" class="pt-24 pb-16 min-h-screen">
+        <div class="max-w-4xl mx-auto px-6">
+            <!-- 方案生成中 -->
+            <div class="bg-white rounded-2xl shadow-card p-12 text-center">
+                <div class="w-24 h-24 mx-auto mb-8 bg-gradient-primary rounded-full flex items-center justify-center">
+                    <i class="fas fa-magic text-white text-4xl loading-spinner"></i>
+                </div>
+                <h2 class="text-3xl font-semibold text-text-primary mb-4">正在生成方案...</h2>
+                <p class="text-text-secondary mb-10 text-lg">
+                    我们正在基于您的需求和相关案例，为您生成定制化的解决方案，请稍候...
+                </p>
+                
+                <!-- 进度条 -->
+                <div class="w-full bg-border-light rounded-full h-4 mb-6">
+                    <div id="generation-progress" class="bg-gradient-primary h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                
+                <div class="text-base text-text-secondary mb-8">
+                    <span id="progress-text">正在分析需求...</span>
+                </div>
+
+                <!-- 进度步骤指示 -->
+                <div class="mt-12 space-y-4">
+                    <div id="step-1" class="flex items-center justify-center space-x-3 text-left p-4 bg-bg-secondary rounded-xl">
+                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-text-primary">正在分析需求</p>
+                            <p class="text-sm text-text-secondary">理解您的项目目标和需求</p>
+                        </div>
+                    </div>
+                    <div id="step-2" class="flex items-center justify-center space-x-3 text-left p-4 bg-bg-secondary rounded-xl opacity-50">
+                        <div class="w-8 h-8 bg-border-light rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-search text-text-secondary text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-text-secondary">正在匹配相关案例</p>
+                            <p class="text-sm text-text-secondary">从案例库中检索相似项目</p>
+                        </div>
+                    </div>
+                    <div id="step-3" class="flex items-center justify-center space-x-3 text-left p-4 bg-bg-secondary rounded-xl opacity-50">
+                        <div class="w-8 h-8 bg-border-light rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-sitemap text-text-secondary text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-text-secondary">正在构建方案框架</p>
+                            <p class="text-sm text-text-secondary">设计整体架构和技术方案</p>
+                        </div>
+                    </div>
+                    <div id="step-4" class="flex items-center justify-center space-x-3 text-left p-4 bg-bg-secondary rounded-xl opacity-50">
+                        <div class="w-8 h-8 bg-border-light rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-edit text-text-secondary text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-medium text-text-secondary">正在完善方案细节</p>
+                            <p class="text-sm text-text-secondary">补充实施计划和风险评估</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 错误提示 -->
+                <div id="error-message" class="hidden mt-8 p-4 bg-red-50 border border-red-200 rounded-xl">
+                    <p class="text-red-600" id="error-text"></p>
+                    <button id="retry-btn" class="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                        重试
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js?v=6"></script>
+    <script>
+        // 等待ApiClient加载完成
+        function waitForApiClient(callback, maxAttempts = 100) {
+            const apiClient = window.ApiClient || window.apiClient || (typeof ApiClient !== 'undefined' ? ApiClient : null);
+            
+            if (apiClient && typeof apiClient.getSolutionById === 'function') {
+                console.log('ApiClient已加载');
+                if (!window.ApiClient) {
+                    window.ApiClient = apiClient;
+                }
+                callback();
+            } else if (maxAttempts > 0) {
+                setTimeout(() => waitForApiClient(callback, maxAttempts - 1), 50);
+            } else {
+                console.error('ApiClient加载超时');
+                showError('API客户端加载失败，请刷新页面重试');
+            }
+        }
+
+        // 从URL获取solutionId
+        function getSolutionIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('solutionId');
+        }
+
+        // 更新进度
+        function updateProgress(progress, text) {
+            const progressBar = document.querySelector('#generation-progress');
+            const progressText = document.querySelector('#progress-text');
+            
+            if (progressBar) {
+                progressBar.style.width = progress + '%';
+            }
+            if (progressText) {
+                progressText.textContent = text;
+            }
+        }
+
+        // 更新步骤状态
+        function updateStep(stepIndex, isActive) {
+            const stepElement = document.querySelector(`#step-${stepIndex}`);
+            if (!stepElement) return;
+
+            if (isActive) {
+                stepElement.classList.remove('opacity-50');
+                const circle = stepElement.querySelector('div');
+                const icon = circle.querySelector('i');
+                circle.className = 'w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0';
+                icon.className = 'fas fa-spinner fa-spin text-white text-sm';
+            } else {
+                // 检查是否已完成（前面的步骤）
+                const prevSteps = [];
+                for (let i = 1; i < stepIndex; i++) {
+                    const prevStep = document.querySelector(`#step-${i}`);
+                    if (prevStep && !prevStep.classList.contains('opacity-50')) {
+                        prevSteps.push(i);
+                    }
+                }
+                
+                if (prevSteps.length === stepIndex - 1) {
+                    // 前面的步骤都完成了，标记为已完成
+                    stepElement.classList.remove('opacity-50');
+                    const circle = stepElement.querySelector('div');
+                    const icon = circle.querySelector('i');
+                    circle.className = 'w-8 h-8 bg-success rounded-full flex items-center justify-center flex-shrink-0';
+                    icon.className = 'fas fa-check text-white text-sm';
+                }
+            }
+        }
+
+        // 显示错误
+        function showError(message) {
+            const errorDiv = document.querySelector('#error-message');
+            const errorText = document.querySelector('#error-text');
+            if (errorDiv && errorText) {
+                errorText.textContent = message;
+                errorDiv.classList.remove('hidden');
+            }
+        }
+
+        // 隐藏错误
+        function hideError() {
+            const errorDiv = document.querySelector('#error-message');
+            if (errorDiv) {
+                errorDiv.classList.add('hidden');
+            }
+        }
+
+        // 等待方案生成完成
+        async function waitForSolution(solutionId, maxAttempts = 60) {
+            console.log(`开始等待方案生成完成，solutionId: ${solutionId}`);
+            
+            const progressSteps = [
+                { progress: 20, text: '正在分析需求...', step: 1 },
+                { progress: 40, text: '正在匹配相关案例...', step: 2 },
+                { progress: 60, text: '正在构建方案框架...', step: 3 },
+                { progress: 80, text: '正在完善方案细节...', step: 4 },
+                { progress: 95, text: '方案生成即将完成...', step: 4 }
+            ];
+
+            let currentStepIndex = 0;
+            let lastStatus = 'generating';
+            
+            // 初始化第一步
+            if (progressSteps.length > 0) {
+                const firstStep = progressSteps[0];
+                updateProgress(firstStep.progress, firstStep.text);
+                updateStep(firstStep.step, true);
+            }
+
+            for (let i = 0; i < maxAttempts; i++) {
+                await new Promise(resolve => setTimeout(resolve, 2000)); // 等待2秒
+                
+                // 更新进度条（模拟进度，每2次轮询更新一次步骤）
+                if (i > 0 && i % 2 === 0 && currentStepIndex < progressSteps.length - 1) {
+                    // 标记当前步骤为完成
+                    const currentStep = progressSteps[currentStepIndex];
+                    updateStep(currentStep.step, false);
+                    
+                    // 进入下一步
+                    currentStepIndex++;
+                    const nextStep = progressSteps[currentStepIndex];
+                    updateProgress(nextStep.progress, nextStep.text);
+                    updateStep(nextStep.step, true);
+                } else if (i > 0 && currentStepIndex === progressSteps.length - 1 && i % 3 === 0) {
+                    // 最后一步，更新进度文本
+                    const lastStep = progressSteps[currentStepIndex];
+                    updateProgress(lastStep.progress, lastStep.text);
+                }
+                
+                try {
+                    const client = window.ApiClient || window.apiClient || ApiClient;
+                    console.log(`第 ${i + 1} 次查询方案状态...`);
+                    const response = await client.getSolutionById(solutionId);
+                    
+                    if (response.success && response.data) {
+                        const status = response.data.status;
+                        console.log(`方案状态: ${status}`);
+                        
+                        if (status === 'completed') {
+                            console.log('方案生成完成，准备跳转');
+                            updateProgress(100, '方案生成完成！');
+                            // 标记所有步骤为完成
+                            for (let j = 1; j <= 4; j++) {
+                                updateStep(j, false);
+                            }
+                            
+                            // 延迟1秒后跳转，让用户看到完成状态
+                            setTimeout(() => {
+                                window.location.href = `P-SOLUTION_DETAIL.html?solutionId=${solutionId}`;
+                            }, 1000);
+                            return response.data;
+                        } else if (status === 'failed') {
+                            const errorMsg = response.data.generated_content || '方案生成失败';
+                            throw new Error(errorMsg);
+                        }
+                        // 继续等待（状态为 'generating'）
+                        lastStatus = status;
+                    } else {
+                        console.warn('获取方案状态失败:', response);
+                    }
+                } catch (error) {
+                    console.error(`第 ${i + 1} 次查询失败:`, error);
+                    // 如果是最后一次尝试，抛出错误
+                    if (i === maxAttempts - 1) {
+                        throw error;
+                    }
+                    // 否则继续重试
+                }
+            }
+            
+            // 超时处理
+            if (lastStatus === 'generating') {
+                throw new Error('方案生成超时，请稍后查看方案详情');
+            }
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            const solutionId = getSolutionIdFromUrl();
+            
+            if (!solutionId) {
+                showError('缺少方案ID参数，请重新生成方案');
+                return;
+            }
+
+            // 等待ApiClient加载完成后再开始轮询
+            waitForApiClient(function() {
+                // 开始等待方案生成
+                waitForSolution(solutionId).catch(error => {
+                    console.error('等待方案生成失败:', error);
+                    showError(error.message || '方案生成失败，请稍后查看方案详情');
+                    
+                    // 添加重试按钮事件
+                    const retryBtn = document.querySelector('#retry-btn');
+                    if (retryBtn) {
+                        retryBtn.onclick = function() {
+                            window.location.href = `P-SOLUTION_PROGRESS.html?solutionId=${solutionId}`;
+                        };
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -324,18 +324,20 @@ a {
   50% { opacity: 0.5; }
 }
 
-/* Modern Chat Messages - Telegram/WeChat Style */
+/* WeChat-Style Chat Messages */
 .cp-chat {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 4px;
+  gap: 16px;
+  padding: 12px 8px;
+  background: #EDEDED;
+  border-radius: var(--cp-radius-sm);
 }
 
 .cp-msg {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
   max-width: 100%;
   animation: cp-msg-fade-in 0.25s ease;
 }
@@ -353,28 +355,40 @@ a {
 
 .cp-msg-avatar {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #fff;
   background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
 }
 
 .cp-msg-bubble {
-  flex: 1;
+  position: relative;
+  max-width: 75%;
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: 4px;
   font-size: 0.9375rem;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--cp-text);
   background: var(--cp-white);
-  border: 1px solid var(--cp-border-light);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   word-wrap: break-word;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+/* Left bubble arrow (for AI/Expert) */
+.cp-msg-ai .cp-msg-bubble::before,
+.cp-msg-expert .cp-msg-bubble::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 12px;
+  border: 6px solid transparent;
+  border-right-color: var(--cp-white);
+  border-left: none;
 }
 
 /* AI message style */
@@ -384,10 +398,9 @@ a {
 
 .cp-msg-ai .cp-msg-bubble {
   background: var(--cp-white);
-  border-color: var(--cp-border-light);
 }
 
-/* User message style */
+/* User message style - right aligned like WeChat */
 .cp-msg-user {
   flex-direction: row-reverse;
 }
@@ -397,10 +410,20 @@ a {
 }
 
 .cp-msg-user .cp-msg-bubble {
-  background: var(--cp-primary);
-  color: #FFFFFF;
-  border-color: var(--cp-primary);
-  text-align: left;
+  background: #95EC69;
+  color: #000000;
+}
+
+/* Right bubble arrow (for User) */
+.cp-msg-user .cp-msg-bubble::before {
+  content: '';
+  position: absolute;
+  right: -8px;
+  left: auto;
+  top: 12px;
+  border: 6px solid transparent;
+  border-left-color: #95EC69;
+  border-right: none;
 }
 
 /* Expert message style */
@@ -410,8 +433,11 @@ a {
 
 .cp-msg-expert .cp-msg-bubble {
   background: #FEF3C7;
-  border-color: #FDE68A;
   color: #92400E;
+}
+
+.cp-msg-expert .cp-msg-bubble::before {
+  border-right-color: #FEF3C7;
 }
 
 /* Todo items */
